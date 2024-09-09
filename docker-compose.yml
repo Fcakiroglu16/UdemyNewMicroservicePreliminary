@@ -1,0 +1,11 @@
+services:
+  udemymicroservices.catalog:
+    image: microservice.catalog
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Catalog/Dockerfile
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+volumes:
+  mongo-data:

@@ -1,50 +1,47 @@
-﻿using AutoMapper;
+﻿using System.Net;
+using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
 
-namespace UdemyMicroservices.Catalog.Features.Courses.GetById
+namespace UdemyMicroservices.Catalog.Features.Courses.GetById;
+
+public record GetCourseByIdQuery(Guid Id) : IRequest<ServiceResult<CourseDto>>;
+
+public class GetCourseByIdCourseQueryHandler(AppDbContext context, IMapper mapper)
+    : IRequestHandler<GetCourseByIdQuery, ServiceResult<CourseDto>>
 {
-    public record GetCourseByIdQuery(Guid Id) : IRequest<ServiceResult<CourseDto>>;
-
-    public class GetCourseByIdCourseQueryHandler(AppDbContext context, IMapper mapper)
-        : IRequestHandler<GetCourseByIdQuery, ServiceResult<CourseDto>>
+    public async Task<ServiceResult<CourseDto>> Handle(GetCourseByIdQuery request,
+        CancellationToken cancellationToken)
     {
-        public async Task<ServiceResult<CourseDto>> Handle(GetCourseByIdQuery request,
-            CancellationToken cancellationToken)
-        {
-            var course = await context.Courses.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
+        var course = await context.Courses.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
 
-            if (course is null)
-            {
-                return ServiceResult<CourseDto>.Error("Course Not Found",
-                    $"The course with id '{request.Id}' was not found.", HttpStatusCode.NotFound);
-            }
+        if (course is null)
+            return ServiceResult<CourseDto>.Error("Course Not Found",
+                $"The course with id '{request.Id}' was not found.", HttpStatusCode.NotFound);
 
-            var category =
-                await context.Categories.FirstOrDefaultAsync(x => x.Id == course.CategoryId, cancellationToken);
-            course.Category = category;
+        var category =
+            await context.Categories.FirstOrDefaultAsync(x => x.Id == course.CategoryId, cancellationToken);
+        course.Category = category;
 
-            var courseDto = mapper.Map<CourseDto>(course);
-            return ServiceResult<CourseDto>.SuccessAsOk(courseDto);
-        }
+        var courseDto = mapper.Map<CourseDto>(course);
+        return ServiceResult<CourseDto>.SuccessAsOk(courseDto);
     }
+}
 
-    public static class GetCourseByIdQueryEndpoint
+public static class GetCourseByIdQueryEndpoint
+{
+    public static void MapGetCourseByIdQueryEndpoint(this WebApplication app)
     {
-        public static void MapGetCourseByIdQueryEndpoint(this WebApplication app)
-        {
-            app.MapGet("/api/courses/{id}", async (IMediator mediator, Guid id) =>
-                {
-                    var response = await mediator.Send(new GetCourseByIdQuery(id));
-                    return response.IsSuccess ? Results.Ok(response) : Results.NotFound(response);
-                })
-                .WithName("GetCourseById")
-                .Produces<CourseDto>(StatusCodes.Status200OK)
-                .Produces(StatusCodes.Status404NotFound)
-                .WithTags("Courses");
-        }
+        app.MapGet("/api/courses/{id}", async (IMediator mediator, Guid id) =>
+            {
+                var response = await mediator.Send(new GetCourseByIdQuery(id));
+                return response.IsSuccess ? Results.Ok(response) : Results.NotFound(response);
+            })
+            .WithName("GetCourseById")
+            .Produces<CourseDto>()
+            .Produces(StatusCodes.Status404NotFound)
+            .WithTags("Courses");
     }
 }

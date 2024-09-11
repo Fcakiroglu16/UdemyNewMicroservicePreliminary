@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
 {
-    using MediatR;
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-
     namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
     {
         public class GetAllCoursesQuery : IRequest<ServiceResult<List<CourseDto>>>
@@ -22,15 +19,12 @@ namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
                 CancellationToken cancellationToken)
             {
                 var courses = await context.Courses
-                    .ToListAsync(cancellationToken: cancellationToken);
+                    .ToListAsync(cancellationToken);
 
-                var categories = await context.Categories.ToListAsync(cancellationToken: cancellationToken);
+                var categories = await context.Categories.ToListAsync(cancellationToken);
 
 
-                foreach (var course in courses)
-                {
-                    course.Category = categories.First(x => x.Id == course.CategoryId);
-                }
+                foreach (var course in courses) course.Category = categories.First(x => x.Id == course.CategoryId);
 
 
                 var coursesListDtos = mapper.Map<List<CourseDto>>(courses);
@@ -51,7 +45,7 @@ namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
                         return Results.Ok(response);
                     })
                     .WithName("GetAllCourses")
-                    .Produces<List<CourseDto>>(StatusCodes.Status200OK)
+                    .Produces<List<CourseDto>>()
                     .WithTags("Courses");
             }
         }

@@ -5,18 +5,17 @@ using UdemyMicroservices.Catalog.Features.Courses.GetAllByUserId;
 using UdemyMicroservices.Catalog.Features.Courses.GetById;
 using UdemyMicroservices.Catalog.Features.Courses.Update;
 
-namespace UdemyMicroservices.Catalog.Features.Courses
+namespace UdemyMicroservices.Catalog.Features.Courses;
+
+public static class CourseEndpointsExt
 {
-    public static class CourseEndpointsExt
+    public static void AddCourseEndpointsExt(this WebApplication app)
     {
-        public static void AddCourseEndpointsExt(this WebApplication app)
-        {
-            app.MapGetAllCoursesQueryEndpoint();
-            app.MapGetCourseByIdQueryEndpoint();
-            app.MapGetCourseByUserIdEndpoint();
-            app.MapCreateCourseCommandEndpoint();
-            app.MapUpdateCourseCommandEndpoint();
-            app.MapDeleteCourseCommandEndpoint();
-        }
+        app.MapGetAllCoursesQueryEndpoint();
+        app.MapGetCourseByIdQueryEndpoint();
+        app.MapGetCourseByUserIdEndpoint();
+        app.MapCreateCourseCommandEndpoint();
+        app.MapUpdateCourseCommandEndpoint();
+        app.MapDeleteCourseCommandEndpoint();
     }
 }

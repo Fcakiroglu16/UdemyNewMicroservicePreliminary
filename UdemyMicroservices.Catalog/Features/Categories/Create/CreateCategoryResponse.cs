@@ -1,4 +1,3 @@
-﻿namespace UdemyMicroservices.Catalog.Features.Categories.Create
-{
-    public record CreateCategoryResponse(string Id);
-}
+﻿namespace UdemyMicroservices.Catalog.Features.Categories.Create;
+
+public record CreateCategoryResponse(string Id);

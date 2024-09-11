@@ -1,6 +1,6 @@
 @UdemyMicroservices.Catalog_HostAddress = http://localhost:5050
 
-@courseId = d89e0000-45b7-e0d0-f5ce-08dcd27225bd
+@courseId = d89e0000-45b7-e0d0-0e08-08dcd27225be
 @userId=1
 @categoryId=d89e0000-45b7-e0d0-efa8-08dcd27225bd
 

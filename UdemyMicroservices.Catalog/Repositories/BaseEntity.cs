@@ -1,10 +1,8 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace UdemyMicroservices.Catalog.Repositories
+namespace UdemyMicroservices.Catalog.Repositories;
+
+public abstract class BaseEntity
 {
-    public abstract class BaseEntity
-    {
-        [BsonElement("_id")] public Guid Id { get; set; }
-    }
+    [BsonElement("_id")] public Guid Id { get; set; }
 }

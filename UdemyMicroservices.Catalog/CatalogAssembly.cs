@@ -1,6 +1,5 @@
-﻿namespace UdemyMicroservices.Catalog
+﻿namespace UdemyMicroservices.Catalog;
+
+public struct CatalogAssembly
 {
-    public struct CatalogAssembly
-    {
-    }
 }

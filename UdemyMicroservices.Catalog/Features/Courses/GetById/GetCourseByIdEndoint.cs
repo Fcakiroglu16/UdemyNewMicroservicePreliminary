@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;

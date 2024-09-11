@@ -22,7 +22,7 @@ public class ServiceResult<T>
     // Static factory method
     public static ServiceResult<T> SuccessAsOk(T data)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Data = data,
             Status = HttpStatusCode.OK
@@ -31,7 +31,7 @@ public class ServiceResult<T>
 
     public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Data = data,
             Status = HttpStatusCode.Created,
@@ -41,7 +41,7 @@ public class ServiceResult<T>
 
     public static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Status = statusCode,
             Fail = problemDetails
@@ -51,7 +51,7 @@ public class ServiceResult<T>
 
     public static ServiceResult<T> Error(string title, string detail, HttpStatusCode statusCode)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Status = statusCode,
             Fail = new ProblemDetails
@@ -88,7 +88,7 @@ public class ServiceResult
     // Static factory method
     public static ServiceResult SuccessAsNoContent()
     {
-        return new ServiceResult()
+        return new ServiceResult
         {
             Status = HttpStatusCode.NoContent
         };
@@ -97,7 +97,7 @@ public class ServiceResult
 
     public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {
-        return new ServiceResult()
+        return new ServiceResult
         {
             Status = statusCode,
             Fail = problemDetails
@@ -107,7 +107,7 @@ public class ServiceResult
 
     public static ServiceResult Error(string title, string detail, HttpStatusCode statusCode)
     {
-        return new ServiceResult()
+        return new ServiceResult
         {
             Status = statusCode,
             Fail = new ProblemDetails

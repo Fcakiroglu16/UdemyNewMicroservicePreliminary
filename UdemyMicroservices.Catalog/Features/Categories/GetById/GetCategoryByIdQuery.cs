@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using AutoMapper;
-using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;

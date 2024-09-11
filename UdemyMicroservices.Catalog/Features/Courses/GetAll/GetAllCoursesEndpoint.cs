@@ -37,16 +37,17 @@ namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
 
         public static class GetAllCoursesEndpoint
         {
-            public static void MapGetAllCoursesQueryEndpoint(this WebApplication app)
+            public static RouteGroupBuilder MapAllCoursesQueryEndpoint(this RouteGroupBuilder group)
             {
-                app.MapGet("/api/courses", async (IMediator mediator) =>
+                group.MapGet("/", async (IMediator mediator) =>
                     {
                         var response = await mediator.Send(new GetAllCoursesQuery());
                         return Results.Ok(response);
                     })
                     .WithName("GetAllCourses")
-                    .Produces<List<CourseDto>>()
-                    .WithTags("Courses");
+                    .Produces<List<CourseDto>>();
+
+                return group;
             }
         }
     }

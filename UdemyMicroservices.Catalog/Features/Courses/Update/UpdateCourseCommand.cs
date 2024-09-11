@@ -60,9 +60,9 @@ public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper)
 
 public static class UpdateCourseCommandEndpoint
 {
-    public static void MapUpdateCourseCommandEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapUpdateCourseCommandEndpoint(this RouteGroupBuilder group)
     {
-        app.MapPut("/api/courses",
+        group.MapPut("/",
                 async (IMediator mediator, UpdateCourseCommand command) =>
                 {
                     var response = await mediator.Send(command);
@@ -71,7 +71,8 @@ public static class UpdateCourseCommandEndpoint
             .WithName("UpdateCourse")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status400BadRequest)
-            .WithTags("Courses");
+            .Produces(StatusCodes.Status400BadRequest);
+
+        return group;
     }
 }

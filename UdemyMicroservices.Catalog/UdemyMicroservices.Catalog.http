@@ -1,4 +1,4 @@
-@UdemyMicroservices.Catalog_HostAddress = http://localhost:5050
+@UdemyMicroservices.Catalog_HostAddress = http://localhost:5050/api/v1
 
 @courseId = d89e0000-45b7-e0d0-0e08-08dcd27225be
 @userId=1
@@ -6,19 +6,19 @@
 
 
 ### Get All Categories
-GET {{UdemyMicroservices.Catalog_HostAddress}}/api/categories
+GET {{UdemyMicroservices.Catalog_HostAddress}}/categories
 Accept: application/json
 
 ###
 
 ### Get Category By Id
-GET {{UdemyMicroservices.Catalog_HostAddress}}/api/categories/{{categoryId}}
+GET {{UdemyMicroservices.Catalog_HostAddress}}/categories/{{categoryId}}
 Accept: application/json
 
 ###
 
 ### Create Category
-POST {{UdemyMicroservices.Catalog_HostAddress}}/api/categories
+POST {{UdemyMicroservices.Catalog_HostAddress}}/categories
 Content-Type: application/json
 
 {
@@ -30,25 +30,25 @@ Content-Type: application/json
 
 
 ### Get Course By Id
-GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+GET {{UdemyMicroservices.Catalog_HostAddress}}/courses
 Accept: application/json
 
 ###
 
 ### Get Course By Id
-GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/{{courseId}}
+GET {{UdemyMicroservices.Catalog_HostAddress}}/courses/{{courseId}}
 Accept: application/json
 
 ###
 
 ### Get Courses By User Id
-GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/user/{{userId}}
+GET {{UdemyMicroservices.Catalog_HostAddress}}/courses/user/{{userId}}
 Accept: application/json
 
 ###
 
 ### Create Course
-POST {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+POST {{UdemyMicroservices.Catalog_HostAddress}}/courses
 Content-Type: application/json
 
 {
@@ -64,7 +64,7 @@ Content-Type: application/json
 ###
 
 ### Update Course
-PUT {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+PUT {{UdemyMicroservices.Catalog_HostAddress}}/courses
 Content-Type: application/json
 
 {
@@ -81,7 +81,7 @@ Content-Type: application/json
 ###
 
 ### Delete Course
-DELETE {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/{{courseId}}
+DELETE {{UdemyMicroservices.Catalog_HostAddress}}/courses/{{courseId}}
 Accept: application/json
 
 ###

@@ -5,17 +5,20 @@ namespace UdemyMicroservices.Catalog.Features.Categories.Create;
 
 public static class CreateCategoryEndpoint
 {
-    public static void MapCreateCategoryEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapCreateCategoryEndpoint(this RouteGroupBuilder group)
     {
-        app.MapPost("/api/categories",
+        group.MapPost("/",
                 async (CreateCategoryCommand request, IMediator mediator) =>
                     (await mediator.Send(request)).ToActionResult())
             .WithName("CreateCategory") // Endpoint'e isim verir
             .Produces<
                 CreateCategoryResponse>(StatusCodes
-                .Status201Created) // Üretilen yanıt türünü ve durum kodunu belirtir
+                .Status201Created).MapToApiVersion(1.0) // Üretilen yanıt türünü ve durum kodunu belirtir
             //.ProducesValidationProblem() // Doğrulama hatalarını belirtir
             //.RequireAuthorization() // Yetkilendirme gerektirir
-            .WithTags("Categories"); // Endpoint'i belirli bir etiketle gruplar
+            ; // Endpoint'i belirli bir etiketle gruplar
+
+
+        return group;
     }
 }

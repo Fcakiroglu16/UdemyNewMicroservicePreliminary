@@ -39,14 +39,14 @@ public class GetCourseByUserIdQueryHandler(AppDbContext context, IMapper mapper)
 
 public static class GetAllCourseByUserIdEndpoint
 {
-    public static void MapGetCourseByUserIdEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapAllCourseByUserIdEndpoint(this RouteGroupBuilder group)
     {
-        app.MapGet("/api/courses/user/{userId}",
+        group.MapGet("/user/{userId}",
                 async (IMediator mediator, string userId) =>
                     (await mediator.Send(new GetAllCourseByUserIdQuery(userId))).ToActionResult())
             .WithName("GetAllCourseByUserId")
             .Produces<List<CourseDto>>()
-            .Produces(StatusCodes.Status404NotFound)
-            .WithTags("Courses");
+            .Produces(StatusCodes.Status404NotFound);
+        return group;
     }
 }

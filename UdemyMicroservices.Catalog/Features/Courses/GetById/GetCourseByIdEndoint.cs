@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
@@ -32,16 +33,17 @@ public class GetCourseByIdCourseQueryHandler(AppDbContext context, IMapper mappe
 
 public static class GetCourseByIdQueryEndpoint
 {
-    public static void MapGetCourseByIdQueryEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapCourseByIdQueryEndpoint(this RouteGroupBuilder group)
     {
-        app.MapGet("/api/courses/{id}", async (IMediator mediator, Guid id) =>
+        group.MapGet("/{id}", async (IMediator mediator, Guid id) =>
             {
                 var response = await mediator.Send(new GetCourseByIdQuery(id));
                 return response.IsSuccess ? Results.Ok(response) : Results.NotFound(response);
             })
             .WithName("GetCourseById")
             .Produces<CourseDto>()
-            .Produces(StatusCodes.Status404NotFound)
-            .WithTags("Courses");
+            .Produces(StatusCodes.Status404NotFound);
+
+        return group;
     }
 }

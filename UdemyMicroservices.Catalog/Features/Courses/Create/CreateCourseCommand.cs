@@ -57,14 +57,16 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
 
 public static class CreateCourseCommandEndpoint
 {
-    public static void MapCreateCourseCommandEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapCreateCourseCommandEndpoint(this RouteGroupBuilder group)
     {
-        app.MapPost("/api/courses",
+        group.MapPost("/",
                 async (IMediator mediator, CreateCourseCommand command) =>
                     (await mediator.Send(command)).ToActionResult())
             .WithName("CreateCourse")
             .Produces<CourseDto>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status404NotFound)
-            .WithTags("Courses");
+            .Produces(StatusCodes.Status404NotFound);
+
+
+        return group;
     }
 }

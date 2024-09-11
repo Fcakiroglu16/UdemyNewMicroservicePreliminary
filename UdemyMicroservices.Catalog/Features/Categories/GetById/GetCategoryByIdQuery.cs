@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using AutoMapper;
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
@@ -29,14 +30,33 @@ public class GetCategoryByIdQueryHandler(AppDbContext context, IMapper mapper)
 
 public static class GetCategoryByIdQueryEndpoint
 {
-    public static void MapGetByIdCategoryQueryEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapCategoryByIdQueryEndpoint(this RouteGroupBuilder group)
     {
-        app.MapGet("/api/categories/{id:int}",
+        group.MapGet("/{id:guid}",
                 async (IMediator mediator, Guid id) =>
                     (await mediator.Send(new GetCategoryByIdQuery(id))).ToActionResult())
             .WithName("GetCategoryById")
             .Produces<CategoryDto>()
-            .Produces(StatusCodes.Status404NotFound)
-            .WithTags("Categories");
+            .Produces(StatusCodes.Status404NotFound).MapToApiVersion(1.0);
+        return group;
+    }
+
+
+    public static RouteGroupBuilder MapCategoryByIdQueryEndpointV2(this RouteGroupBuilder group)
+    {
+        group.MapGet("/{id:guid}",
+                async (IMediator mediator, Guid id) =>
+                {
+                    var result =
+                        ServiceResult<CategoryDto>.SuccessAsOk(new CategoryDto(id.ToString(),
+                            "Category V2"));
+
+
+                    return result.ToActionResult();
+                })
+            .WithName("GetCategoryByIdV2")
+            .Produces<CategoryDto>()
+            .Produces(StatusCodes.Status404NotFound).MapToApiVersion(2.0);
+        return group;
     }
 }

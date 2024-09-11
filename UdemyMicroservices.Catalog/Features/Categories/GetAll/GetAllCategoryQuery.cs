@@ -26,12 +26,13 @@ public class GetAllCategoryQueryHandler(AppDbContext context, IMapper mapper)
 //endpoint
 public static class GetAllCategoryQueryEndpoint
 {
-    public static void MapGetAllCategoryQueryEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapAllCategoryQueryEndpoint(this RouteGroupBuilder group)
     {
-        app.MapGet("/api/categories",
+        group.MapGet("/",
                 async (IMediator mediator) => (await mediator.Send(new GetAllCategoryQuery())).ToActionResult())
             .WithName("GetAllCategories")
-            .Produces<List<CategoryDto>>()
-            .WithTags("Categories");
+            .Produces<List<CategoryDto>>().MapToApiVersion(1.0);
+
+        return group;
     }
 }

@@ -27,9 +27,9 @@ public class DeleteCourseCommandHandler(AppDbContext context) : IRequestHandler<
 
 public static class DeleteCourseCommandEndpoint
 {
-    public static void MapDeleteCourseCommandEndpoint(this WebApplication app)
+    public static RouteGroupBuilder MapDeleteCourseCommandEndpoint(this RouteGroupBuilder group)
     {
-        app.MapDelete("/api/courses/{id}",
+        group.MapDelete("/{id}",
                 async (IMediator mediator, Guid id) =>
                 {
                     var response = await mediator.Send(new DeleteCourseCommand(id));
@@ -37,7 +37,8 @@ public static class DeleteCourseCommandEndpoint
                 })
             .WithName("DeleteCourse")
             .Produces(StatusCodes.Status204NoContent)
-            .Produces(StatusCodes.Status404NotFound)
-            .WithTags("Courses");
+            .Produces(StatusCodes.Status404NotFound);
+
+        return group;
     }
 }

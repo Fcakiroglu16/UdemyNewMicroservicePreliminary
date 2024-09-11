@@ -28,7 +28,7 @@ namespace UdemyMicroservices.Catalog.Features.Categories.GetAll
     {
         public static void MapGetAllCategoryQueryEndpoint(this WebApplication app)
         {
-            app.MapGet("/categories",
+            app.MapGet("/api/categories",
                     async (IMediator mediator) => (await mediator.Send(new GetAllCategoryQuery())).ToActionResult())
                 .WithName("GetAllCategories")
                 .Produces<List<CategoryDto>>(StatusCodes.Status200OK)

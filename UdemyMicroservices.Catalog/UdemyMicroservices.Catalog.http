@@ -1,6 +1,87 @@
 @UdemyMicroservices.Catalog_HostAddress = http://localhost:5050
 
-GET {{UdemyMicroservices.Catalog_HostAddress}}/weatherforecast/
+@courseId = d89e0000-45b7-e0d0-f5ce-08dcd27225bd
+@userId=1
+@categoryId=d89e0000-45b7-e0d0-efa8-08dcd27225bd
+
+
+### Get All Categories
+GET {{UdemyMicroservices.Catalog_HostAddress}}/api/categories
+Accept: application/json
+
+###
+
+### Get Category By Id
+GET {{UdemyMicroservices.Catalog_HostAddress}}/api/categories/{{categoryId}}
+Accept: application/json
+
+###
+
+### Create Category
+POST {{UdemyMicroservices.Catalog_HostAddress}}/api/categories
+Content-Type: application/json
+
+{
+  "name": "New Category",
+  "description": "This is a new category"
+}
+
+###
+
+
+### Get Course By Id
+GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+Accept: application/json
+
+###
+
+### Get Course By Id
+GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/{{courseId}}
+Accept: application/json
+
+###
+
+### Get Courses By User Id
+GET {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/user/{{userId}}
+Accept: application/json
+
+###
+
+### Create Course
+POST {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+Content-Type: application/json
+
+{
+  "name": "New Course",
+  "description": "This is a new course",
+  "price": 99.99,
+  "picture": "http://example.com/picture.jpg",
+  "userId": "user123",
+  "categoryId": "{{categoryId}}",
+  "duration": 120
+}
+
+###
+
+### Update Course
+PUT {{UdemyMicroservices.Catalog_HostAddress}}/api/courses
+Content-Type: application/json
+
+{
+  "id": "{{courseId}}",
+  "name": "Updated Course",
+  "description": "This is an updated course",
+  "price": 79.99,
+  "picture": "http://example.com/updated_picture.jpg",
+  "userId": "user123",
+  "categoryId": "{{categoryId}}",
+  "duration": 150
+}
+
+###
+
+### Delete Course
+DELETE {{UdemyMicroservices.Catalog_HostAddress}}/api/courses/{{courseId}}
 Accept: application/json
 
 ###

@@ -7,12 +7,12 @@ using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.GetById
 {
-    public record GetByIdCourseQuery(Guid Id) : IRequest<ServiceResult<CourseDto>>;
+    public record GetCourseByIdQuery(Guid Id) : IRequest<ServiceResult<CourseDto>>;
 
-    public class GetByIdCourseQueryHandler(AppDbContext context, IMapper mapper)
-        : IRequestHandler<GetByIdCourseQuery, ServiceResult<CourseDto>>
+    public class GetCourseByIdCourseQueryHandler(AppDbContext context, IMapper mapper)
+        : IRequestHandler<GetCourseByIdQuery, ServiceResult<CourseDto>>
     {
-        public async Task<ServiceResult<CourseDto>> Handle(GetByIdCourseQuery request,
+        public async Task<ServiceResult<CourseDto>> Handle(GetCourseByIdQuery request,
             CancellationToken cancellationToken)
         {
             var course = await context.Courses.FirstOrDefaultAsync(c => c.Id == request.Id, cancellationToken);
@@ -32,13 +32,13 @@ namespace UdemyMicroservices.Catalog.Features.Courses.GetById
         }
     }
 
-    public static class GetByIdCourseQueryEndpoint
+    public static class GetCourseByIdQueryEndpoint
     {
-        public static void MapGetByIdCourseQueryEndpoint(this WebApplication app)
+        public static void MapGetCourseByIdQueryEndpoint(this WebApplication app)
         {
-            app.MapGet("/courses/{id}", async (IMediator mediator, Guid id) =>
+            app.MapGet("/api/courses/{id}", async (IMediator mediator, Guid id) =>
                 {
-                    var response = await mediator.Send(new GetByIdCourseQuery(id));
+                    var response = await mediator.Send(new GetCourseByIdQuery(id));
                     return response.IsSuccess ? Results.Ok(response) : Results.NotFound(response);
                 })
                 .WithName("GetCourseById")

@@ -7,7 +7,7 @@ namespace UdemyMicroservices.Catalog.Features.Categories.Create
     {
         public static void MapCreateCategoryEndpoint(this WebApplication app)
         {
-            app.MapPost("/categories",
+            app.MapPost("/api/categories",
                     async (CreateCategoryCommand request, IMediator mediator) =>
                         (await mediator.Send(request)).ToActionResult())
                 .WithName("CreateCategory") // Endpoint'e isim verir

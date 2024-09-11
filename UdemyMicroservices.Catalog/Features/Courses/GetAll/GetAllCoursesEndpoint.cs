@@ -45,7 +45,7 @@ namespace UdemyMicroservices.Catalog.Features.Courses.GetAll
         {
             public static void MapGetAllCoursesQueryEndpoint(this WebApplication app)
             {
-                app.MapGet("/courses", async (IMediator mediator) =>
+                app.MapGet("/api/courses", async (IMediator mediator) =>
                     {
                         var response = await mediator.Send(new GetAllCoursesQuery());
                         return Results.Ok(response);

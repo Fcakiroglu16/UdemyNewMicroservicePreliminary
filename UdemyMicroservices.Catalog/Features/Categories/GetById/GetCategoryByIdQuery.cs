@@ -1,20 +1,18 @@
 ﻿using AutoMapper;
 using MediatR;
-using System.Net;
-using MassTransit;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Categories.GetById
 {
-    public record GetByIdCategoryQuery(Guid Id) : IRequestByServiceResult<CategoryDto>;
+    public record GetCategoryByIdQuery(Guid Id) : IRequestByServiceResult<CategoryDto>;
 
-    public class GetByIdCategoryQueryHandler(AppDbContext context, IMapper mapper)
-        : IRequestHandler<GetByIdCategoryQuery, ServiceResult<CategoryDto>>
+    public class GetCategoryByIdQueryHandler(AppDbContext context, IMapper mapper)
+        : IRequestHandler<GetCategoryByIdQuery, ServiceResult<CategoryDto>>
     {
-        public async Task<ServiceResult<CategoryDto>> Handle(GetByIdCategoryQuery request,
+        public async Task<ServiceResult<CategoryDto>> Handle(GetCategoryByIdQuery request,
             CancellationToken cancellationToken)
         {
             var category =
@@ -31,13 +29,13 @@ namespace UdemyMicroservices.Catalog.Features.Categories.GetById
         }
     }
 
-    public static class GetByIdCategoryQueryEndpoint
+    public static class GetCategoryByIdQueryEndpoint
     {
         public static void MapGetByIdCategoryQueryEndpoint(this WebApplication app)
         {
-            app.MapGet("/categories/{id:int}",
+            app.MapGet("/api/categories/{id:int}",
                     async (IMediator mediator, Guid id) =>
-                        (await mediator.Send(new GetByIdCategoryQuery(id))).ToActionResult())
+                        (await mediator.Send(new GetCategoryByIdQuery(id))).ToActionResult())
                 .WithName("GetCategoryById")
                 .Produces<CategoryDto>(StatusCodes.Status200OK)
                 .Produces(StatusCodes.Status404NotFound)

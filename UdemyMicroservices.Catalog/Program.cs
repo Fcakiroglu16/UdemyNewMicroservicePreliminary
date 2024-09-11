@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using UdemyMicroservices.Catalog;
 using UdemyMicroservices.Catalog.Features.Categories;
-using UdemyMicroservices.Catalog.Features.Categories.Create;
+using UdemyMicroservices.Catalog.Features.Courses;
 using UdemyMicroservices.Catalog.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,9 +14,21 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
+{
+    var mongoOption = sp.GetRequiredService<MongoOption>();
+    return new MongoClient(mongoOption.ConnectionString);
+});
+
+builder.Services.AddScoped(sp =>
+{
+    var mongoClient = sp.GetRequiredService<IMongoClient>();
+    var mongoOption = sp.GetRequiredService<MongoOption>();
+    return AppDbContext.Create(mongoClient.GetDatabase(mongoOption.DatabaseName));
+});
+
 
 //generic
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 //automapper
 builder.Services.AddAutoMapper(typeof(CatalogAssembly));
 builder.Services.AddFluentValidationAutoValidation();
@@ -48,4 +61,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.AddCategoryEndpointsExt();
+app.AddCourseEndpointsExt();
+await app.AddSeedDataExt();
 app.Run();

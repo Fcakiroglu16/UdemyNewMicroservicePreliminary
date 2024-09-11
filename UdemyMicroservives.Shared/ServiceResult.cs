@@ -13,30 +13,33 @@ namespace UdemyMicroservices.Shared
     public class ServiceResult<T>
     {
         public T? Data { get; set; }
-        [JsonIgnore] public int? Status { get; set; }
+        [JsonIgnore] public HttpStatusCode Status { get; set; }
         [JsonIgnore] public string? UrlAsCreated { get; set; }
 
-        public ProblemDetails? Fail { get; set; }
 
+        [JsonIgnore] public bool IsSuccess => Fail is null;
+        [JsonIgnore] public bool IsFail => !IsSuccess;
+
+        public ProblemDetails? Fail { get; set; }
 
         // Static factory method
         public static ServiceResult<T> SuccessAsOk(T data) => new ServiceResult<T>
         {
             Data = data,
-            Status = HttpStatusCode.OK.GetHashCode()
+            Status = HttpStatusCode.OK
         };
 
         public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated) => new ServiceResult<T>
         {
             Data = data,
-            Status = HttpStatusCode.Created.GetHashCode(),
+            Status = HttpStatusCode.Created,
             UrlAsCreated = urlAsCreated
         };
 
         public static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode) =>
             new ServiceResult<T>
             {
-                Status = statusCode.GetHashCode(),
+                Status = statusCode,
                 Fail = problemDetails
             };
 
@@ -44,7 +47,7 @@ namespace UdemyMicroservices.Shared
         public static ServiceResult<T> Error(string title, string detail, HttpStatusCode statusCode) =>
             new ServiceResult<T>
             {
-                Status = statusCode.GetHashCode(),
+                Status = statusCode,
                 Fail = new ProblemDetails
                 {
                     Title = title,
@@ -58,7 +61,7 @@ namespace UdemyMicroservices.Shared
         {
             return new ServiceResult<T>
             {
-                Status = HttpStatusCode.BadRequest.GetHashCode(),
+                Status = HttpStatusCode.BadRequest,
                 Fail = new ProblemDetails
                 {
                     Title = "Validation errors occurred",
@@ -71,21 +74,21 @@ namespace UdemyMicroservices.Shared
 
     public class ServiceResult
     {
-        [JsonIgnore] public int? Status { get; set; }
+        [JsonIgnore] public HttpStatusCode Status { get; set; }
 
         public ProblemDetails? Fail { get; set; }
 
         // Static factory method
         public static ServiceResult SuccessAsNoContent() => new ServiceResult
         {
-            Status = HttpStatusCode.NoContent.GetHashCode()
+            Status = HttpStatusCode.NoContent
         };
 
 
         public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode) =>
             new ServiceResult
             {
-                Status = statusCode.GetHashCode(),
+                Status = statusCode,
                 Fail = problemDetails
             };
 
@@ -93,7 +96,7 @@ namespace UdemyMicroservices.Shared
         public static ServiceResult Error(string title, string detail, HttpStatusCode statusCode) =>
             new ServiceResult
             {
-                Status = statusCode.GetHashCode(),
+                Status = statusCode,
                 Fail = new ProblemDetails
                 {
                     Title = title,
@@ -107,7 +110,7 @@ namespace UdemyMicroservices.Shared
         {
             return new ServiceResult
             {
-                Status = HttpStatusCode.BadRequest.GetHashCode(),
+                Status = HttpStatusCode.BadRequest,
                 Fail = new ProblemDetails
                 {
                     Title = "Validation errors occurred",

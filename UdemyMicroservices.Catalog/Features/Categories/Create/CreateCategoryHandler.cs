@@ -1,19 +1,23 @@
 ﻿using AutoMapper;
 using MediatR;
 using System.Net;
+using MassTransit;
+using Microsoft.EntityFrameworkCore;
+using MongoDB.Driver;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Categories.Create
 {
-    public class CreateCategoryHandler(IGenericRepository<Category> categoryRepository, IMapper mapper)
+    public class CreateCategoryHandler(AppDbContext context, IMapper mapper)
         : IRequestHandler<CreateCategoryCommand, ServiceResult<CreateCategoryResponse>>
     {
         public async Task<ServiceResult<CreateCategoryResponse>> Handle(CreateCategoryCommand request,
             CancellationToken cancellationToken)
         {
             // exit category check
-            var existingCategory = await categoryRepository.Any(x => x.Name == request.Name);
+            var existingCategory =
+                await context.Categories.AnyAsync(x => x.Name == request.Name, cancellationToken: cancellationToken);
 
             if (existingCategory)
             {
@@ -24,9 +28,12 @@ namespace UdemyMicroservices.Catalog.Features.Categories.Create
 
             var category = mapper.Map<Category>(request);
 
-            await categoryRepository.Insert(category);
+            category.Id = NewId.NextGuid();
+            await context.AddAsync(category, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
 
-            return ServiceResult<CreateCategoryResponse>.SuccessAsCreated(new(category.Id), "");
+
+            return ServiceResult<CreateCategoryResponse>.SuccessAsCreated(new(category.Id.ToString()), "");
         }
     }
 }

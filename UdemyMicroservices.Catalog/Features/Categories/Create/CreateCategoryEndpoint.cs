@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Categories.Create
 {
@@ -6,11 +7,9 @@ namespace UdemyMicroservices.Catalog.Features.Categories.Create
     {
         public static void MapCreateCategoryEndpoint(this WebApplication app)
         {
-            app.MapPost("/categories", async (CreateCategoryCommand request, IMediator mediator) =>
-                {
-                    var response = await mediator.Send(request);
-                    return Results.Created(response.UrlAsCreated, response);
-                })
+            app.MapPost("/categories",
+                    async (CreateCategoryCommand request, IMediator mediator) =>
+                        (await mediator.Send(request)).ToActionResult())
                 .WithName("CreateCategory") // Endpoint'e isim verir
                 .Produces<
                     CreateCategoryResponse>(StatusCodes

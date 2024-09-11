@@ -12,7 +12,7 @@
   <ItemGroup>
     <None Include=".env" />
     <None Include="docker-compose.yml" />
-    <None Include="docker-compose.development.yml" />
+    <None Include="docker-compose.onlydb.yml" />
     <None Include="docker-compose.production.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>

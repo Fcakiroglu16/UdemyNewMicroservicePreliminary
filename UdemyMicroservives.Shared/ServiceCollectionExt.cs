@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace UdemyMicroservices.Shared;
 
-public static class ServiceCollectionExtensions
+public static class ServiceCollectionExt
 {
     public static IServiceCollection AddCommonServicesExt(this IServiceCollection services, Type assembly)
     {

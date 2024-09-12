@@ -1,7 +1,6 @@
-﻿namespace UdemyMicroservices.Shared.Services
+﻿namespace UdemyMicroservices.Shared.Services;
+
+public interface IIdentityService
 {
-    public interface IIdentityService
-    {
-        public string GetUserId { get; }
-    }
+    public string GetUserId { get; }
 }

@@ -1,7 +1,6 @@
-﻿namespace UdemyMicroservices.Basket.Features.Basket
+﻿namespace UdemyMicroservices.Basket.Features.Basket;
+
+public class BasketConst
 {
-    public class BasketConst
-    {
-        public const string BasketCacheKey = "baskets:{0}";
-    }
+    public const string BasketCacheKey = "baskets:{0}";
 }

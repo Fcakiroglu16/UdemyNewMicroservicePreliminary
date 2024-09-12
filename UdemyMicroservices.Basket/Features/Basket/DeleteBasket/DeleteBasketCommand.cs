@@ -1,8 +1,5 @@
-﻿using MassTransit;
-using MediatR;
-using UdemyMicroservices.Shared;
+﻿using UdemyMicroservices.Shared;
 
-namespace UdemyMicroservices.Basket.Features.Basket.DeleteBasket
-{
-    public record DeleteBasketCommand(string UserId) : IRequestByServiceResult;
-}
+namespace UdemyMicroservices.Basket.Features.Basket.DeleteBasket;
+
+public record DeleteBasketCommand(string UserId) : IRequestByServiceResult;

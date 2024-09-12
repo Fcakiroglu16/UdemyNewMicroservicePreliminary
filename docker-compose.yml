@@ -1,6 +1,6 @@
 services:
 
-  mongo:
+  mongo.db.catalog:
     image: mongo:8.0-rc
     restart: always
     environment:
@@ -9,8 +9,8 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db
-  mongo-express:
+      - mongo-catalog-data:/data/db
+  mongo.db.catalog.ui:
     image: mongo-express:1.0.2-20-alpine3.19
     restart: always
     ports:
@@ -18,7 +18,63 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${username}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${password}
-      ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.catalog:27017/
       ME_CONFIG_BASICAUTH: false
+  redis.db.basket:
+    image: redis:7.0-alpine
+    restart: always
+    command: ["redis-server", "--requirepass", "Password12"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-basket-data:/data
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    ports:
+      - "8082:8081"
+    environment:
+      REDIS_HOSTS: redis.db.basket
+      REDIS_HOST: redis.db.basket
+      REDIS_PORT: redis.db.basket:6379
+      REDIS_PASSWORD: Password12
+      HTTP_USER: root
+      HTTP_PASSWORD: root
+  mongo.db.discount:
+    image: mongo:8.0-rc
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${username}
+      MONGO_INITDB_ROOT_PASSWORD: ${password}
+    ports:
+      - "27020:27017"
+    volumes:
+      - mongo-discount-data:/data/db
+  mongo.db.discount.ui:
+    image: mongo-express:1.0.2-20-alpine3.19
+    restart: always
+    ports:
+      - 8083:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${username}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${password}
+      ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.discount:27017/
+      ME_CONFIG_BASICAUTH: false  
+  sqlserver.db.order:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    environment:
+      SA_PASSWORD: ${password}
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+
+
 volumes:
-  mongo-data:
+  mongo-discount-data:
+  mongo-catalog-data:
+  redis-basket-data: 
+  sqlserver-data:

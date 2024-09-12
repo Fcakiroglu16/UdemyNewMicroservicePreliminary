@@ -7,6 +7,8 @@ namespace UdemyMicroservices.Shared;
 
 public interface IRequestByServiceResult<T> : IRequest<ServiceResult<T>>;
 
+public interface IRequestByServiceResult : IRequest<ServiceResult>;
+
 public class ServiceResult<T>
 {
     public T? Data { get; set; }

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BasketDto.cs" />
+    <Compile Remove="BasketItemDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Dto\BasketDto.cs" />
+    <None Include="Dto\BasketItemDto.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.8" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UdemyMicroservices.Bus\UdemyMicroservices.Bus.csproj" />
+    <ProjectReference Include="..\UdemyMicroservives.Shared\UdemyMicroservices.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -14,7 +14,7 @@ public record CreateCourseCommand(
     string Picture,
     string UserId,
     Guid CategoryId,
-    int Duration) : IRequest<ServiceResult<CourseDto>>;
+    int Duration) : IRequestByServiceResult<CourseDto>;
 
 public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
     : IRequestHandler<CreateCourseCommand, ServiceResult<CourseDto>>

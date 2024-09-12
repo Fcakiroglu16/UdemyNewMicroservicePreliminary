@@ -6,7 +6,7 @@ using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.Delete;
 
-public record DeleteCourseCommand(Guid Id) : IRequest<ServiceResult>;
+public record DeleteCourseCommand(Guid Id) : IRequestByServiceResult;
 
 public class DeleteCourseCommandHandler(AppDbContext context) : IRequestHandler<DeleteCourseCommand, ServiceResult>
 {

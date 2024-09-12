@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\UdemyMicroservices.Bus\UdemyMicroservices.Bus.csproj" />
+    <ProjectReference Include="..\UdemyMicroservices.Bus\UdemyMicroservices.Bus.csproj" />
     <ProjectReference Include="..\UdemyMicroservives.Shared\UdemyMicroservices.Shared.csproj" />
   </ItemGroup>
 

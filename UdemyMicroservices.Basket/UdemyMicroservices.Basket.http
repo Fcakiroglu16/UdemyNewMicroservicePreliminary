@@ -1,0 +1,32 @@
+@UdemyMicroservices.Basket_HostAddress = http://localhost:5208
+
+### GetAllBasketByUserId Endpoint
+GET {{UdemyMicroservices.Basket_HostAddress}}/api/v1/baskets/
+Accept: application/json
+
+###
+
+### SaveOrUpdateBasket Endpoint
+POST {{UdemyMicroservices.Basket_HostAddress}}/api/v1/baskets/
+Content-Type: application/json
+
+{
+  "userId": "user123",
+  "discountCode": "DISCOUNT10",
+  "discountRate": 10,
+  "basketItems": [
+    {
+      "courseId": "course123",
+      "courseName": "Course Name",
+      "price": 100.0
+    }
+  ]
+}
+
+###
+
+### DeleteBasket Endpoint
+DELETE {{UdemyMicroservices.Basket_HostAddress}}/api/v1/baskets/user123
+Accept: application/json
+
+###

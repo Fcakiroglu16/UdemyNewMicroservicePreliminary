@@ -1,0 +1,29 @@
+@UdemyMicroservices.Order.API_HostAddress = http://localhost:5225
+@userId=1;
+### Create Order
+POST {{UdemyMicroservices.Order.API_HostAddress}}/api/v1/orders
+Content-Type: application/json
+Accept: application/json
+{
+  "buyerId": "1",
+  "discountRate": 10,
+  "address": {
+    "line": "a",
+    "province": "b",
+    "district": "c",
+    "zipCode": "d"
+  },
+  "orderItems": [
+    {
+      "productId": "x",
+      "productName": "y",
+      "unitPrice": 10
+    }
+  ]
+}
+###
+
+### Get All Orders by User ID
+GET {{UdemyMicroservices.Order.API_HostAddress}}/api/v1/orders/userId
+Accept: application/json
+###

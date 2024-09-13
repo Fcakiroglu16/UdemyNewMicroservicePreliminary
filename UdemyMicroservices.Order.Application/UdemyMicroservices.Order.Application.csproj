@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UdemyMicroservices.Bus\UdemyMicroservices.Bus.csproj" />
+    <ProjectReference Include="..\UdemyMicroservices.Order.Domain\UdemyMicroservices.Order.Domain.csproj" />
+    <ProjectReference Include="..\UdemyMicroservives.Shared\UdemyMicroservices.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

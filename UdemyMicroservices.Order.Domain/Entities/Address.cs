@@ -2,6 +2,16 @@
 
 public class Address : BaseEntity<int>
 {
+    private Address()
+    {
+    }
+
+
+    public Address(string line, string province, string district, string? zipCode = null)
+    {
+        SetAddress(line, province, district, zipCode);
+    }
+
     public string Line { get; private set; } = default!;
     public string Province { get; private set; } = default!;
 
@@ -12,16 +22,6 @@ public class Address : BaseEntity<int>
 
     public Order Order { get; set; } = default!;
     public Guid OrderId { get; set; }
-
-    private Address()
-    {
-    }
-
-
-    public Address(string line, string province, string district, string? zipCode = null)
-    {
-        SetAddress(line, province, district, zipCode);
-    }
 
     // Business method to set or update the address
     public void SetAddress(string line, string province, string district, string? zipCode = null)

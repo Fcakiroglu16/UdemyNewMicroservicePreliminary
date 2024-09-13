@@ -1,5 +1,4 @@
-﻿using UdemyMicroservices.Order.Application.Features.Orders.Dto;
-using UdemyMicroservices.Shared;
+﻿using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Order.Application.Features.Orders.GetAllOrderByUserId;
 

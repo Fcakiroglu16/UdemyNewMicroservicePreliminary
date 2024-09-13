@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using UdemyMicroservices.Order.Application.Contracts.Persistence;
-using UdemyMicroservices.Order.Application.Features.Orders.Dto;
 using UdemyMicroservices.Shared;
 using UdemyMicroservices.Shared.Services;
 

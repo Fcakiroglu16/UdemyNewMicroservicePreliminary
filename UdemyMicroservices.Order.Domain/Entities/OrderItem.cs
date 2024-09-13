@@ -2,6 +2,14 @@
 
 public class OrderItem : BaseEntity<int>
 {
+    private OrderItem()
+    {
+    }
+
+    public OrderItem(string productId, string productName, decimal productPrice, float? discountRate)
+    {
+        SetItem(productId, productName, productPrice, discountRate);
+    }
     //// Constructor to initialize an OrderItem
     //public OrderItem(string productId, string productName, decimal productPrice)
     //{
@@ -17,15 +25,6 @@ public class OrderItem : BaseEntity<int>
 
     public Guid OrderId { get; set; }
     public Order Order { get; set; } = default!;
-
-    private OrderItem()
-    {
-    }
-
-    public OrderItem(string productId, string productName, decimal productPrice, float? discountRate)
-    {
-        SetItem(productId, productName, productPrice, discountRate);
-    }
 
     public void SetItem(string productId, string productName, decimal productPrice, float? discountRate)
     {

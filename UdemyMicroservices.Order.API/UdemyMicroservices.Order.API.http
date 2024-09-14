@@ -11,7 +11,7 @@ Accept: application/json
     "line": "a",
     "province": "b",
     "district": "c",
-    "zipCode": "d"
+    "zipCode": "12365"
   },
   "orderItems": [
     {

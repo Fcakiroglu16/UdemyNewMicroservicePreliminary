@@ -1,0 +1,18 @@
+﻿@UdemyMicroservices.Payment_HostAddress = http://localhost:5210
+
+POST {{UdemyMicroservices.Payment_HostAddress}}/api/v1/payments/receive
+Content-Type: application/json
+Accept: application/json
+
+{
+  "orderCode": "1",
+  "cardNumber": "4242 4242 4242 4242",
+  "cardHolderName": "ahmet yıldız",
+  "expiryDate": "10/24",
+  "cvv": "123",
+  "amount": 1000
+}
+###
+GET {{UdemyMicroservices.Payment_HostAddress}}/api/v1/payments
+Content-Type: application/json
+###

@@ -15,7 +15,8 @@ public static class ServiceCollectionExt
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining(assembly);
         services.AddMediatR(x => x.RegisterServicesFromAssemblyContaining(assembly));
-
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
         return services;
     }
 }

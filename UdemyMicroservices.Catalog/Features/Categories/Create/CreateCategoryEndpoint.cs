@@ -13,10 +13,14 @@ public static class CreateCategoryEndpoint
             .WithName("CreateCategory") // Endpoint'e isim verir
             .Produces<
                 CreateCategoryResponse>(StatusCodes
-                .Status201Created).MapToApiVersion(1.0) // Üretilen yanıt türünü ve durum kodunu belirtir
-            //.ProducesValidationProblem() // Doğrulama hatalarını belirtir
-            //.RequireAuthorization() // Yetkilendirme gerektirir
-            ; // Endpoint'i belirli bir etiketle gruplar
+                .Status201Created).MapToApiVersion(1.0)
+            .AddEndpointFilter<ValidationFilter<CreateCategoryCommand>>();
+
+
+        // Üretilen yanıt türünü ve durum kodunu belirtir
+        //.ProducesValidationProblem() // Doğrulama hatalarını belirtir
+        //.RequireAuthorization() // Yetkilendirme gerektirir
+        // Endpoint'i belirli bir etiketle gruplar
 
 
         return group;

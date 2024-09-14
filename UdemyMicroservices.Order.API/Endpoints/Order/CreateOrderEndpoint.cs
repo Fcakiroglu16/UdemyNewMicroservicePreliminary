@@ -19,7 +19,8 @@ public static class CreateOrderEndpoint
             .WithName("CreateOrder")
             .Produces(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
-            .MapToApiVersion(1.0);
+            .MapToApiVersion(1.0)
+            .AddEndpointFilter<ValidationFilter<CreateOrderCommand>>();
 
         return group;
     }

@@ -15,7 +15,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 var app = builder.Build();
-
+app.UseExceptionHandler();
 
 app.AddSwaggerMiddlewareExt();
 var apiVersionSet = app.AddVersionSetExt();

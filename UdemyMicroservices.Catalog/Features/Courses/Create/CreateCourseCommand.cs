@@ -64,7 +64,8 @@ public static class CreateCourseCommandEndpoint
                     (await mediator.Send(command)).ToActionResult())
             .WithName("CreateCourse")
             .Produces<CourseDto>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status404NotFound);
+            .Produces(StatusCodes.Status404NotFound)
+            .AddEndpointFilter<ValidationFilter<CreateCourseCommand>>();
 
 
         return group;

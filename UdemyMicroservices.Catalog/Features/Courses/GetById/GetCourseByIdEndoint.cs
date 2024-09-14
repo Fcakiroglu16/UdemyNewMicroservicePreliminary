@@ -34,10 +34,10 @@ public static class GetCourseByIdQueryEndpoint
 {
     public static RouteGroupBuilder MapCourseByIdQueryEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("/{id}", async (IMediator mediator, Guid id) =>
+        group.MapGet("/{id:guid}", async (IMediator mediator, Guid id) =>
             {
                 var response = await mediator.Send(new GetCourseByIdQuery(id));
-                return response.IsSuccess ? Results.Ok(response) : Results.NotFound(response);
+                return response.ToActionResult();
             })
             .WithName("GetCourseById")
             .Produces<CourseDto>()

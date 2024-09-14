@@ -12,8 +12,8 @@ public static class ResultExt
             HttpStatusCode.OK => Results.Ok(result),
             HttpStatusCode.Created => Results.Created(result.UrlAsCreated, result),
             HttpStatusCode.NoContent => Results.NoContent(),
-            HttpStatusCode.NotFound => Results.NotFound(result.Fail),
-            HttpStatusCode.BadRequest => Results.BadRequest(result.Fail),
+            HttpStatusCode.NotFound => Results.Problem(result.Fail!),
+            HttpStatusCode.BadRequest => Results.Problem(result.Fail!),
             _ => throw new ArgumentOutOfRangeException(nameof(result.Status))
         };
     }
@@ -23,8 +23,8 @@ public static class ResultExt
         return result.Status switch
         {
             HttpStatusCode.NoContent => Results.NoContent(),
-            HttpStatusCode.NotFound => Results.NotFound(result.Fail),
-            HttpStatusCode.BadRequest => Results.BadRequest(result.Fail),
+            HttpStatusCode.NotFound => Results.Problem(result.Fail!),
+            HttpStatusCode.BadRequest => Results.Problem(result.Fail!),
             _ => throw new ArgumentOutOfRangeException(nameof(result.Status))
         };
     }

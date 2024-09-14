@@ -1,0 +1,19 @@
+@UdemyMicroservices.Discount_HostAddress = http://localhost:5206
+
+### GetDiscountByCode Endpoint
+GET {{UdemyMicroservices.Discount_HostAddress}}/api/v1/discounts/DISCOUNT10
+Accept: application/json
+
+###
+
+### CreateDiscount Endpoint
+POST {{UdemyMicroservices.Discount_HostAddress}}/api/v1/discounts/
+Content-Type: application/json
+{
+  "code": "DISCOUNT10",
+  "rate": 10,
+  "userId":"1",
+  "expired":"2025-09-12T13:39:18.188Z"
+}
+
+###

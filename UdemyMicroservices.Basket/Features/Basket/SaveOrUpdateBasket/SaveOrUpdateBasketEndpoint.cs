@@ -9,15 +9,15 @@ public static class SaveOrUpdateBasketEndpoint
     public static RouteGroupBuilder MapSaveOrUpdateBasketEndpoint(this RouteGroupBuilder group)
     {
         group.MapPost("/",
-                async (IMediator mediator, BasketDto basket) =>
+                async (IMediator mediator, SaveOrUpdateBasketCommand saveOrUpdateBasketCommand) =>
                 {
-                    var command = new SaveOrUpdateBasketCommand(basket);
-                    var result = await mediator.Send(command);
+                    var result = await mediator.Send(saveOrUpdateBasketCommand);
                     return result.ToActionResult();
                 })
             .WithName("SaveOrUpdateBasket")
             .Produces(StatusCodes.Status204NoContent)
-            .MapToApiVersion(1.0);
+            .MapToApiVersion(1.0)
+            .AddEndpointFilter<ValidationFilter<SaveOrUpdateBasketCommand>>();
 
         return group;
     }

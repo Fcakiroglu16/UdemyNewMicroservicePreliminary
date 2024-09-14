@@ -11,7 +11,8 @@ internal class OrderEntityConfiguration : IEntityTypeConfiguration<Domain.Entiti
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedNever();
         builder.Property(x => x.OrderDate).IsRequired();
-        builder.Property(x => x.BuyerId).IsRequired().HasMaxLength(300);
+        builder.Property(x => x.BuyerId).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.OrderCode).HasMaxLength(10);
         builder.Property(x => x.TotalPrice).IsRequired().HasColumnType("decimal(18,2)");
         builder.HasMany(x => x.OrderItems).WithOne(y => y.Order).HasForeignKey(x => x.OrderId);
         builder.HasOne(x => x.Address).WithOne(y => y.Order).HasForeignKey<Address>(x => x.OrderId);

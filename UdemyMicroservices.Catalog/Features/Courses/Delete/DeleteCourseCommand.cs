@@ -29,7 +29,7 @@ public static class DeleteCourseCommandEndpoint
 {
     public static RouteGroupBuilder MapDeleteCourseCommandEndpoint(this RouteGroupBuilder group)
     {
-        group.MapDelete("/{id}",
+        group.MapDelete("/{id:guid}",
                 async (IMediator mediator, Guid id) =>
                 {
                     var response = await mediator.Send(new DeleteCourseCommand(id));

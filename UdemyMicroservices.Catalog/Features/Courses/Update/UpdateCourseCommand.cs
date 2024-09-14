@@ -71,8 +71,8 @@ public static class UpdateCourseCommandEndpoint
             .WithName("UpdateCourse")
             .Produces(StatusCodes.Status204NoContent)
             .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status400BadRequest);
-
+            .Produces(StatusCodes.Status400BadRequest)
+            .AddEndpointFilter<ValidationFilter<UpdateCourseCommand>>();
         return group;
     }
 }

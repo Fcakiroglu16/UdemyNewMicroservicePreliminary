@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using System.Text;
+using MassTransit;
 
 namespace UdemyMicroservices.Order.Domain.Entities;
 
@@ -11,6 +12,21 @@ public class Order : BaseEntity<Guid>
     public Order(string buyerId, float? discountRate, Address address)
     {
         SetOrder(buyerId, discountRate, address);
+    }
+
+    public string OrderCode { get; private set; }
+
+    public static string GenerateOrderCode()
+    {
+        Random random = new Random();
+        StringBuilder orderCode = new StringBuilder(10); // Başlangıç kapasitesi 10 olarak ayarlanır.
+
+        for (int i = 0; i < 10; i++)
+        {
+            orderCode.Append(random.Next(0, 10)); // Sayıları doğrudan ekler.
+        }
+
+        return orderCode.ToString(); // Sonuç olarak string döndürülür.
     }
 
     public DateTime OrderDate { get; private set; }
@@ -35,6 +51,7 @@ public class Order : BaseEntity<Guid>
         OrderDate = DateTime.Now;
         DiscountRate = discountRate;
         Address = address;
+        OrderCode = GenerateOrderCode();
         TotalPrice = 0; // Initial total price is zero
     }
 

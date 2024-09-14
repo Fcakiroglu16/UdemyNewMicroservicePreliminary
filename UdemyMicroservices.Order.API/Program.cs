@@ -10,7 +10,7 @@ builder.Services.AddCommonServicesExt(typeof(OrderApplicationAssembly));
 builder.Services.AddVersioningExt();
 builder.Services.AddPersistenceExt(builder.Configuration);
 var app = builder.Build();
-
+app.UseExceptionHandler();
 app.AddSwaggerMiddlewareExt();
 var apiVersionSet = app.AddVersionSetExt();
 app.AddOrderEndpointsExt(apiVersionSet);

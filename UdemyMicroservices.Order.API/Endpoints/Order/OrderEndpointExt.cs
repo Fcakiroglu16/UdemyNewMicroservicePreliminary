@@ -1,4 +1,5 @@
 ﻿using Asp.Versioning.Builder;
+using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Order.API.Endpoints.Order;
 

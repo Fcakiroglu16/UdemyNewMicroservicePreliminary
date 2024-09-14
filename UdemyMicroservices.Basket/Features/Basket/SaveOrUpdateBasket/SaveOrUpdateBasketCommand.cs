@@ -3,4 +3,5 @@ using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Basket.Features.Basket.SaveOrUpdateBasket;
 
-public record SaveOrUpdateBasketCommand(BasketDto Basket) : IRequestByServiceResult;
+public record SaveOrUpdateBasketCommand(string UserId, int? DiscountRate, List<BasketItemDto> BasketItems)
+    : IRequestByServiceResult;

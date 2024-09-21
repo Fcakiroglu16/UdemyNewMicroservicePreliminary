@@ -1,0 +1,41 @@
+﻿@UdemyMicroservices.Web_HostAddress = http://localhost:8080/realms/MyCompany
+
+
+
+
+### Token Request
+POST http://localhost:8080/realms/MyTenant/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=web&client_secret=dzqGej2xl4H7mDmBEgeyzKf5PDun9taq&grant_type=client_credentials
+###
+
+### Admin Token Request
+POST http://localhost:8080/realms/master/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=admin-cli&&username=admin&password=password&grant_type=password
+###
+
+
+POST http://localhost:8080/admin/realms/MyTenant/users
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJFdU05VkhLLXMwaFBqOW94ejVoYjBMWjU4QlJhQ21UWmdFaWhWZFFUdHBzIn0.eyJleHAiOjE3MjY5MzU2MzksImlhdCI6MTcyNjkzNTU3OSwianRpIjoiNGRlMTQ4YjktYmJmNy00MDEwLTlhZWEtZjZmZGU3YjFhYjY0IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJzdWIiOiIzZDg5OGE4MC1hNGM2LTRlNGYtYjE2MS1mN2I5NWFhMmI3YTMiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJzaWQiOiIxM2U4NmYzMC00NTMxLTQ1MzctYmI4Mi0wZTAwNDI4NjRkNjMiLCJhY3IiOiIxIiwic2NvcGUiOiJlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZG1pbiJ9.l7KVMA4BqoUoljyYd17FF18UjBSYaSSfukA0MHhjVEVcDh8JAWlnCAnZHlCvBgZ--w7MqrWoPpshynG6zIOnxSCnAxaW7lV6TC7MWLM9iZ3HZ3on8_PSEBeaXoUNzqLWFBWkb5MyDhP-DQ6hCKNIvnfOqjpjl8TBQItASvKFstcVbUjpryuYqhA3vPz5_xzs8qDnux9nakngLx3LMr94rOI9wOXl3pO8h9qs5tmBhmanGfz6CrXssfIZkbqvTrNw2ipF3hha6dk2_CVqaL6S7PfJpnlW647WOg52XiF75hsCvymuDFXBvnSrSWWXB-iKM-rn135BdEuI4RGZmHp9rw
+
+{
+  "username": "newuser",
+  "enabled": true,
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "emailVerified": true,
+  "credentials": [
+    {
+      "type": "password",
+      "value": "password123",
+      "temporary": false
+    }
+  ]
+}
+###

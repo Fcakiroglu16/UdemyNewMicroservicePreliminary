@@ -59,6 +59,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyMicroservices.Files", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyMicroservices.Yarp", "UdemyMicroservices.Yarp\UdemyMicroservices.Yarp.csproj", "{3C76FB37-739C-4EB6-8414-D7A94CA91381}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdemyMicroservices.Web", "UdemyMicroservices.Web\UdemyMicroservices.Web.csproj", "{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{3C76FB37-739C-4EB6-8414-D7A94CA91381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C76FB37-739C-4EB6-8414-D7A94CA91381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C76FB37-739C-4EB6-8414-D7A94CA91381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -147,6 +153,7 @@ Global
 		{3A2076AE-4E43-4BD1-B1BC-4AE9660B3458} = {31987E38-2887-47DB-BBF8-8FF723A388B1}
 		{757957F6-CC76-4F0D-AADD-45F027F11317} = {3A2076AE-4E43-4BD1-B1BC-4AE9660B3458}
 		{3C76FB37-739C-4EB6-8414-D7A94CA91381} = {90FC4C43-18BC-4321-A809-BC8188F23744}
+		{E893D688-8CE1-4F81-9A26-4E12D1D5FBF7} = {121F046B-7049-44B1-96AC-7FF9D6AE4353}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D1EE908-F148-4896-8E30-2D59064C2AD8}

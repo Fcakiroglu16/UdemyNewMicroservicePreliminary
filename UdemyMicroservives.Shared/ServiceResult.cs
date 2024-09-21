@@ -9,130 +9,102 @@ public interface IRequestByServiceResult<T> : IRequest<ServiceResult<T>>;
 
 public interface IRequestByServiceResult : IRequest<ServiceResult>;
 
-public class ServiceResult<T>
+public class ServiceResult
 {
-    public T? Data { get; set; }
-    [JsonIgnore] public HttpStatusCode Status { get; set; }
-    [JsonIgnore] public string? UrlAsCreated { get; set; }
-
+    [JsonIgnore] public HttpStatusCode Status { get; init; }
+    public ProblemDetails? Fail { get; init; }
 
     [JsonIgnore] public bool IsSuccess => Fail is null;
     [JsonIgnore] public bool IsFail => !IsSuccess;
 
-    public ProblemDetails? Fail { get; set; }
-
-    // Static factory method
-    public static ServiceResult<T> SuccessAsOk(T data)
+    // Static factory method for success with No Content
+    public static ServiceResult SuccessAsNoContent() => new()
     {
-        return new ServiceResult<T>
-        {
-            Data = data,
-            Status = HttpStatusCode.OK
-        };
-    }
+        Status = HttpStatusCode.NoContent
+    };
 
-    public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated)
+    // Static factory method for error with ProblemDetails
+    public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode) => new()
     {
-        return new ServiceResult<T>
-        {
-            Data = data,
-            Status = HttpStatusCode.Created,
-            UrlAsCreated = urlAsCreated
-        };
-    }
+        Status = statusCode,
+        Fail = problemDetails
+    };
 
-    public static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
+    // Static factory method for error with custom title and detail
+    public static ServiceResult Error(string title, string detail, HttpStatusCode statusCode) => new()
     {
-        return new ServiceResult<T>
+        Status = statusCode,
+        Fail = new ProblemDetails
         {
-            Status = statusCode,
-            Fail = problemDetails
-        };
-    }
+            Title = title,
+            Detail = detail,
+            Status = (int)statusCode
+        }
+    };
 
-
-    public static ServiceResult<T> Error(string title, string detail, HttpStatusCode statusCode)
+    // Static factory method for validation errors
+    public static ServiceResult ValidationError(IDictionary<string, object?> errors) => new()
     {
-        return new ServiceResult<T>
+        Status = HttpStatusCode.BadRequest,
+        Fail = new ProblemDetails
         {
-            Status = statusCode,
-            Fail = new ProblemDetails
-            {
-                Title = title,
-                Detail = detail,
-                Status = statusCode.GetHashCode()
-            }
-        };
-    }
-
-    //validation error
-    public static ServiceResult<T> ValidationError(IDictionary<string, object?> errors)
-    {
-        return new ServiceResult<T>
-        {
-            Status = HttpStatusCode.BadRequest,
-            Fail = new ProblemDetails
-            {
-                Title = "Validation errors occurred",
-                Detail = "See the errors property for details",
-                Extensions = errors
-            }
-        };
-    }
+            Title = "Validation errors occurred",
+            Detail = "See the errors property for details",
+            Extensions = errors
+        }
+    };
 }
 
-public class ServiceResult
+public class ServiceResult<T> : ServiceResult
 {
-    [JsonIgnore] public HttpStatusCode Status { get; set; }
+    public T? Data { get; init; }
+    public string? UrlAsCreated { get; init; }
 
-    public ProblemDetails? Fail { get; set; }
-
-    // Static factory method
-    public static ServiceResult SuccessAsNoContent()
+    // Static factory method for success as OK
+    public static ServiceResult<T> SuccessAsOk(T data) => new ServiceResult<T>
     {
-        return new ServiceResult
-        {
-            Status = HttpStatusCode.NoContent
-        };
-    }
+        Data = data,
+        Status = HttpStatusCode.OK
+    };
 
-
-    public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
+    // Static factory method for success as Created
+    public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated) => new ServiceResult<T>
     {
-        return new ServiceResult
+        Data = data,
+        Status = HttpStatusCode.Created,
+        UrlAsCreated = urlAsCreated
+    };
+
+    // Static factory method for error with ProblemDetails (inherits from base class)
+    public new static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode) =>
+        new ServiceResult<T>
         {
             Status = statusCode,
             Fail = problemDetails
         };
-    }
 
-
-    public static ServiceResult Error(string title, string detail, HttpStatusCode statusCode)
-    {
-        return new ServiceResult
+    // Static factory method for error with custom title and detail (inherits from base class)
+    public new static ServiceResult<T> Error(string title, string detail, HttpStatusCode statusCode) =>
+        new ServiceResult<T>
         {
             Status = statusCode,
             Fail = new ProblemDetails
             {
                 Title = title,
                 Detail = detail,
-                Status = statusCode.GetHashCode()
+                Status = (int)statusCode
             }
         };
-    }
 
-    //validation error
-    public static ServiceResult ValidationError(IDictionary<string, object?> errors)
+    // Static factory method for validation errors (inherits from base class)
+    public new static ServiceResult<T> ValidationError(IDictionary<string, object?> errors) => new ServiceResult<T>
     {
-        return new ServiceResult
+        Status = HttpStatusCode.BadRequest,
+        Fail = new ProblemDetails
         {
-            Status = HttpStatusCode.BadRequest,
-            Fail = new ProblemDetails
-            {
-                Title = "Validation errors occurred",
-                Detail = "See the errors property for details",
-                Extensions = errors
-            }
-        };
-    }
+            Title = "Validation errors occurred",
+            Detail = "See the errors property for details",
+            Extensions = errors
+        }
+    };
 }

@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using UdemyMicroservices.Payment.Features.Payments.GetAll;
 
-namespace UdemyMicroservices.Payment.Features.Payments
+namespace UdemyMicroservices.Payment.Features.Payments;
+
+public class PaymentProfile : Profile
 {
-    public class PaymentProfile : Profile
+    public PaymentProfile()
     {
-        public PaymentProfile()
-        {
-            CreateMap<Repositories.Payment, PaymentsDto>();
-        }
+        CreateMap<Repositories.Payment, PaymentsDto>();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using UdemyMicroservices.Basket.Dto;
 using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Basket.Features.Basket.SaveOrUpdateBasket;

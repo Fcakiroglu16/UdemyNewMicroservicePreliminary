@@ -1,6 +1,5 @@
-﻿namespace UdemyMicroservices.Payment.Dto
+﻿namespace UdemyMicroservices.Payment.Dto;
+
+public class PaymentRequest
 {
-    public class PaymentRequest
-    {
-    }
 }

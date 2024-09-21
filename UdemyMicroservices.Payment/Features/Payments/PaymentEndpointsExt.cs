@@ -1,7 +1,6 @@
 ﻿using Asp.Versioning.Builder;
 using UdemyMicroservices.Payment.Features.Payments.GetAll;
 using UdemyMicroservices.Payment.Features.Payments.Receive;
-using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Payment.Features.Payments;
 

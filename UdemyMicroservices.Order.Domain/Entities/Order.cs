@@ -16,19 +16,6 @@ public class Order : BaseEntity<Guid>
 
     public string OrderCode { get; private set; }
 
-    public static string GenerateOrderCode()
-    {
-        Random random = new Random();
-        StringBuilder orderCode = new StringBuilder(10); // Başlangıç kapasitesi 10 olarak ayarlanır.
-
-        for (int i = 0; i < 10; i++)
-        {
-            orderCode.Append(random.Next(0, 10)); // Sayıları doğrudan ekler.
-        }
-
-        return orderCode.ToString(); // Sonuç olarak string döndürülür.
-    }
-
     public DateTime OrderDate { get; private set; }
     public string BuyerId { get; private set; } = default!;
 
@@ -37,6 +24,16 @@ public class Order : BaseEntity<Guid>
     public float? DiscountRate { get; private set; }
     public ICollection<OrderItem> OrderItems { get; } = [];
     public Address Address { get; set; } = default!;
+
+    public static string GenerateOrderCode()
+    {
+        var random = new Random();
+        var orderCode = new StringBuilder(10); // Başlangıç kapasitesi 10 olarak ayarlanır.
+
+        for (var i = 0; i < 10; i++) orderCode.Append(random.Next(0, 10)); // Sayıları doğrudan ekler.
+
+        return orderCode.ToString(); // Sonuç olarak string döndürülür.
+    }
 
     public void SetOrder(string buyerId, float? discountRate, Address address)
     {

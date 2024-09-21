@@ -12,7 +12,6 @@ namespace UdemyMicroservices.Payment.Features.Payments.Receive
         public async Task<ServiceResult<ReceivePaymentResponse>> Handle(ReceivePaymentCommand request,
             CancellationToken cancellationToken)
         {
-            throw new DivideByZeroException();
             var newPayment = new Repositories.Payment(identityService.GetUserId, request.OrderCode, request.Amount);
 
             var processResult = await ExternalPaymentProcessAsync(request.CardNumber, request.CardHolderName,

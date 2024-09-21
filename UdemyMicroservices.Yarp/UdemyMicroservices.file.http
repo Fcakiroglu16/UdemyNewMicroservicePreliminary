@@ -1,9 +1,9 @@
-@UdemyMicroservices.Files_HostAddress = http://localhost:5282
+@UdemyMicroservices.yarp_HostAddress = http://localhost:5215
 
 
 ###
 
-POST {{UdemyMicroservices.Files_HostAddress}}/api/v1/files
+POST {{UdemyMicroservices.yarp_HostAddress}}/v1/file
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
 
 ------WebKitFormBoundary
@@ -13,7 +13,7 @@ Content-Type: text/plain
 Hello World
 ------WebKitFormBoundary--
 ###
-DELETE {{UdemyMicroservices.Files_HostAddress}}/api/v1/files
+DELETE {{UdemyMicroservices.yarp_HostAddress}}v1/file
 Content-Type: application/json
 {
   "fileName": "1420a437-2927-47fa-98f7-331a3b877cf0.txt"

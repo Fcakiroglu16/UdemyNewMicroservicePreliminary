@@ -1,0 +1,29 @@
+@UdemyMicroservices.Yarp_HostAddress = http://localhost:5215
+@userId=1;
+### Create Order
+POST {{UdemyMicroservices.Yarp_HostAddress}}/v1/order
+Content-Type: application/json
+Accept: application/json
+{
+  "buyerId": "1",
+  "discountRate": 10,
+  "address": {
+    "line": "a",
+    "province": "b",
+    "district": "c",
+    "zipCode": "12365"
+  },
+  "orderItems": [
+    {
+      "productId": "x",
+      "productName": "y",
+      "unitPrice": 10
+    }
+  ]
+}
+###
+
+### Get All Orders by User ID
+GET {{UdemyMicroservices.Yarp_HostAddress}}/v1/order/userId
+Accept: application/json
+###

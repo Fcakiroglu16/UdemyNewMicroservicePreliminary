@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.FileProviders;
 using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Files.Features.File.Delete
@@ -27,12 +28,11 @@ namespace UdemyMicroservices.Files.Features.File.Delete
     {
         public static RouteGroupBuilder MapDeleteFileEndpoint(this RouteGroupBuilder group)
         {
-            group.MapDelete("/{fileName:required}",
-                    async (IMediator mediator, string fileName) =>
-                    {
-                        var result = await mediator.Send(new DeleteFileCommand(fileName));
-                        return result.ToActionResult();
-                    })
+            group.MapDelete("/", async ([FromBody] DeleteFileCommand command, IMediator mediator) =>
+                {
+                    var result = await mediator.Send(command);
+                    return result.ToActionResult();
+                })
                 .WithName("DeleteFile")
                 .Produces(StatusCodes.Status204NoContent)
                 .Produces(StatusCodes.Status404NotFound)

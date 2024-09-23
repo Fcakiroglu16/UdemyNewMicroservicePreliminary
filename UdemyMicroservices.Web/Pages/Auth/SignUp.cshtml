@@ -14,17 +14,17 @@
                     <span asp-validation-for="SignUpViewModel.UserName"></span>
                 </div>
             </div>
-            
+
             <div class="mb-3">
                 <label asp-for="SignUpViewModel.FirstName" class="form-label"></label>
-                <input asp-for="SignUpViewModel.FirstName" class="form-control" />
+                <input asp-for="SignUpViewModel.FirstName" class="form-control"/>
                 <div class="text-danger">
                     <span asp-validation-for="SignUpViewModel.FirstName"></span>
                 </div>
             </div>
             <div class="mb-3">
                 <label asp-for="SignUpViewModel.LastName" class="form-label"></label>
-                <input asp-for="SignUpViewModel.LastName" class="form-control" />
+                <input asp-for="SignUpViewModel.LastName" class="form-control"/>
                 <div class="text-danger">
                     <span asp-validation-for="SignUpViewModel.LastName"></span>
                 </div>
@@ -60,7 +60,7 @@
 
 @section Scripts {
 
-     @{
+    @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }

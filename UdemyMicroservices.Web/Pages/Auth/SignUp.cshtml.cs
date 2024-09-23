@@ -14,10 +14,7 @@ public class SignUpModel(SignUpService signUpService) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid)
-        {
-            return Page();
-        }
+        if (!ModelState.IsValid) return Page();
 
 
         var result = await signUpService.SignUpAsync(SignUpViewModel);

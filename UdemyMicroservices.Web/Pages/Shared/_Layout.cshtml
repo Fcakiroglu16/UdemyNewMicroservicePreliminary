@@ -26,8 +26,8 @@
                         <a class="nav-link" asp-page="/privacy">Privacy</a>
                     </li>
                 </ul>
-                
-                @if(User.Identity!.IsAuthenticated)
+
+                @if (User.Identity!.IsAuthenticated)
                 {
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
@@ -35,34 +35,39 @@
                                 @User.Identity.Name
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" asp-page="/auth/profile">Profile</a></li>
-                                <li><a class="dropdown-item" asp-page="/auth/settings">Settings</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" asp-page="/auth/signin" asp-page-handler="signout">Logout</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/auth/profile">Profile</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/auth/settings">Settings</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-page="/auth/signin" asp-page-handler="signout">Logout</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
                 }
                 else
                 {
-                <ul class="navbar-nav ms-auto">
-                    
+                    <ul class="navbar-nav ms-auto">
 
-                    
 
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Auth/SignIn">SignIn</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/Auth/SignUp">SignUp</a>
-                    </li>
-                </ul>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Auth/SignIn">SignIn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-page="/Auth/SignUp">SignUp</a>
+                        </li>
+                    </ul>
                 }
-                
-                
+
 
                 <!-- Sağ tarafa SignIn ve SignUp linkleri -->
-            
+
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

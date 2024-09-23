@@ -1,18 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UdemyMicroservices.Web.Pages.Auth;
+namespace UdemyMicroservices.Web.Pages.Auth.Options;
 
 public class IdentityOption
 {
-    public IdentityOptionItemAsTenant Tenant { get; set; } = default!;
-    public IdentityOptionItemAsMaster MasterTenant { get; set; } = default!;
+    [Required] public IdentityOptionItemAsTenant Tenant { get; set; } = default!;
+    [Required] public IdentityOptionItemAsMaster MasterTenant { get; set; } = default!;
 }
 
 public class IdentityOptionItemAsMaster
 {
-    public string? UserName { get; set; } = default!;
+    [Required] public string UserName { get; set; } = default!;
 
-    public string? Password { get; set; } = default!;
+    [Required] public string Password { get; set; } = default!;
 
     [Required] public string Address { get; set; } = default!;
 
@@ -23,7 +23,7 @@ public class IdentityOptionItemAsMaster
 
 public class IdentityOptionItemAsTenant
 {
-    public string UserCreateEndpoint { get; set; } = default!;
+    [Required] public string UserCreateEndpoint { get; set; } = default!;
 
     [Required] public string Address { get; set; } = default!;
 

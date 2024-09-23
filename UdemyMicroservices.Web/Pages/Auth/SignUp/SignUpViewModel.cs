@@ -1,12 +1,14 @@
-﻿namespace UdemyMicroservices.Web.Pages.Auth.SignUp;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace UdemyMicroservices.Web.Pages.Auth.SignUp;
 
 public record SignUpViewModel(
-    string FirstName,
-    string LastName,
-    string UserName,
-    string Email,
-    string Password,
-    string PasswordConfirm)
+    [Display(Name = "First Name")] string FirstName,
+    [Display(Name = "Last Name")] string LastName,
+    [Display(Name = "Username")] string UserName,
+    [Display(Name = "Email Address")] string Email,
+    [Display(Name = "Password")] string Password,
+    [Display(Name = "Confirm Password")] string PasswordConfirm)
 {
     public static SignUpViewModel Empty => new(string.Empty, string.Empty, string.Empty, string.Empty, string.Empty,
         string.Empty);

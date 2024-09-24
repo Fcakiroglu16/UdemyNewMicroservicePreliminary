@@ -14,8 +14,7 @@ public record UpdateCourseCommand(
     decimal Price,
     string Picture,
     string UserId,
-    Guid CategoryId,
-    int Duration) : IRequest<ServiceResult>;
+    Guid CategoryId) : IRequest<ServiceResult>;
 
 public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper)
     : IRequestHandler<UpdateCourseCommand, ServiceResult>
@@ -46,9 +45,9 @@ public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper)
         course.CategoryId = request.CategoryId;
 
 
-        course.Feature ??= new Feature();
+        //course.Feature ??= new Feature();
 
-        course.Feature.Duration = request.Duration;
+        //course.Feature.Duration = request.Duration;
 
 
         await _context.SaveChangesAsync(cancellationToken);

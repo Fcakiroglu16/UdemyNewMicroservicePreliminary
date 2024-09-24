@@ -20,13 +20,8 @@ public class CreateCourseCommandValidator : AbstractValidator<CreateCourseComman
         RuleFor(x => x.Picture)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty");
 
-        RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("{PropertyName} cannot be empty");
 
         RuleFor(x => x.CategoryId)
             .NotEqual(Guid.Empty).WithMessage("{PropertyName} cannot be an empty GUID");
-
-        RuleFor(x => x.Duration)
-            .GreaterThan(0).WithMessage("{PropertyName} must be greater than zero");
     }
 }

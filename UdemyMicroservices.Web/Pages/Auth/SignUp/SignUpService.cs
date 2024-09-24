@@ -11,7 +11,7 @@ public class SignUpService(HttpClient client, IdentityOption identityOption, ILo
         var tokenResponseAsMaster = await TokenResponseAsMaster();
 
 
-        if (tokenResponseAsMaster.IsFail) return ServiceResult.Fail(tokenResponseAsMaster.Error!);
+        if (tokenResponseAsMaster.IsFail) return ServiceResult.Fail(tokenResponseAsMaster.ProblemDetails);
 
 
         client.SetBearerToken(tokenResponseAsMaster.Data!.AccessToken!);

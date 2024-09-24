@@ -10,83 +10,20 @@
     @await RenderSectionAsync("Css", false)
 </head>
 <body>
-<header>
 
 
-    <nav class="navbar navbar-expand-sm  navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            <!-- Sol tarafa Home ve Privacy linkleri -->
-            <a class="navbar-brand" asp-page="/index">Solode</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" asp-page="/index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-page="/privacy">Privacy</a>
-                    </li>
-                </ul>
+    <partial name="_Header"/> 
+ 
 
-                @if (User.Identity!.IsAuthenticated)
-                {
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @User.Identity.Name
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li>
-                                    <a class="dropdown-item" asp-page="/auth/profile">Profile</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-page="/auth/settings">Settings</a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" asp-page="/auth/signin" asp-page-handler="signout">Logout</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                }
-                else
-                {
-                    <ul class="navbar-nav ms-auto">
-
-
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Auth/SignIn">SignIn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Auth/SignUp">SignUp</a>
-                        </li>
-                    </ul>
-                }
-
-
-                <!-- Sağ tarafa SignIn ve SignUp linkleri -->
-
-            </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
-</header>
 <div class="container">
     <main role="main" class="pb-3">
+        
+        <partial name="_Error"/>
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2024 - UdemyMicroservices.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
-    </div>
-</footer>
-
+<partial name="_Footer"/>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>

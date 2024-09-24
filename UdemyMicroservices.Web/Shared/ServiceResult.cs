@@ -1,14 +1,16 @@
-﻿namespace UdemyMicroservices.Web.Shared;
+﻿using Microsoft.AspNetCore.Mvc;
+using UdemyMicroservices.Web.Extensions;
+
+namespace UdemyMicroservices.Web.Shared;
 
 public class ServiceResult
 {
-    public bool IsSuccess =>
-        string.IsNullOrEmpty(Error) && (ValidationErrors is null || ValidationErrors.Count == 0);
+    public bool IsSuccess => ProblemDetails is null;
 
     public bool IsFail => !IsSuccess;
 
-    public Dictionary<string, object>? ValidationErrors { get; init; }
-    public string? Error { get; init; }
+
+    public ProblemDetails? ProblemDetails { get; set; }
 
 
     // Static factory method for success
@@ -17,21 +19,20 @@ public class ServiceResult
         return new ServiceResult();
     }
 
-    // Static factory method for validation failure
-    public static ServiceResult FailAsValidation(Dictionary<string, object> errors)
+
+    public static ServiceResult Fail(string problemDetails)
     {
         return new ServiceResult
         {
-            ValidationErrors = errors
+            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
         };
     }
 
-    // Static factory method for general failure
-    public static ServiceResult Fail(string error)
+    public static ServiceResult Fail(ProblemDetails problemDetails)
     {
         return new ServiceResult
         {
-            Error = error
+            ProblemDetails = problemDetails
         };
     }
 }
@@ -46,21 +47,22 @@ public class ServiceResult<T> : ServiceResult
         return new ServiceResult<T> { Data = data };
     }
 
-    // Static factory method for validation failure
-    public new static ServiceResult<T> FailAsValidation(Dictionary<string, object> errors)
+    public new static ServiceResult<T> Fail(ProblemDetails problemDetails)
     {
         return new ServiceResult<T>
         {
-            ValidationErrors = errors
+            ProblemDetails = problemDetails
         };
     }
 
-    // Static factory method for general failure
-    public new static ServiceResult<T> Fail(string error)
+    public new static ServiceResult<T> Fail(string problemDetails)
     {
         return new ServiceResult<T>
         {
-            Error = error
+            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
         };
     }
+
+
+    // Static factory method for general failure
 }

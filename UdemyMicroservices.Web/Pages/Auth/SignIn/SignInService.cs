@@ -29,7 +29,7 @@ public class SignInService(
 
         var tokenResponse = await GetTokenAsync(responseAsDiscovery, model);
 
-        if (tokenResponse.IsFail) return ServiceResult.Fail(tokenResponse.Error!);
+        if (tokenResponse.IsFail) return ServiceResult.Fail(tokenResponse.ProblemDetails!);
 
         var accessToken = tokenResponse.Data!.AccessToken!;
 

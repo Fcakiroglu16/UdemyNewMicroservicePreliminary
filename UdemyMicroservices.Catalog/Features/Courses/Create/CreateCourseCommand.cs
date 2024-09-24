@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
+using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.Create;
 
@@ -12,11 +13,9 @@ public record CreateCourseCommand(
     string Description,
     decimal Price,
     string Picture,
-    string UserId,
-    Guid CategoryId,
-    int Duration) : IRequestByServiceResult<CourseDto>;
+    Guid CategoryId) : IRequestByServiceResult<CourseDto>;
 
-public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
+public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, IIdentityService identityService)
     : IRequestHandler<CreateCourseCommand, ServiceResult<CourseDto>>
 {
     public async Task<ServiceResult<CourseDto>> Handle(CreateCourseCommand request,
@@ -41,10 +40,10 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper)
             Description = request.Description,
             Price = request.Price,
             Picture = request.Picture,
-            UserId = request.UserId,
+            UserId = identityService.GetUserId,
             CategoryId = request.CategoryId,
             CreatedTime = DateTime.UtcNow,
-            Feature = new Feature { Duration = request.Duration }
+            Feature = new Feature { Duration = 0, Rating = 0 }
         };
 
         context.Courses.Add(course);

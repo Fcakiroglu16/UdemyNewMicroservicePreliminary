@@ -28,8 +28,5 @@ public class UpdateCourseCommandValidator : AbstractValidator<UpdateCourseComman
 
         RuleFor(x => x.CategoryId)
             .NotEqual(Guid.Empty).WithMessage("{PropertyName} cannot be an empty GUID");
-
-        RuleFor(x => x.Duration)
-            .GreaterThan(0).WithMessage("{PropertyName} must be greater than zero");
     }
 }

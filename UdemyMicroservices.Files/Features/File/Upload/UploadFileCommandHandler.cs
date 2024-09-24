@@ -10,8 +10,7 @@ public record UploadFileCommand(IFormFile File) : IRequestByServiceResult<Upload
 public record UploadFileCommandResponse(
     string FileName,
     string FilePath,
-    string OriginalFileName,
-    HttpStatusCode StatusCode);
+    string OriginalFileName);
 
 public class UploadFileCommandHandler(IFileProvider fileProvider)
     : IRequestHandler<UploadFileCommand, ServiceResult<UploadFileCommandResponse>>
@@ -36,8 +35,7 @@ public class UploadFileCommandHandler(IFileProvider fileProvider)
         return ServiceResult<UploadFileCommandResponse>.SuccessAsOk(new UploadFileCommandResponse(
             newFileName,
             $"uploads/{newFileName}",
-            request.File.FileName,
-            HttpStatusCode.OK));
+            request.File.FileName));
     }
 }
 

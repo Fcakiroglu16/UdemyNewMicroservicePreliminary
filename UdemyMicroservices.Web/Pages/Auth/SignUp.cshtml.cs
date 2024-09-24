@@ -22,7 +22,7 @@ public class SignUpModel(SignUpService signUpService) : PageModel
 
         if (result.IsFail)
         {
-            ModelState.AddModelError(string.Empty, result.Error!);
+            //ModelState.AddModelError(string.Empty, result.Error!);
             return Page();
         }
 

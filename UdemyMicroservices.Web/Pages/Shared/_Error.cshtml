@@ -1,0 +1,19 @@
+﻿@* @using UdemyMicroservices.Web.Shared
+@{
+
+    // var errorTitle = ViewBag.errorTitle as string;
+    var errorModel = ViewData["Error"] as PageErrorModel;
+}
+
+
+
+
+@if (errorModel is not null )
+{
+    <div class="alert alert-danger">
+
+        <p>@errorModel.Title</p>
+        <p>@errorModel.Description</p>
+    </div>
+}
+ *@

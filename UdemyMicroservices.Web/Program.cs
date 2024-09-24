@@ -1,11 +1,16 @@
-using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
+using Refit;
+using System.Reflection;
+using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Pages.Auth.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
+using UdemyMicroservices.Web.Pages.Instructor.CreateCourse;
+using UdemyMicroservices.Web.Services;
+using UdemyMicroservices.Web.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +29,16 @@ builder.Services
     .ValidateDataAnnotations()
     .ValidateOnStart();
 
+
+builder.Services
+    .AddOptions<FileServiceOption>()
+    .BindConfiguration(nameof(FileServiceOption))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<FileServiceOption>>().Value);
+
+
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityOption>>().Value);
 
 
@@ -38,6 +53,18 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.SlidingExpiration = true;
         opts.Cookie.Name = "webCookie";
     });
+
+
+builder.Services.AddRefitClient<ICatalogService>()
+    .ConfigureHttpClient(
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!));
+builder.Services.AddRefitClient<IFileService>()
+    .ConfigureHttpClient(
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!));
+
+
+builder.Services.AddScoped<CatalogService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -4,3 +4,26 @@
 
     Layout = "Shared/_Instructor_Layout";
 }
+
+
+<div class="row">
+    <!-- Course Count Card -->
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Course Count</h5>
+                <p class="card-text">Number of courses: @Model.CourseStatisticsViewModel.CourseCount</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Rating Card -->
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Course Rating</h5>
+                <p class="card-text">Average rating: @Model.CourseStatisticsViewModel.AverageRating</p>
+            </div>
+        </div>
+    </div>
+</div>

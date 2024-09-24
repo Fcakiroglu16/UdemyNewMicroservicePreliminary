@@ -14,7 +14,7 @@ public class Course : BaseEntity
 
     public string UserId { get; set; } = default!;
 
-    public string Picture { get; set; } = default!;
+    public string? Picture { get; set; }
 
 
     public DateTime CreatedTime { get; set; }

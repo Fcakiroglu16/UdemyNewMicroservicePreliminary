@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
-using UdemyMicroservices.Web.Shared;
+using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course
 {
@@ -22,6 +22,19 @@ namespace UdemyMicroservices.Web.Pages.Instructor.Course
             }
 
             CourseList = response.Data!;
+        }
+
+        public async Task<IActionResult> OnGetDeleteAsync(Guid id)
+        {
+            var response = await catalogService.DeleteCourseAsync(id);
+
+            if (response.IsFail)
+            {
+                ViewData["error"] = new PageErrorModel(response.ProblemDetails!.Title, response.ProblemDetails.Detail);
+                return Page();
+            }
+
+            return RedirectToPage("/Instructor/Course/GetAll");
         }
     }
 }

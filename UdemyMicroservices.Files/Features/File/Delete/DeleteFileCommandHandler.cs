@@ -11,7 +11,7 @@ public class DeleteFileCommandHandler(IFileProvider fileProvider)
 {
     public Task<ServiceResult> Handle(DeleteFileCommand request, CancellationToken cancellationToken)
     {
-        var fileInfo = fileProvider.GetFileInfo(Path.Combine("uploads", request.FileName));
+        var fileInfo = fileProvider.GetFileInfo(Path.Combine(request.FileName));
         if (!fileInfo.Exists)
             return Task.FromResult(ServiceResult.Error("File Not Found", "The specified file does not exist.",
                 HttpStatusCode.NotFound));

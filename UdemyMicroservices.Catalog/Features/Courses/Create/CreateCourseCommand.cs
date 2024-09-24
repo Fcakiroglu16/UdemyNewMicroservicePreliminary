@@ -12,7 +12,7 @@ public record CreateCourseCommand(
     string Name,
     string Description,
     decimal Price,
-    string Picture,
+    string? Picture,
     Guid CategoryId) : IRequestByServiceResult<CourseDto>;
 
 public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, IIdentityService identityService)

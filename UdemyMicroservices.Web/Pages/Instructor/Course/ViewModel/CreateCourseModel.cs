@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel
 {
-    public record CreateCourseModel
+    public record CreateCourseViewModel
     {
-        public static CreateCourseModel Empty => new();
+        public static CreateCourseViewModel Empty => new();
 
 
         [Display(Name = "Course Category")] public SelectList CategoryDropdownList { get; set; } = default!;
@@ -22,8 +22,6 @@ namespace UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel
 
         [Display(Name = "Course Price")] public decimal Price { get; init; }
 
-        public Guid CategoryId { get; init; }
+        public Guid? CategoryId { get; init; }
     }
-
-    public record CategoryModel(Guid Id, string Name);
 }

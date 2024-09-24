@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
 using UdemyMicroservices.Shared;
+using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.Update;
 
@@ -12,11 +13,10 @@ public record UpdateCourseCommand(
     string Name,
     string Description,
     decimal Price,
-    string Picture,
-    string UserId,
+    string? Picture,
     Guid CategoryId) : IRequest<ServiceResult>;
 
-public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper)
+public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper, IIdentityService identityService)
     : IRequestHandler<UpdateCourseCommand, ServiceResult>
 {
     private readonly AppDbContext _context = context;
@@ -41,7 +41,7 @@ public class UpdateCourseCommandHandler(AppDbContext context, IMapper mapper)
         course.Description = request.Description;
         course.Price = request.Price;
         course.Picture = request.Picture;
-        course.UserId = request.UserId;
+        course.UserId = identityService.GetUserId;
         course.CategoryId = request.CategoryId;
 
 

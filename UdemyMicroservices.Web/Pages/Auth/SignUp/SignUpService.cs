@@ -1,6 +1,6 @@
 ﻿using IdentityModel.Client;
 using UdemyMicroservices.Web.Pages.Auth.Options;
-using UdemyMicroservices.Web.Shared;
+using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Auth.SignUp;
 

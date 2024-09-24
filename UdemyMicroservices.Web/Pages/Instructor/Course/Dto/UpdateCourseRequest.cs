@@ -1,13 +1,10 @@
 ﻿namespace UdemyMicroservices.Web.Pages.Instructor.Course.Dto
 {
-    public record CourseResponse(
+    public record UpdateCourseRequest(
         Guid Id,
         string Name,
         string Description,
         decimal Price,
-        string UserId,
         string? Picture,
-        DateTime CreatedTime,
-        FeatureResponse Feature,
-        CategoryResponse Category);
+        Guid CategoryId);
 }

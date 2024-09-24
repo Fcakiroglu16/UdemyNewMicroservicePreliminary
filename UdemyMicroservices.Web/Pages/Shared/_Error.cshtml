@@ -1,4 +1,4 @@
-﻿@* @using UdemyMicroservices.Web.Shared
+﻿@using UdemyMicroservices.Web.ViewModels
 @{
 
     // var errorTitle = ViewBag.errorTitle as string;
@@ -8,12 +8,44 @@
 
 
 
+
 @if (errorModel is not null )
 {
-    <div class="alert alert-danger">
 
-        <p>@errorModel.Title</p>
-        <p>@errorModel.Description</p>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3 ">
+
+
+
+        <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <div>@errorModel.Title</div>
+                    @if (@errorModel.HasDescription)
+                    {
+
+                        <div>@errorModel.Description</div>
+                    }
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        
+
     </div>
+   
+    <script>
+
+    window.onload = function () {
+        var toastEl = document.getElementById('errorToast');
+        var toast = new bootstrap.Toast(toastEl, {
+            autohide: true, // Toast otomatik olarak kapanacak
+            delay: 3000     // 5 saniye sonra (5000 ms) kapanacak
+        });
+        toast.show();
+    };
+
+</script>
+
+    
 }
- *@

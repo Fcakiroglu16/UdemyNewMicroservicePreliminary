@@ -12,13 +12,11 @@ public class CreateCourseCommandValidator : AbstractValidator<CreateCourseComman
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty")
-            .MaximumLength(500).WithMessage("{PropertyName} must be a maximum of 500 characters");
+            .Length(5, 500).WithMessage("{PropertyName} must be between 5 and 100 characters");
+
 
         RuleFor(x => x.Price)
             .GreaterThan(0).WithMessage("{PropertyName} must be greater than zero");
-
-        RuleFor(x => x.Picture)
-            .NotEmpty().WithMessage("{PropertyName} cannot be empty");
 
 
         RuleFor(x => x.CategoryId)

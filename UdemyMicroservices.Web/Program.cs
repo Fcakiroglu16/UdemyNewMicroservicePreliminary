@@ -10,7 +10,6 @@ using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
 using UdemyMicroservices.Web.Pages.Instructor.CreateCourse;
 using UdemyMicroservices.Web.Services;
-using UdemyMicroservices.Web.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 

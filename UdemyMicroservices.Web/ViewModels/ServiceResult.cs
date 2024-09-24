@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Web.Extensions;
 
-namespace UdemyMicroservices.Web.Shared;
+namespace UdemyMicroservices.Web.ViewModels;
 
 public class ServiceResult
 {

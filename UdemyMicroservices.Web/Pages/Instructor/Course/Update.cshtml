@@ -1,13 +1,35 @@
-﻿@page
-@model CreateCourseModel
+﻿@page "{id}"
+@model UdemyMicroservices.Web.Pages.Instructor.Course.UpdateCourseModel
 @{
     Layout = "Shared/_Instructor_Layout";
 }
-
 <div class="row">
     <h2>Create Course</h2>
-    <div asp-validation-summary="ModelOnly" class="alert alert-warning text-bg-warning   border-warning"></div>
+
     <form method="post" enctype="multipart/form-data">
+        
+        <input type="hidden"  asp-for="ViewModel.Id"/>
+        <input type="hidden"  asp-for="ViewModel.PictureUrl"/>
+        <div class="row">
+            
+            <div class="col-md-6 d-flex justify-content-center">
+                <course-picture class="img-fluid img-thumbnail" src="@Model.ViewModel.PictureUrl"></course-picture>
+            </div>
+
+        
+            <div class="col-md-6 d-flex justify-content-center">
+                <div class="mb-3">
+                    <label asp-for="ViewModel.PictureFormFile" class="form-label"></label>
+                    <input asp-for="ViewModel.PictureFormFile" class="form-control" type="file">
+                    <span asp-validation-for="ViewModel.PictureFormFile" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        
+
+        <div>
+          
+        </div>
         <div class="mb-3">
             <label asp-for="ViewModel.CategoryDropdownList" class="form-label"></label>
             <select asp-for="ViewModel.CategoryId" class="form-select" asp-items="@Model.ViewModel.CategoryDropdownList">
@@ -25,13 +47,9 @@
             <textarea asp-for="ViewModel.Description" class="form-control"></textarea>
             <span asp-validation-for="ViewModel.Description" class="text-danger"></span>
         </div>
-    
 
-        <div class="mb-3">
-            <label asp-for="ViewModel.PictureFormFile" class="form-label"></label>
-            <input asp-for="ViewModel.PictureFormFile" class="form-control" type="file">
-            <span asp-validation-for="ViewModel.PictureFormFile" class="text-danger"></span>
-        </div>
+
+   
 
         <div class="mb-3">
             <label asp-for="ViewModel.Price" class="form-label"></label>
@@ -39,14 +57,6 @@
             <span asp-validation-for="ViewModel.Price" class="text-danger"></span>
         </div>
 
-        <button type="submit" class="btn btn-primary">Create Course</button>
+        <button type="submit" class="btn btn-primary">Update Course</button>
     </form>
 </div>
-
-
-@section Scripts {
-    @{
-
-        await Html.RenderPartialAsync("Shared/_ValidationScriptsPartial");
-    }
-}

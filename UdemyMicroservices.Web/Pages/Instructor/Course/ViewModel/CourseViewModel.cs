@@ -5,8 +5,8 @@
         string Name,
         string Description,
         decimal Price,
-        string PictureUrl,
-        string CategoryName,
+        string? PictureUrl,
+        CategoryViewModel Category,
         string Created,
         int Rating,
         int Duration);

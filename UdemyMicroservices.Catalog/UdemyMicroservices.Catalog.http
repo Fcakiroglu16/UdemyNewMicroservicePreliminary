@@ -52,7 +52,7 @@ POST {{UdemyMicroservices.Catalog_HostAddress}}/courses
 Content-Type: application/json
 
 {
-  "name": "New Course",
+  "name": "New",
   "description": "This is a new course",
   "price": 99.99,
   "picture": "http://example.com/picture.jpg",

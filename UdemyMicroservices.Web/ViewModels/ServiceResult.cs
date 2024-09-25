@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Web.Extensions;
 
 namespace UdemyMicroservices.Web.ViewModels;
@@ -24,7 +25,10 @@ public class ServiceResult
     {
         return new ServiceResult
         {
-            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
+            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(problemDetails, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            })
         };
     }
 
@@ -64,7 +68,10 @@ public class ServiceResult<T> : ServiceResult
     {
         return new ServiceResult<T>
         {
-            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
+            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(problemDetails, new JsonSerializerOptions()
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            })
         };
     }
 

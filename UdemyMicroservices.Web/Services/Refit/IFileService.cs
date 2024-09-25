@@ -2,7 +2,7 @@
 using UdemyMicroservices.Web.Pages.Instructor.Course.Dto;
 using UdemyMicroservices.Web.ViewModels;
 
-namespace UdemyMicroservices.Web.Services;
+namespace UdemyMicroservices.Web.Services.Refit;
 
 public interface IFileService
 {

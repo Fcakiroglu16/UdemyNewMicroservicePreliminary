@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
 using UdemyMicroservices.Web.Options;
 
-namespace UdemyMicroservices.Web;
+namespace UdemyMicroservices.Web.TagHelpers;
 
 public class CoursePictureTagHelper(FileServiceOption fileServiceOption) : TagHelper
 {

@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using Refit;
 using UdemyMicroservices.Web.Options;
-using UdemyMicroservices.Web.Pages.Auth.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
 using UdemyMicroservices.Web.Services;
+using UdemyMicroservices.Web.Services.Refit;
 
 var builder = WebApplication.CreateBuilder(args);
 

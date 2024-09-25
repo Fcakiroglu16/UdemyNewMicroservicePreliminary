@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UdemyMicroservices.Web.Pages.Auth.Options;
+namespace UdemyMicroservices.Web.Options;
 
 public class IdentityOption
 {

@@ -11,6 +11,6 @@ public static class CourseEndpointsExt
         app.MapGroup("api/v{version:apiVersion}/files")
             .MapUploadFileEndpoint()
             .MapDeleteFileEndpoint()
-            .WithTags("files").WithApiVersionSet(apiVersionSet);
+            .WithTags("files").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

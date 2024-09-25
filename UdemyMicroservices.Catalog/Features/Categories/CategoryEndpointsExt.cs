@@ -14,6 +14,6 @@ public static class CategoryEndpointsExt
             .MapCategoryByIdQueryEndpoint()
             .MapCategoryByIdQueryEndpointV2()
             .MapAllCategoryQueryEndpoint()
-            .WithTags("Categories").WithApiVersionSet(apiVersionSet);
+            .WithTags("Categories").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

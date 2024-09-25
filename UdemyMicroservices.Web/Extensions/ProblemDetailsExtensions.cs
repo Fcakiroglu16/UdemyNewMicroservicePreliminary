@@ -1,23 +1,29 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
+﻿using Refit;
+using System.Text.Json;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace UdemyMicroservices.Web.Extensions;
 
 public static class ProblemDetailsExtensions
 {
     // Extension method for logging ProblemDetails
-    public static void LogProblemDetails(this ILogger logger, string jsonContent)
+    public static void LogProblemDetails(this ILogger logger, ApiException apiException)
     {
-        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(jsonContent);
+        if (string.IsNullOrEmpty(apiException.Content))
+        {
+            logger.LogError(apiException.Message);
+            return;
+        }
 
-        if (problemDetails != null)
-            // Log important fields of ProblemDetails
-            logger.LogError(
-                "Problem Details: Title: {Title}, Detail: {Detail}, Status: {Status}",
-                problemDetails.Title,
-                problemDetails.Detail,
-                problemDetails.Status);
-        else
-            logger.LogError("Failed to deserialize ProblemDetails from content: {Content}", jsonContent);
+
+        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(apiException.Content!);
+
+        if (problemDetails is null) return;
+
+        logger.LogError(
+            "Problem Details: Title: {Title}, Detail: {Detail}, Status: {Status}",
+            problemDetails.Title,
+            problemDetails.Detail,
+            problemDetails.Status);
     }
 }

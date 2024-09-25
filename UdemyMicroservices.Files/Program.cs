@@ -4,7 +4,8 @@ using UdemyMicroservices.Files.Features.File;
 using UdemyMicroservices.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Services.AddAuthenticationExt(builder.Configuration);
+builder.Services.AddAuthorization();
 builder.Services.AddSwaggerServicesExt();
 builder.Services.AddCommonServicesExt(typeof(FileAssembly));
 builder.Services.AddVersioningExt();
@@ -18,6 +19,10 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 app.AddSwaggerMiddlewareExt();
+
+
+app.UseAuthentication();
+app.UseAuthorization();
 var apiVersionSet = app.AddVersionSetExt();
 app.AddFileEndpointsExt(apiVersionSet);
 

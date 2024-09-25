@@ -20,7 +20,7 @@ public class CatalogService(
 
         if (!coursesAsResult.IsSuccessStatusCode)
         {
-            logger.LogProblemDetails(coursesAsResult.Error.Content!);
+            logger.LogProblemDetails(coursesAsResult.Error);
 
             return ServiceResult<List<CourseViewModel>>.Fail(
                 "Failed to retrieve course data. Please try again later.");
@@ -41,7 +41,7 @@ public class CatalogService(
         var categoriesAsResult = await catalogService.GetCategoriesAsync();
         if (!categoriesAsResult.IsSuccessStatusCode)
         {
-            logger.LogProblemDetails(categoriesAsResult.Error.Content!);
+            logger.LogProblemDetails(categoriesAsResult.Error);
             return ServiceResult<List<CategoryViewModel>>.Fail(
                 "Failed to retrieve category data. Please try again later.");
         }
@@ -57,7 +57,7 @@ public class CatalogService(
         var response = await catalogService.GetCourse(courseId);
 
         if (!response.IsSuccessStatusCode)
-            return ServiceResult<CourseViewModel>.FailFromProblemDetails(response.Error.Content!);
+            return ServiceResult<CourseViewModel>.FailFromProblemDetails(response.Error);
 
 
         var course = response.Content!.Data!;
@@ -78,8 +78,7 @@ public class CatalogService(
 
 
         if (!getAllCoursesAsResult.IsSuccessStatusCode)
-            return ServiceResult<CourseStatisticsViewModel>.FailFromProblemDetails(getAllCoursesAsResult.Error!
-                .Content!);
+            return ServiceResult<CourseStatisticsViewModel>.FailFromProblemDetails(getAllCoursesAsResult.Error);
 
         CourseStatisticsViewModel courseStatistics = new();
 
@@ -131,10 +130,10 @@ public class CatalogService(
         if (!response.IsSuccessStatusCode)
 
         {
-            logger.LogProblemDetails(response.Error.Content!);
+            logger.LogProblemDetails(response.Error);
 
             if (response.StatusCode == HttpStatusCode.BadRequest)
-                return ServiceResult.FailFromProblemDetails(response.Error.Content!);
+                return ServiceResult.FailFromProblemDetails(response.Error);
 
             if (response.StatusCode == HttpStatusCode.InternalServerError)
                 return ServiceResult.Fail("course creation failed. Please try again later.");
@@ -176,7 +175,7 @@ public class CatalogService(
             logger.LogError(response.Error.Message, "Course could not be updated.");
 
             if (response.StatusCode == HttpStatusCode.BadRequest)
-                return ServiceResult.FailFromProblemDetails(response.Error.Content!);
+                return ServiceResult.FailFromProblemDetails(response.Error);
 
             if (response.StatusCode == HttpStatusCode.InternalServerError)
                 return ServiceResult.Fail("A system error occurred. Please try again later.");
@@ -191,13 +190,13 @@ public class CatalogService(
 
 
         if (!courseAsResult.IsSuccessStatusCode)
-            return ServiceResult.FailFromProblemDetails(courseAsResult.Error!.Content!);
+            return ServiceResult.FailFromProblemDetails(courseAsResult.Error);
 
 
         var courseToDeleteAsResult = await catalogService.DeleteCourseAsync(courseId);
 
         if (!courseToDeleteAsResult.IsSuccessStatusCode)
-            return ServiceResult.FailFromProblemDetails(courseToDeleteAsResult.Error.Content!);
+            return ServiceResult.FailFromProblemDetails(courseToDeleteAsResult.Error);
 
 
         if (string.IsNullOrEmpty(courseAsResult.Content!.Data!.Picture)) return ServiceResult.Success();

@@ -6,7 +6,8 @@ using UdemyMicroservices.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddAuthenticationExt(builder.Configuration);
+builder.Services.AddAuthorization();
 builder.Services.AddSwaggerServicesExt();
 builder.Services.AddDatabaseServicesExt();
 builder.Services.AddCommonServicesExt(typeof(CatalogAssembly));
@@ -19,6 +20,8 @@ app.UseExceptionHandler();
 // Configure the HTTP request pipeline.
 app.AddSwaggerMiddlewareExt();
 
+app.UseAuthentication();
+app.UseAuthorization();
 var apiVersionSet = app.AddVersionSetExt();
 app.AddCategoryEndpointsExt(apiVersionSet);
 app.AddCourseEndpointsExt(apiVersionSet);

@@ -1,6 +1,8 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
 using UdemyMicroservices.Web.Extensions;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace UdemyMicroservices.Web.ViewModels;
 
@@ -21,11 +23,23 @@ public class ServiceResult
     }
 
 
-    public static ServiceResult FailFromProblemDetails(string problemDetails)
+    public static ServiceResult FailFromProblemDetails(ApiException exception)
     {
+        if (string.IsNullOrEmpty(exception.Content))
+        {
+            return new ServiceResult
+            {
+                ProblemDetails = new ProblemDetails()
+                {
+                    Title = exception.Message
+                }
+            };
+        }
+
+
         return new ServiceResult
         {
-            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(problemDetails, new JsonSerializerOptions()
+            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             })
@@ -64,11 +78,23 @@ public class ServiceResult<T> : ServiceResult
     }
 
 
-    public new static ServiceResult<T> FailFromProblemDetails(string problemDetails)
+    public new static ServiceResult<T> FailFromProblemDetails(ApiException exception)
     {
+        if (string.IsNullOrEmpty(exception.Content))
+        {
+            return new ServiceResult<T>
+            {
+                ProblemDetails = new ProblemDetails()
+                {
+                    Title = exception.Message
+                }
+            };
+        }
+
+
         return new ServiceResult<T>
         {
-            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(problemDetails, new JsonSerializerOptions()
+            ProblemDetails = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions()
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             })

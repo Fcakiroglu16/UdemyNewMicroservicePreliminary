@@ -4,6 +4,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using Refit;
+using UdemyMicroservices.Web.DelegatingHandlers;
 using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
@@ -51,14 +52,16 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.SlidingExpiration = true;
         opts.Cookie.Name = "webCookie";
     });
-
+builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(
-        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!));
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 builder.Services.AddRefitClient<IFileService>()
     .ConfigureHttpClient(
-        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!));
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 
 
 builder.Services.AddScoped<CatalogService>();

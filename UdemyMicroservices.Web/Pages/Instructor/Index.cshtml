@@ -5,6 +5,11 @@
 }
 
 
+
+@if (Model.CourseStatisticsViewModel is null)
+{
+    return;
+}
 <div class="row">
     <!-- Course Count Card -->
     <div class="col-md-6">

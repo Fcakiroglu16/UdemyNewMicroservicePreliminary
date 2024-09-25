@@ -13,6 +13,6 @@ public static class BasketEndpointsExt
             .MapGetAllBasketByUserIdEndpoint()
             .MapSaveOrUpdateBasketEndpoint()
             .MapDeleteBasketEndpoint()
-            .WithTags("baskets").WithApiVersionSet(apiVersionSet);
+            .WithTags("baskets").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

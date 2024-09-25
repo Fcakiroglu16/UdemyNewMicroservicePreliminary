@@ -19,6 +19,6 @@ public static class CourseEndpointsExt
             .MapCreateCourseCommandEndpoint()
             .MapUpdateCourseCommandEndpoint()
             .MapDeleteCourseCommandEndpoint()
-            .WithTags("Courses").WithApiVersionSet(apiVersionSet);
+            .WithTags("Courses").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

@@ -1,18 +1,16 @@
 ﻿@page "{id:guid}"
-@model UdemyMicroservices.Web.Pages.Courses.DetailModel
+@model DetailModel
 @{
 }
 <div class="container mt-5">
-  
+
     <div class="row">
-        
-  
-      
+
+
         <div class="col-md-6">
             <div class="card shadow-lg border-0">
-             
-                     
-            
+
+
                 <course-picture class="card-img-top img-fluid" alt="Kurs Resmi" src="@Model.Course.PictureUrl"></course-picture>
                 <div class="card-body">
                     <h2 class="mb-4">@Model.Course.Name</h2>
@@ -21,12 +19,6 @@
                 </div>
             </div>
         </div>
-
-
-        
-        
-        
-        
 
 
         <div class="col-md-6">
@@ -65,5 +57,5 @@
 
     </div>
 
-  
+
 </div>

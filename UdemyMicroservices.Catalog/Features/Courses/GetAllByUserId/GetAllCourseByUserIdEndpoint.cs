@@ -1,5 +1,4 @@
-﻿using System.Net;
-using AutoMapper;
+﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using UdemyMicroservices.Catalog.Repositories;
@@ -19,10 +18,7 @@ public class GetCourseByUserIdQueryHandler(AppDbContext context, IMapper mapper)
             .ToListAsync(cancellationToken);
 
 
-        if (!courses.Any())
-        {
-            return ServiceResult<List<CourseDto>>.SuccessAsOk(Enumerable.Empty<CourseDto>().ToList());
-        }
+        if (!courses.Any()) return ServiceResult<List<CourseDto>>.SuccessAsOk(Enumerable.Empty<CourseDto>().ToList());
 
 
         var categories = await context.Categories.ToListAsync(cancellationToken);

@@ -1,56 +1,58 @@
 ﻿@page
-@model UdemyMicroservices.Web.Pages.Developer.TokensModel
+@model TokensModel
 @{
-
     Layout = "Shared/_Instructor_Layout";
 }
 
 <div class="text-break">
     <div class="row alert alert-secondary">
 
-        <div class="col-md-3 text-primary"><strong>Access Token</strong></div>
+        <div class="col-md-3 text-primary">
+            <strong>Access Token</strong>
+        </div>
         <div class="col-md-9">@Model.AccessToken</div>
 
     </div>
     <div class="row ">
-        
+
         <div class="col-md-12">
             <table class="table table-striped">
-                
+
                 <thead>
                 <tr>
                     <th>Type</th>
-                    <th>Value</th></tr>
+                    <th>Value</th>
+                </tr>
 
                 </thead>
-              
+
                 <tbody>
-                
+
                 @foreach (var claim in User.Claims)
-                    {
-                        <tr>
-                            <td>@claim.Type</td>
-                            <td>@claim.Value</td>
-                        </tr>
-                    }
-                
+                {
+                    <tr>
+                        <td>@claim.Type</td>
+                        <td>@claim.Value</td>
+                    </tr>
+                }
+
 
                 </tbody>
 
 
             </table>
-            
+
 
         </div>
-        
 
-    
 
     </div>
     <div class="row mt-3 alert alert-secondary">
-        <div class="col-md-3 text-primary"><strong>Refresh Token</strong></div>
-    <div class="col-md-9">@Model.RefreshToken</div>
+        <div class="col-md-3 text-primary">
+            <strong>Refresh Token</strong>
+        </div>
+        <div class="col-md-9">@Model.RefreshToken</div>
 
-</div>
+    </div>
 
 </div>

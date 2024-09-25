@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UdemyMicroservices.Shared.Options
+namespace UdemyMicroservices.Shared.Options;
+
+public class IdentityServerOption
 {
-    public class IdentityServerOption
-    {
-        [Required] public string Address { get; set; } = default!;
-        [Required] public string Audience { get; set; } = default!;
-    }
+    [Required] public string Address { get; set; } = default!;
+    [Required] public string Audience { get; set; } = default!;
 }

@@ -11,25 +11,27 @@
         {
             <div class="col">
                 <div class="card h-100 shadow-lg border-0">
-                    <a  asp-page="/Courses/Detail" asp-route-id="@course.Id">
+                    <a asp-page="/Courses/Detail" asp-route-id="@course.Id">
                         <course-picture src="@course.PictureUrl" class="card-img-top" alt="Kurs Resmi"></course-picture>
                     </a>
-                 
+
                     <div class="card-body">
                         <h5 class="card-title">@course.Name</h5>
                         <p class="card-text">@course.TruncateDescription(100)</p>
                         <p class="card-text">
                             <small class="text-muted">Kategori: <strong>@course.Category.Name</strong></small>
                         </p>
-                        <p class="card-text"><strong>₺ @course.Price</strong></p>
+                        <p class="card-text">
+                            <strong>₺ @course.Price</strong>
+                        </p>
                     </div>
                     <div class="card-footer">
                         <small class="text-muted">Eğitmen: <strong>@course.EducatorFullName</strong></small><br>
                         <small class="text-muted">Oluşturulma Tarihi: <strong>@course.Created</strong></small><br>
                         <small class="text-muted">Puan: <strong>@course.Rating</strong> | Süre: <strong>@course.Duration</strong> saat</small>
-                        
+
                         <br>
-                        <a  asp-page="/Courses/Detail" asp-route-id="@course.Id" class="btn btn-primary mt-2">Detay Gör</a>
+                        <a asp-page="/Courses/Detail" asp-route-id="@course.Id" class="btn btn-primary mt-2">Detay Gör</a>
                     </div>
                 </div>
             </div>

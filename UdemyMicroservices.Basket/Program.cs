@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using UdemyMicroservices.Basket.Features.Basket;
 using UdemyMicroservices.Catalog;
 using UdemyMicroservices.Shared;

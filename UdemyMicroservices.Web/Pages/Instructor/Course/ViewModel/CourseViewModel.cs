@@ -15,10 +15,7 @@ public record CourseViewModel(
 {
     public string TruncateDescription(int maxLength)
     {
-        if (string.IsNullOrEmpty(Description) || Description.Length <= maxLength)
-        {
-            return Description;
-        }
+        if (string.IsNullOrEmpty(Description) || Description.Length <= maxLength) return Description;
 
         return Description[..maxLength] + "...";
     }

@@ -75,7 +75,7 @@ public class ServiceResult<T> : ServiceResult
     // Static factory method for success as OK
     public static ServiceResult<T> SuccessAsOk(T data)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Data = data,
             Status = HttpStatusCode.OK
@@ -85,7 +85,7 @@ public class ServiceResult<T> : ServiceResult
     // Static factory method for success as Created
     public static ServiceResult<T> SuccessAsCreated(T data, string urlAsCreated)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Data = data,
             Status = HttpStatusCode.Created,
@@ -96,7 +96,7 @@ public class ServiceResult<T> : ServiceResult
     // Static factory method for error with ProblemDetails (inherits from base class)
     public new static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Status = statusCode,
             Fail = problemDetails
@@ -106,7 +106,7 @@ public class ServiceResult<T> : ServiceResult
     // Static factory method for error with custom title and detail (inherits from base class)
     public new static ServiceResult<T> Error(string title, string detail, HttpStatusCode statusCode)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Status = statusCode,
             Fail = new ProblemDetails
@@ -121,7 +121,7 @@ public class ServiceResult<T> : ServiceResult
     // Static factory method for validation errors (inherits from base class)
     public new static ServiceResult<T> ValidationError(IDictionary<string, object?> errors)
     {
-        return new ServiceResult<T>()
+        return new ServiceResult<T>
         {
             Status = HttpStatusCode.BadRequest,
             Fail = new ProblemDetails

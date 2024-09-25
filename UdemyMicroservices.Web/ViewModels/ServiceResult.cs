@@ -40,7 +40,7 @@ public class ServiceResult
     {
         return new ServiceResult
         {
-            ProblemDetails = new ProblemDetails()
+            ProblemDetails = new ProblemDetails
             {
                 Title = error,
                 Detail = errorDetail
@@ -80,7 +80,7 @@ public class ServiceResult<T> : ServiceResult
     {
         return new ServiceResult<T>
         {
-            ProblemDetails = new ProblemDetails()
+            ProblemDetails = new ProblemDetails
             {
                 Title = error,
                 Detail = errorDetail

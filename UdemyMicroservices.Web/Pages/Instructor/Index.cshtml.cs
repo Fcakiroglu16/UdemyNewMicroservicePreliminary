@@ -1,33 +1,31 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
-namespace UdemyMicroservices.Web.Pages.Instructor
+namespace UdemyMicroservices.Web.Pages.Instructor;
+
+public class IndexModel(CatalogService catalogService) : PageModel
 {
-    public class IndexModel(CatalogService catalogService) : PageModel
+    public CourseStatisticsViewModel? CourseStatisticsViewModel { get; set; }
+
+    public async Task OnGet()
     {
-        public CourseStatisticsViewModel? CourseStatisticsViewModel { get; set; }
+        var result = await catalogService.GetCourseStatistic();
 
-        public async Task OnGet()
+        if (result.IsFail)
         {
-            var result = await catalogService.GetCourseStatistic();
-
-            if (result.IsFail)
-            {
-                ViewData["Error"] = new PageErrorModel(result.ProblemDetails!.Title, result.ProblemDetails.Detail);
+            ViewData["Error"] = new PageErrorModel(result.ProblemDetails!.Title, result.ProblemDetails.Detail);
 
 
-                return;
-            }
-
-
-            CourseStatisticsViewModel = new CourseStatisticsViewModel
-            {
-                CourseCount = result.Data!.CourseCount,
-                AverageRating = result.Data!.AverageRating
-            };
+            return;
         }
+
+
+        CourseStatisticsViewModel = new CourseStatisticsViewModel
+        {
+            CourseCount = result.Data!.CourseCount,
+            AverageRating = result.Data!.AverageRating
+        };
     }
 }

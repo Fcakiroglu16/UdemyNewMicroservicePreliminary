@@ -1,5 +1,5 @@
 ﻿@page "{id}"
-@model UdemyMicroservices.Web.Pages.Instructor.Course.UpdateCourseModel
+@model UpdateCourseModel
 @{
     Layout = "Shared/_Instructor_Layout";
 }
@@ -7,16 +7,16 @@
     <h2>Create Course</h2>
 
     <form method="post" enctype="multipart/form-data">
-        
-        <input type="hidden"  asp-for="ViewModel.Id"/>
-        <input type="hidden"  asp-for="ViewModel.PictureUrl"/>
+
+        <input type="hidden" asp-for="ViewModel.Id"/>
+        <input type="hidden" asp-for="ViewModel.PictureUrl"/>
         <div class="row">
-            
+
             <div class="col-md-6 d-flex justify-content-center">
                 <course-picture class="img-fluid img-thumbnail" src="@Model.ViewModel.PictureUrl"></course-picture>
             </div>
 
-        
+
             <div class="col-md-6 d-flex justify-content-center">
                 <div class="mb-3">
                     <label asp-for="ViewModel.PictureFormFile" class="form-label"></label>
@@ -25,10 +25,10 @@
                 </div>
             </div>
         </div>
-        
+
 
         <div>
-          
+
         </div>
         <div class="mb-3">
             <label asp-for="ViewModel.CategoryDropdownList" class="form-label"></label>
@@ -48,8 +48,6 @@
             <span asp-validation-for="ViewModel.Description" class="text-danger"></span>
         </div>
 
-
-   
 
         <div class="mb-3">
             <label asp-for="ViewModel.Price" class="form-label"></label>

@@ -1,4 +1,3 @@
-﻿namespace UdemyMicroservices.Web.Options
-{
-    public class FileServiceOption : BaseServiceOption;
-}
+﻿namespace UdemyMicroservices.Web.Options;
+
+public class FileServiceOption : BaseServiceOption;

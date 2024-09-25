@@ -22,10 +22,8 @@ public class SignInModel(SignInService signInService) : PageModel
         var result = await signInService.SignInAsync(SignInViewModel);
 
         if (result.IsFail)
-        {
             // ModelState.AddModelError(string.Empty, result.Error);
             return Page();
-        }
 
         return RedirectToPage("/Index");
     }

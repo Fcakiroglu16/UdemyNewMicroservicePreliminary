@@ -25,7 +25,7 @@
             <textarea asp-for="ViewModel.Description" class="form-control"></textarea>
             <span asp-validation-for="ViewModel.Description" class="text-danger"></span>
         </div>
-    
+
 
         <div class="mb-3">
             <label asp-for="ViewModel.PictureFormFile" class="form-label"></label>
@@ -46,7 +46,6 @@
 
 @section Scripts {
     @{
-
         await Html.RenderPartialAsync("Shared/_ValidationScriptsPartial");
     }
 }

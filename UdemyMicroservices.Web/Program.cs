@@ -1,14 +1,13 @@
+using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Options;
 using Refit;
-using System.Reflection;
 using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Pages.Auth.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
-using UdemyMicroservices.Web.Pages.Instructor.CreateCourse;
 using UdemyMicroservices.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);

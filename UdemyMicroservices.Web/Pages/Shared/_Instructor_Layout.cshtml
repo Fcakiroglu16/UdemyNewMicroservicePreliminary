@@ -12,35 +12,35 @@
 <body>
 
 
-    <partial name="_Header_Dark"/> 
- 
+<partial name="_Header_Dark"/>
 
-    <div class="container">
-        
-        <div class="row">
-            
-            <div class="col-md-9">
-                <partial name="_Error"/>
-                @RenderBody()
-            </div>
-            <div class="col-md-3">
-                
-                
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                        Menu
-                    </a>
-                    <a asp-page="/Instructor/Index" class="list-group-item list-group-item-action">Home Page</a>
-                    <a asp-page="/Instructor/Course/GetAll" class="list-group-item list-group-item-action">Course List</a>
-                    <a asp-page="/Instructor/Course/Create" class="list-group-item list-group-item-action">Create Course</a>
-                  
-                </div>
 
-            </div>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-9">
+            <partial name="_Error"/>
+            @RenderBody()
         </div>
+        <div class="col-md-3">
 
-        
+
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                    Menu
+                </a>
+                <a asp-page="/Instructor/Index" class="list-group-item list-group-item-action">Home Page</a>
+                <a asp-page="/Instructor/Course/GetAll" class="list-group-item list-group-item-action">Course List</a>
+                <a asp-page="/Instructor/Course/Create" class="list-group-item list-group-item-action">Create Course</a>
+
+            </div>
+
+        </div>
     </div>
+
+
+</div>
 
 <partial name="_Footer"/>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>

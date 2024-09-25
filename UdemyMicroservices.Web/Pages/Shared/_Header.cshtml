@@ -1,29 +1,27 @@
-﻿
-<header>
-<nav class="navbar navbar-expand-sm  navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
- 
-        <a class="navbar-brand" asp-page="/index">Solode</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link " aria-current="page" asp-page="/index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-page="/privacy">Privacy</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link" asp-page="/Instructor/CreateCourse">Privacy</a>
-                </li>
-            </ul>
+﻿<header>
+    <nav class="navbar navbar-expand-sm  navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
 
-            <partial name="_Auth_Header" />
+            <a class="navbar-brand" asp-page="/index">Solode</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link " aria-current="page" asp-page="/index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/privacy">Privacy</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-page="/Instructor/CreateCourse">Privacy</a>
+                    </li>
+                </ul>
+
+                <partial name="_Auth_Header"/>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</nav>
+    </nav>
 </header>
-

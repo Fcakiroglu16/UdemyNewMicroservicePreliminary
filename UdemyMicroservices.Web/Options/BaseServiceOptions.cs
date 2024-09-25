@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UdemyMicroservices.Web.Options
+namespace UdemyMicroservices.Web.Options;
+
+public class BaseServiceOption
 {
-    public class BaseServiceOption
-    {
-        [Required] public string Address { get; set; } = default!;
-    }
+    [Required] public string Address { get; set; } = default!;
 }

@@ -1,7 +1,6 @@
-﻿namespace UdemyMicroservices.Web.Constants
+﻿namespace UdemyMicroservices.Web.Constants;
+
+public static class RoleConstants
 {
-    public static class RoleConstants
-    {
-        public const string Instructor = "Instructor";
-    }
+    public const string Instructor = "Instructor";
 }

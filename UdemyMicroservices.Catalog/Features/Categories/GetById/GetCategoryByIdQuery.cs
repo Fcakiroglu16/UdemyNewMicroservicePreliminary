@@ -44,7 +44,7 @@ public static class GetCategoryByIdQueryEndpoint
     public static RouteGroupBuilder MapCategoryByIdQueryEndpointV2(this RouteGroupBuilder group)
     {
         group.MapGet("/{id:guid}",
-                async (IMediator mediator, Guid id) =>
+                (IMediator mediator, Guid id) =>
                 {
                     var result =
                         ServiceResult<CategoryDto>.SuccessAsOk(new CategoryDto(id.ToString(),

@@ -25,7 +25,7 @@ public class Order : BaseEntity<Guid>
     public ICollection<OrderItem> OrderItems { get; } = [];
     public Address Address { get; set; } = default!;
 
-    public static string GenerateOrderCode()
+    private static string GenerateOrderCode()
     {
         var random = new Random();
         var orderCode = new StringBuilder(10); // Başlangıç kapasitesi 10 olarak ayarlanır.

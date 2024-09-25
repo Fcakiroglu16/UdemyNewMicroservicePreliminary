@@ -24,7 +24,7 @@ public class UploadFileCommandHandler(IFileProvider fileProvider)
                 HttpStatusCode.BadRequest);
 
 
-        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.File.FileName)}";
+        var newFileName = $"{Guid.NewGuid()}{Path.GetExtension(request.File!.FileName)}";
         var uploadPath = Path.Combine(fileProvider.GetFileInfo("uploads").PhysicalPath!, newFileName);
 
 

@@ -22,6 +22,9 @@ public interface ICatalogService
     [Get("/v1/catalog/courses")]
     Task<ApiResponse<ServiceResult<List<CourseResponse>>>> GetAllCourses();
 
+    [Get("/v1/catalog/courses/user/{userId}")]
+    Task<ApiResponse<ServiceResult<List<CourseResponse>>>> GetAllCoursesByUserId(Guid userId);
+
     [Delete("/v1/catalog/courses/{id}")]
     Task<ApiResponse<ServiceResult>> DeleteCourseAsync(Guid id);
 

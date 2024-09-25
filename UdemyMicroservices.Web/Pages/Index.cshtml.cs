@@ -1,17 +1,23 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
+using UdemyMicroservices.Web.Services;
+using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages;
 
-public class IndexModel : PageModel
+public class IndexModel(CatalogService catalogService) : BasePageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    public List<CourseViewModel>? Courses { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public async Task<IActionResult> OnGet()
     {
-        _logger = logger;
-    }
+        var coursesAsResult = await catalogService.GetAllCoursesAsync();
 
-    public void OnGet()
-    {
+        if (coursesAsResult.IsFail) return ErrorPage(coursesAsResult);
+
+        Courses = coursesAsResult.Data!;
+
+        return Page();
     }
 }

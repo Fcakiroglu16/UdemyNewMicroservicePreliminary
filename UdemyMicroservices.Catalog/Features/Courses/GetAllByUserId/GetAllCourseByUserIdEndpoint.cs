@@ -20,8 +20,9 @@ public class GetCourseByUserIdQueryHandler(AppDbContext context, IMapper mapper)
 
 
         if (!courses.Any())
-            return ServiceResult<List<CourseDto>>.Error("Courses Not Found",
-                $"The courses with user id '{request.UserId}' were not found.", HttpStatusCode.NotFound);
+        {
+            return ServiceResult<List<CourseDto>>.SuccessAsOk(Enumerable.Empty<CourseDto>().ToList());
+        }
 
 
         var categories = await context.Categories.ToListAsync(cancellationToken);

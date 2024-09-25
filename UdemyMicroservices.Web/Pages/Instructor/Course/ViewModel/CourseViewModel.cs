@@ -9,4 +9,17 @@ public record CourseViewModel(
     CategoryViewModel Category,
     string Created,
     int Rating,
-    int Duration);
+    int Duration,
+    string EducatorFullName,
+    Guid EducatorId)
+{
+    public string TruncateDescription(int maxLength)
+    {
+        if (string.IsNullOrEmpty(Description) || Description.Length <= maxLength)
+        {
+            return Description;
+        }
+
+        return Description[..maxLength] + "...";
+    }
+}

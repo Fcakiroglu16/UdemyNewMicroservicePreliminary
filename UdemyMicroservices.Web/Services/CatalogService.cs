@@ -10,13 +10,41 @@ using UdemyMicroservices.Web.ViewModels;
 namespace UdemyMicroservices.Web.Services;
 
 public class CatalogService(
+    IHttpContextAccessor httpContextAccessor,
     ICatalogService catalogService,
     IFileService fileService,
     ILogger<CatalogService> logger)
 {
-    public async Task<ServiceResult<List<CourseViewModel>>> GetAllCourses()
+    public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesAsync()
     {
         var coursesAsResult = await catalogService.GetAllCourses();
+
+        if (!coursesAsResult.IsSuccessStatusCode)
+        {
+            logger.LogProblemDetails(coursesAsResult.Error);
+
+            return ServiceResult<List<CourseViewModel>>.Fail(
+                "Failed to retrieve course data. Please try again later.");
+        }
+
+
+        var courses = coursesAsResult.Content!.Data!;
+        var categoriesViewModel = courses.Select(c => new CourseViewModel(c.Id, c.Name, c.Description,
+            c.Price, c.Picture,
+            new CategoryViewModel(c.Category.Id, c.Category.Name), c.CreatedTime.ToShortDateString(),
+            c.Feature.Rating,
+            c.Feature.Duration, c.Feature.EducatorFullName, c.UserId)).ToList();
+
+        return ServiceResult<List<CourseViewModel>>.Success(categoriesViewModel);
+    }
+
+
+    public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesByUserId()
+    {
+        var userId = Guid.Parse(httpContextAccessor.HttpContext!.User.FindFirst(x => x.Type == "sub")!.Value);
+
+
+        var coursesAsResult = await catalogService.GetAllCoursesByUserId(userId);
 
         if (!coursesAsResult.IsSuccessStatusCode)
         {
@@ -31,10 +59,11 @@ public class CatalogService(
             c.Price, c.Picture,
             new CategoryViewModel(c.Category.Id, c.Category.Name), c.CreatedTime.ToShortDateString(),
             c.Feature.Rating,
-            c.Feature.Duration)).ToList();
+            c.Feature.Duration, c.Feature.EducatorFullName, c.UserId)).ToList();
 
         return ServiceResult<List<CourseViewModel>>.Success(categoriesViewModel);
     }
+
 
     public async Task<ServiceResult<List<CategoryViewModel>>> GetCategoryList()
     {
@@ -66,7 +95,7 @@ public class CatalogService(
             new CategoryViewModel(course.Category.Id, course.Category.Name),
             course.CreatedTime.ToShortDateString(),
             course.Feature.Rating,
-            course.Feature.Duration);
+            course.Feature.Duration, course.Feature.EducatorFullName, course.UserId);
 
         return ServiceResult<CourseViewModel>.Success(courseViewModel);
     }

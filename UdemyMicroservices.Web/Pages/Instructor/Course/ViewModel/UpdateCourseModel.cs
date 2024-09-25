@@ -27,4 +27,9 @@ public class UpdateCourseViewModel
     public string? PictureUrl { get; set; }
 
     public Guid CategoryId { get; set; }
+
+    public void SetCategoryDropdownList(List<CategoryViewModel> categories)
+    {
+        CategoryDropdownList = new SelectList(categories, "Id", "Name");
+    }
 }

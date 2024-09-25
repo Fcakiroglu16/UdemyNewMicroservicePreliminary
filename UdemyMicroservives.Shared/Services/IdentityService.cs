@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace UdemyMicroservices.Shared.Services;
 
 public class IdentityService(IHttpContextAccessor httpContextAccessor) : IIdentityService
 {
-    //public string GetUserId => httpContextAccessor.HttpContext!.User.FindFirst("sub")!.Value;
+    public string GetUserId => httpContextAccessor.HttpContext!.User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
 
-    public string GetUserId => "1";
+    public string GetFullName => httpContextAccessor.HttpContext!.User.FindFirst("name")!.Value;
 }

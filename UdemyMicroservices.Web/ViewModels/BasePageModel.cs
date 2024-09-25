@@ -6,7 +6,7 @@ namespace UdemyMicroservices.Web.ViewModels;
 
 public class BasePageModel : PageModel
 {
-    public IActionResult ErrorResultPage(ServiceResult serviceResult)
+    public IActionResult ErrorPage(ServiceResult serviceResult)
     {
         ViewData["Error"] =
             new PageErrorModel(serviceResult.ProblemDetails!.Title, serviceResult.ProblemDetails.Detail);
@@ -24,5 +24,24 @@ public class BasePageModel : PageModel
             ModelState.AddModelError(string.Empty, fieldError);
 
         return Page();
+    }
+
+
+    public void ShowError(ServiceResult serviceResult)
+    {
+        ViewData["Error"] =
+            new PageErrorModel(serviceResult.ProblemDetails!.Title, serviceResult.ProblemDetails.Detail);
+
+
+        var validationError = serviceResult.ProblemDetails.Extensions.FirstOrDefault(x => x.Key == "errors");
+
+        if (validationError.Value is null) return;
+
+        var validationErrorAsDictionary = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(
+            validationError.Value!
+                .ToString()!);
+
+        foreach (var fieldError in validationErrorAsDictionary!.SelectMany(fieldErrors => fieldErrors.Value))
+            ModelState.AddModelError(string.Empty, fieldError);
     }
 }

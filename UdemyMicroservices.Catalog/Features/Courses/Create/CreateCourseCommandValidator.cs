@@ -12,7 +12,7 @@ public class CreateCourseCommandValidator : AbstractValidator<CreateCourseComman
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty")
-            .Length(5, 500).WithMessage("{PropertyName} must be between 5 and 100 characters");
+            .Length(5, 5000).WithMessage("{PropertyName} must be between 5 and 5000 characters");
 
 
         RuleFor(x => x.Price)

@@ -50,6 +50,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
             feature.HasElementName("feature");
             feature.Property(f => f.Duration).HasElementName("duration");
             feature.Property(f => f.Rating).HasElementName("rating");
+            feature.Property(f => f.EducatorFullName).HasElementName("educator_full_name");
             // Add other properties of Feature if needed
         });
 

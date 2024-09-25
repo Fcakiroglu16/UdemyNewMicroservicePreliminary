@@ -15,7 +15,7 @@ public class UpdateCourseCommandValidator : AbstractValidator<UpdateCourseComman
 
         RuleFor(x => x.Description)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty")
-            .MaximumLength(500).WithMessage("{PropertyName} must be a maximum of 500 characters");
+            .Length(5, 5000).WithMessage("{PropertyName} must be between 5 and 5000 characters");
 
         RuleFor(x => x.Price)
             .GreaterThan(0).WithMessage("{PropertyName} must be greater than zero");

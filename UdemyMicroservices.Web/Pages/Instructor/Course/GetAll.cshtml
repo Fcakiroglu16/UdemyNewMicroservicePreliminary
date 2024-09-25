@@ -34,7 +34,7 @@
                     <course-picture class="img-fluid img-thumbnail" src="@course.PictureUrl" width="100px"/>
                 </td>
                 <td>@course.Name</td>
-                <td>@course.Description</td>
+                <td>@course.TruncateDescription(50)</td>
                 <td>@course.Price.ToString("C")</td>
                 <td>@course.Category.Name</td>
                 <td>@course.Created</td>

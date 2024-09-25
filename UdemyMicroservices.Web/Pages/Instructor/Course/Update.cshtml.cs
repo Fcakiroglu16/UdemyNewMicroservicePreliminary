@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
+using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course;
 
-public class UpdateCourseModel(CatalogService catalogService) : PageModel
+public class UpdateCourseModel(CatalogService catalogService) : BasePageModel
 {
     [BindProperty] public UpdateCourseViewModel ViewModel { get; set; } = UpdateCourseViewModel.Empty;
 
@@ -41,7 +42,13 @@ public class UpdateCourseModel(CatalogService catalogService) : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!ModelState.IsValid) return Page();
+        if (!ModelState.IsValid)
+        {
+            var categoriesAsResult = await catalogService.GetCategoryList();
+            if (categoriesAsResult.IsFail) return ErrorPage(categoriesAsResult);
+            ViewModel.SetCategoryDropdownList(categoriesAsResult.Data!);
+            return Page();
+        }
 
 
         var response = await catalogService.UpdateCourseAsync(ViewModel);

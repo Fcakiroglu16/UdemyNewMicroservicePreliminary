@@ -5,7 +5,7 @@ public record CourseResponse(
     string Name,
     string Description,
     decimal Price,
-    string UserId,
+    Guid UserId,
     string? Picture,
     DateTime CreatedTime,
     FeatureResponse Feature,

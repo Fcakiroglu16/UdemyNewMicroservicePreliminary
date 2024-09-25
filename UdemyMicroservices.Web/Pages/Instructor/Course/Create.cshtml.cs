@@ -14,7 +14,7 @@ public class CreateCourseModel(CatalogService catalogService) : BasePageModel
     {
         var result = await catalogService.GetCategoryList();
 
-        if (result.IsFail) return ErrorResultPage(result);
+        if (result.IsFail) return ErrorPage(result);
 
         ViewModel.SetCategoryDropdownList(result.Data!);
         return Page();
@@ -26,12 +26,12 @@ public class CreateCourseModel(CatalogService catalogService) : BasePageModel
         if (!ModelState.IsValid)
         {
             var categoriesAsResult = await catalogService.GetCategoryList();
-            if (categoriesAsResult.IsFail) return ErrorResultPage(categoriesAsResult);
+            if (categoriesAsResult.IsFail) return ErrorPage(categoriesAsResult);
             ViewModel.SetCategoryDropdownList(categoriesAsResult.Data!);
             return Page();
         }
 
         var courseToCreateResult = await catalogService.CreateCourseAsync(ViewModel);
-        return courseToCreateResult.IsFail ? ErrorResultPage(courseToCreateResult) : RedirectToPage("GetAll");
+        return courseToCreateResult.IsFail ? ErrorPage(courseToCreateResult) : RedirectToPage("GetAll");
     }
 }

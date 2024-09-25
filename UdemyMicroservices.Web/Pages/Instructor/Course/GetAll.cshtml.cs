@@ -11,9 +11,9 @@ public class GetAllCoursesModel(CatalogService catalogService) : BasePageModel
 
     public async Task<IActionResult> OnGet()
     {
-        var result = await catalogService.GetAllCourses();
+        var result = await catalogService.GetAllCoursesByUserId();
 
-        if (result.IsFail) return ErrorResultPage(result);
+        if (result.IsFail) return ErrorPage(result);
 
         CourseList = result.Data!;
         return Page();
@@ -23,6 +23,6 @@ public class GetAllCoursesModel(CatalogService catalogService) : BasePageModel
     {
         var result = await catalogService.DeleteCourseAsync(id);
 
-        return result.IsFail ? ErrorResultPage(result) : RedirectToPage("/Instructor/Course/GetAll");
+        return result.IsFail ? ErrorPage(result) : RedirectToPage("/Instructor/Course/GetAll");
     }
 }

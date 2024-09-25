@@ -43,7 +43,7 @@ public class CreateCourseCommandHandler(AppDbContext context, IMapper mapper, II
             UserId = identityService.GetUserId,
             CategoryId = request.CategoryId,
             CreatedTime = DateTime.UtcNow,
-            Feature = new Feature { Duration = 0, Rating = 0 }
+            Feature = new Feature { Duration = 0, Rating = 0, EducatorFullName = identityService.GetFullName }
         };
 
         context.Courses.Add(course);

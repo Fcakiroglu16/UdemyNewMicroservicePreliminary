@@ -1,0 +1,69 @@
+﻿@page "{id:guid}"
+@model UdemyMicroservices.Web.Pages.Courses.DetailModel
+@{
+}
+<div class="container mt-5">
+  
+    <div class="row">
+        
+  
+      
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+             
+                     
+            
+                <course-picture class="card-img-top img-fluid" alt="Kurs Resmi" src="@Model.Course.PictureUrl"></course-picture>
+                <div class="card-body">
+                    <h2 class="mb-4">@Model.Course.Name</h2>
+                    <h5 class="card-title">Kurs Açıklaması</h5>
+                    <p>@Model.Course.Description</p>
+                </div>
+            </div>
+        </div>
+
+
+        
+        
+        
+        
+
+
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-body">
+                    <!-- Kategori -->
+                    <h5 class="card-title">Kategori</h5>
+                    <p class="card-text">@Model.Course.Category.Name</p>
+                    <hr> <!-- Ayraç (Separator) -->
+
+                    <!-- Fiyat -->
+                    <h5 class="card-title">Fiyat</h5>
+                    <p class="card-text">
+                        <strong>₺ @Model.Course.Price</strong>
+                    </p>
+                    <hr> <!-- Ayraç (Separator) -->
+
+                    <!-- Detaylar -->
+                    <h5 class="card-title">Detaylar</h5>
+                    <p class="card-text">
+                        <small class="text-muted">Eğitmen: <strong>@Model.Course.EducatorFullName</strong></small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">Oluşturulma Tarihi: <strong>@Model.Course.Created</strong></small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">Puan: <strong>@Model.Course.Rating</strong> | Süre: <strong>@Model.Course.Duration</strong> saat</small>
+                    </p>
+                </div>
+                <div class="card-footer bg-light text-center">
+                    <a href="#" class="btn btn-primary">Kursa Katıl</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+  
+</div>

@@ -11,7 +11,7 @@ public class SignUpService(HttpClient client, IdentityOption identityOption, ILo
         var tokenResponseAsMaster = await TokenResponseAsMaster();
 
 
-        if (tokenResponseAsMaster.IsFail) return ServiceResult.Fail(tokenResponseAsMaster.ProblemDetails);
+        if (tokenResponseAsMaster.IsFail) return ServiceResult.Fail(tokenResponseAsMaster.ProblemDetails!);
 
 
         client.SetBearerToken(tokenResponseAsMaster.Data!.AccessToken!);
@@ -53,7 +53,7 @@ public class SignUpService(HttpClient client, IdentityOption identityOption, ILo
         var discoAsMaster = await client.GetDiscoveryDocumentAsync(identityOption.MasterTenant.Address);
         if (discoAsMaster.IsError)
         {
-            logger.LogError(discoAsMaster.Error, "Failed to retrieve discovery document.");
+            logger.LogError(discoAsMaster.Exception, "Failed to retrieve discovery document.");
 
             return ServiceResult<TokenResponse>.Fail("A system error occurred. Please try again later.");
         }
@@ -70,7 +70,7 @@ public class SignUpService(HttpClient client, IdentityOption identityOption, ILo
 
         if (tokenResponseAsMaster.IsError)
         {
-            logger.LogError(tokenResponseAsMaster.Error, "Failed to retrieve discovery document.");
+            logger.LogError(tokenResponseAsMaster.Exception, "Failed to retrieve discovery document.");
 
             return ServiceResult<TokenResponse>.Fail("A system error occurred. Please try again later.");
         }

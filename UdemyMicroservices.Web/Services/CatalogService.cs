@@ -1,10 +1,11 @@
 ﻿using Refit;
 using System.Net;
-using UdemyMicroservices.Web.Options;
+using UdemyMicroservices.Web.Extensions;
 using UdemyMicroservices.Web.Pages.Instructor.Course.Dto;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Pages.Instructor.CreateCourse;
 using UdemyMicroservices.Web.ViewModels;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace UdemyMicroservices.Web.Services
 {
@@ -15,14 +16,17 @@ namespace UdemyMicroservices.Web.Services
     {
         public async Task<ServiceResult<List<CourseViewModel>>> GetAllCourses()
         {
-            var getAllCoursesAsResult = await catalogService.GetAllCourses();
+            var coursesAsResult = await catalogService.GetAllCourses();
 
-            if (!getAllCoursesAsResult.IsSuccessStatusCode)
+            if (!coursesAsResult.IsSuccessStatusCode)
             {
-                return ServiceResult<List<CourseViewModel>>.Fail(getAllCoursesAsResult.Error!.Content!);
+                logger.LogProblemDetails(coursesAsResult.Error.Content!);
+
+                return ServiceResult<List<CourseViewModel>>.Fail(
+                    "Failed to retrieve course data. Please try again later.");
             }
 
-            var courses = getAllCoursesAsResult.Content!.Data!;
+            var courses = coursesAsResult.Content!.Data!;
             var categoriesViewModel = courses.Select(c => new CourseViewModel(c.Id, c.Name, c.Description,
                 c.Price, c.Picture,
                 new CategoryViewModel(c.Category.Id, c.Category.Name), c.CreatedTime.ToShortDateString(),
@@ -65,16 +69,16 @@ namespace UdemyMicroservices.Web.Services
             if (!response.IsSuccessStatusCode)
 
             {
-                logger.LogError(response.Error.Message, "Course could not be created.");
+                logger.LogProblemDetails(response.Error.Content!);
 
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    return ServiceResult.Fail(response.Error.Content!);
+                    return ServiceResult.FailFromProblemDetails(response.Error.Content!);
                 }
 
                 if (response.StatusCode == HttpStatusCode.InternalServerError)
                 {
-                    return ServiceResult.Fail("A system error occurred. Please try again later.");
+                    return ServiceResult.Fail("course creation failed. Please try again later.");
                 }
             }
 
@@ -85,16 +89,17 @@ namespace UdemyMicroservices.Web.Services
 
         public async Task<ServiceResult<List<CategoryViewModel>>> GetCategoryList()
         {
-            var response = await catalogService.GetCategoriesAsync();
-
-
-            if (!response.IsSuccessStatusCode)
+            var categoriesAsResult = await catalogService.GetCategoriesAsync();
+            if (!categoriesAsResult.IsSuccessStatusCode)
             {
-                return ServiceResult<List<CategoryViewModel>>.Fail(response.Error.Content!);
+                logger.LogProblemDetails(categoriesAsResult.Error.Content!);
+                return ServiceResult<List<CategoryViewModel>>.Fail(
+                    "Failed to retrieve category data. Please try again later.");
             }
 
 
-            var categoryModelList = response.Content!.Data!.Select(x => new CategoryViewModel(x.Id, x.Name)).ToList();
+            var categoryModelList = categoriesAsResult.Content!.Data!.Select(x => new CategoryViewModel(x.Id, x.Name))
+                .ToList();
             return ServiceResult<List<CategoryViewModel>>.Success(categoryModelList);
         }
 
@@ -106,7 +111,7 @@ namespace UdemyMicroservices.Web.Services
 
             if (!courseAsResult.IsSuccessStatusCode)
             {
-                return ServiceResult.Fail(courseAsResult.Error!.Content!);
+                return ServiceResult.FailFromProblemDetails(courseAsResult.Error!.Content!);
             }
 
 
@@ -114,7 +119,7 @@ namespace UdemyMicroservices.Web.Services
 
             if (!courseToDeleteAsResult.IsSuccessStatusCode)
             {
-                return ServiceResult.Fail(courseToDeleteAsResult.Error.Content!);
+                return ServiceResult.FailFromProblemDetails(courseToDeleteAsResult.Error.Content!);
             }
 
 
@@ -142,7 +147,7 @@ namespace UdemyMicroservices.Web.Services
 
             if (!response.IsSuccessStatusCode)
             {
-                return ServiceResult<CourseViewModel>.Fail(response.Error.Content!);
+                return ServiceResult<CourseViewModel>.FailFromProblemDetails(response.Error.Content!);
             }
 
 
@@ -192,7 +197,7 @@ namespace UdemyMicroservices.Web.Services
 
                 if (response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    return ServiceResult.Fail(response.Error.Content!);
+                    return ServiceResult.FailFromProblemDetails(response.Error.Content!);
                 }
 
                 if (response.StatusCode == HttpStatusCode.InternalServerError)
@@ -212,7 +217,8 @@ namespace UdemyMicroservices.Web.Services
 
             if (!getAllCoursesAsResult.IsSuccessStatusCode)
             {
-                return ServiceResult<CourseStatisticsViewModel>.Fail(getAllCoursesAsResult.Error!.Content!);
+                return ServiceResult<CourseStatisticsViewModel>.FailFromProblemDetails(getAllCoursesAsResult.Error!
+                    .Content!);
             }
 
             CourseStatisticsViewModel courseStatistics = new();

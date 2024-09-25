@@ -12,21 +12,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 namespace UdemyMicroservices.Web.Pages.Instructor.Course
 {
     //[Authorize(Roles = RoleConstants.Instructor)]
-    public class CreateCourseModel(CatalogService catalogService) : PageModel
+    public class CreateCourseModel(CatalogService catalogService) : BasePageModel
     {
         [BindProperty]
         public ViewModel.CreateCourseViewModel ViewModel { get; set; } = Course.ViewModel.CreateCourseViewModel.Empty;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var categoryListAsResult = await catalogService.GetCategoryList();
+            var result = await catalogService.GetCategoryList();
 
-            if (categoryListAsResult.IsFail)
-            {
-                // ModelState.AddModelError(string.Empty, categoryListAsResult.Error!);
-            }
+            if (result.IsFail) return ErrorResultPage(result);
 
-            ViewModel.CategoryDropdownList = new SelectList(categoryListAsResult.Data!, "Id", "Name");
+            ViewModel.SetCategoryDropdownList(result.Data!);
+            return Page();
         }
 
 
@@ -34,39 +32,14 @@ namespace UdemyMicroservices.Web.Pages.Instructor.Course
         {
             if (!ModelState.IsValid)
             {
-                var categoryListAsResult = await catalogService.GetCategoryList();
-                ViewModel.CategoryDropdownList = new SelectList(categoryListAsResult.Data!, "Id", "Name");
+                var categoriesAsResult = await catalogService.GetCategoryList();
+                if (categoriesAsResult.IsFail) return ErrorResultPage(categoriesAsResult);
+                ViewModel.SetCategoryDropdownList(categoriesAsResult.Data!);
                 return Page();
             }
 
-
-            var result = await catalogService.CreateCourseAsync(ViewModel);
-
-
-            if (!result.IsFail) return RedirectToPage("GetAll");
-
-
-            if (result.ProblemDetails is null) return Page();
-
-
-            ViewData["Error"] = new PageErrorModel(result.ProblemDetails.Title, result.ProblemDetails.Detail);
-
-            var validationError = result.ProblemDetails.Extensions.FirstOrDefault(x => x.Key == "errors");
-
-
-            if (validationError.Value is null) return Page();
-
-            var validationErrorAsDictionary = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(
-                validationError.Value!
-                    .ToString()!);
-
-            foreach (var fieldError in validationErrorAsDictionary!.SelectMany(fieldErrors => fieldErrors.Value))
-            {
-                ModelState.AddModelError(string.Empty, fieldError);
-            }
-
-
-            return Page();
+            var courseToCreateResult = await catalogService.CreateCourseAsync(ViewModel);
+            return courseToCreateResult.IsFail ? ErrorResultPage(courseToCreateResult) : RedirectToPage("GetAll");
         }
     }
 }

@@ -23,5 +23,11 @@ namespace UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel
         [Display(Name = "Course Price")] public decimal Price { get; init; }
 
         public Guid? CategoryId { get; init; }
+
+
+        public void SetCategoryDropdownList(List<CategoryViewModel> categories)
+        {
+            CategoryDropdownList = new SelectList(categories, "Id", "Name");
+        }
     }
 }

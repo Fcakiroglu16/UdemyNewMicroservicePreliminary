@@ -17,6 +17,7 @@ public class GetAllCategoryQueryHandler(AppDbContext context, IMapper mapper)
     public async Task<ServiceResult<List<CategoryDto>>> Handle(GetAllCategoryQuery request,
         CancellationToken cancellationToken)
     {
+        throw new Exception("db hatası");
         var categories = await context.Categories.ToListAsync(cancellationToken);
         var categoryDtos = mapper.Map<List<CategoryDto>>(categories);
         return ServiceResult<List<CategoryDto>>.SuccessAsOk(categoryDtos);

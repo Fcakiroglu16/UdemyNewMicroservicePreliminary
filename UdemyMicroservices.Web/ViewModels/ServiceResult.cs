@@ -20,7 +20,7 @@ public class ServiceResult
     }
 
 
-    public static ServiceResult Fail(string problemDetails)
+    public static ServiceResult FailFromProblemDetails(string problemDetails)
     {
         return new ServiceResult
         {
@@ -35,6 +35,18 @@ public class ServiceResult
             ProblemDetails = problemDetails
         };
     }
+
+    public static ServiceResult Fail(string error, string? errorDetail = null)
+    {
+        return new ServiceResult
+        {
+            ProblemDetails = new ProblemDetails()
+            {
+                Title = error,
+                Detail = errorDetail
+            }
+        };
+    }
 }
 
 public class ServiceResult<T> : ServiceResult
@@ -47,6 +59,15 @@ public class ServiceResult<T> : ServiceResult
         return new ServiceResult<T> { Data = data };
     }
 
+
+    public new static ServiceResult<T> FailFromProblemDetails(string problemDetails)
+    {
+        return new ServiceResult<T>
+        {
+            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
+        };
+    }
+
     public new static ServiceResult<T> Fail(ProblemDetails problemDetails)
     {
         return new ServiceResult<T>
@@ -55,11 +76,15 @@ public class ServiceResult<T> : ServiceResult
         };
     }
 
-    public new static ServiceResult<T> Fail(string problemDetails)
+    public new static ServiceResult<T> Fail(string error, string? errorDetail = null)
     {
         return new ServiceResult<T>
         {
-            ProblemDetails = JsonSerializerAsCustom.Deserialize<ProblemDetails>(problemDetails)
+            ProblemDetails = new ProblemDetails()
+            {
+                Title = error,
+                Detail = errorDetail
+            }
         };
     }
 

@@ -1,40 +1,29 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course
 {
-    public class GetAllCoursesModel(CatalogService catalogService) : PageModel
+    public class GetAllCoursesModel(CatalogService catalogService) : BasePageModel
     {
         public List<CourseViewModel>? CourseList { get; set; }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            var response = await catalogService.GetAllCourses();
+            var result = await catalogService.GetAllCourses();
 
+            if (result.IsFail) return ErrorResultPage(result);
 
-            if (response.IsFail)
-            {
-                ViewData["error"] = new PageErrorModel(response.ProblemDetails!.Title, response.ProblemDetails.Detail);
-                return;
-            }
-
-            CourseList = response.Data!;
+            CourseList = result.Data!;
+            return Page();
         }
 
         public async Task<IActionResult> OnGetDeleteAsync(Guid id)
         {
-            var response = await catalogService.DeleteCourseAsync(id);
+            var result = await catalogService.DeleteCourseAsync(id);
 
-            if (response.IsFail)
-            {
-                ViewData["error"] = new PageErrorModel(response.ProblemDetails!.Title, response.ProblemDetails.Detail);
-                return Page();
-            }
-
-            return RedirectToPage("/Instructor/Course/GetAll");
+            return result.IsFail ? ErrorResultPage(result) : RedirectToPage("/Instructor/Course/GetAll");
         }
     }
 }

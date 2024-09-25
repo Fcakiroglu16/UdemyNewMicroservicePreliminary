@@ -77,7 +77,7 @@ public class SignInService(
         if (tokenResponse.IsError)
         {
             logger.LogError(tokenResponse.Error, "Failed to retrieve access token.");
-            return ServiceResult<TokenResponse>.Fail(tokenResponse.ErrorDescription!);
+            return ServiceResult<TokenResponse>.FailFromProblemDetails(tokenResponse.ErrorDescription!);
         }
 
         return ServiceResult<TokenResponse>.Success(tokenResponse);

@@ -32,7 +32,7 @@
                     <!-- Fiyat -->
                     <h5 class="card-title">Fiyat</h5>
                     <p class="card-text">
-                        <strong>₺ @Model.Course.Price</strong>
+                        <strong>@Model.Course.Price.ToString("C")</strong>
                     </p>
                     <hr> <!-- Ayraç (Separator) -->
 
@@ -49,7 +49,7 @@
                     </p>
                 </div>
                 <div class="card-footer bg-light text-center">
-                    <a href="#" class="btn btn-primary">Kursa Katıl</a>
+                    <a asp-page="/basket/index" asp-page-handler="AddBasket" asp-route-courseId="@Model.Course.Id" class="btn btn-primary">Add To Basket</a>
                 </div>
             </div>
         </div>

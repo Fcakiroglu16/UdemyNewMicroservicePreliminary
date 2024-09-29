@@ -1,14 +1,16 @@
-﻿using MassTransit;
+﻿using System.Security.Principal;
+using MassTransit;
 using MediatR;
 using UdemyMicroservices.Discount.Repositories;
 using UdemyMicroservices.Shared;
+using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Discount.Features.Discount.CreateDiscount;
 
-public record CreateDiscountCommand(string UserId, string Code, int Rate, DateTime Expired)
+public record CreateDiscountCommand(string Code, int Rate, DateTime Expired)
     : IRequestByServiceResult;
 
-public class CreateDiscountCommandHandler(AppDbContext context)
+public class CreateDiscountCommandHandler(AppDbContext context, IIdentityService identityService)
     : IRequestHandler<CreateDiscountCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(CreateDiscountCommand request, CancellationToken cancellationToken)
@@ -16,9 +18,9 @@ public class CreateDiscountCommandHandler(AppDbContext context)
         var discount = new Repositories.Discount
         {
             Id = NewId.NextGuid(),
-            UserId = request.UserId,
+            UserId = identityService.GetUserId,
             Code = request.Code,
-            Rate = request.Rate,
+            Rate = request.Rate / 100f,
             Created = DateTime.Now,
             Expired = request.Expired
         };

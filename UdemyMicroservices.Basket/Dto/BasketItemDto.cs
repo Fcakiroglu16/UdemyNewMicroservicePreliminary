@@ -1,3 +1,3 @@
 namespace UdemyMicroservices.Basket.Dto;
 
-public record BasketItemDto(string CourseId, string CourseName, decimal Price);
+public record BasketItemDto(Guid CourseId, string CourseName,string? CoursePictureUrl, decimal CoursePrice,decimal? CoursePriceByApplyDiscountRate);

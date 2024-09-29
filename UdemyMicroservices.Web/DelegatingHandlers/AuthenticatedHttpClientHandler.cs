@@ -12,12 +12,20 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
         if (contextAccessor is null) return await base.SendAsync(request, cancellationToken);
 
 
+        if (!contextAccessor.HttpContext.User.Identity.IsAuthenticated)
+        {
+            return await base.SendAsync(request, cancellationToken);
+        }
+
         var accessToken =
             (await contextAccessor.HttpContext!.GetTokenAsync(OpenIdConnectParameterNames.AccessToken))!;
 
 
         if (!string.IsNullOrEmpty(accessToken))
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        {
+            if (!string.IsNullOrEmpty(accessToken))
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+        }
 
 
         return await base.SendAsync(request, cancellationToken);

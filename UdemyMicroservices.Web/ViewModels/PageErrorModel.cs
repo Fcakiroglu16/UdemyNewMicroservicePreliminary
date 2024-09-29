@@ -12,8 +12,8 @@ public record PageErrorModel
     {
     }
 
-    public string? Title { get; private set; }
-    public string? Description { get; private set; }
+    public string? Title { get; set; }
+    public string? Description { get; set; }
 
     public bool HasDescription => !string.IsNullOrEmpty(Description);
 

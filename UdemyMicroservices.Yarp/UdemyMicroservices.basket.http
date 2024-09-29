@@ -22,6 +22,6 @@ Content-Type: application/json
 }
 ###
 ### DeleteBasket Endpoint
-DELETE {{UdemyMicroservices.Basket_HostAddress}}/v1/basket/user123
+DELETE {{UdemyMicroservices.Basket_HostAddress}}/v1/basket/courseId
 Accept: application/json
 ###

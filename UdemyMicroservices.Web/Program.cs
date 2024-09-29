@@ -1,7 +1,9 @@
+using System.Globalization;
 using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Options;
 using Refit;
 using UdemyMicroservices.Web.DelegatingHandlers;
@@ -12,6 +14,17 @@ using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.Services.Refit;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+var supportedCultures = new CultureInfo[] { new("tr-Tr") };
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    options.SupportedCultures = supportedCultures; // datetime-currency
+    options.SupportedUICultures = supportedCultures; // string localization
+    options.DefaultRequestCulture = new
+        RequestCulture(supportedCultures.First());
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -53,10 +66,13 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.Cookie.Name = "webCookie";
     });
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
+builder.Services.AddScoped<ClientAuthenticatedHttpClientHandler>();
+
 
 builder.Services.AddRefitClient<ICatalogService>()
     .ConfigureHttpClient(
         c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<ClientAuthenticatedHttpClientHandler>()
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 builder.Services.AddRefitClient<IFileService>()
     .ConfigureHttpClient(
@@ -64,10 +80,28 @@ builder.Services.AddRefitClient<IFileService>()
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 
 
+builder.Services.AddRefitClient<IBasketService>()
+    .ConfigureHttpClient(
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+
+
+builder.Services.AddRefitClient<IDiscountService>()
+    .ConfigureHttpClient(
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+
 builder.Services.AddScoped<CatalogService>();
+builder.Services.AddScoped<BasketService>();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = "SampleInstance";
+});
 
 var app = builder.Build();
-
+app.UseRequestLocalization();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Error");
 

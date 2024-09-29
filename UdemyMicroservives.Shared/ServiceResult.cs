@@ -26,6 +26,16 @@ public class ServiceResult
         };
     }
 
+    public static ServiceResult ErrorAsNotFound()
+    {
+        return new ServiceResult
+        {
+            Status = HttpStatusCode.NotFound,
+            Fail = new ProblemDetails()
+        };
+    }
+
+
     // Static factory method for error with ProblemDetails
     public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {

@@ -17,9 +17,9 @@ public class GetAllBasketByUserIdQueryHandler(IDistributedCache distributedCache
         var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.GetUserId);
         var hasBasket = await distributedCache.GetStringAsync(cacheKey, cancellationToken);
 
+
         if (string.IsNullOrEmpty(hasBasket))
-            return ServiceResult<BasketDto>.Error("Basket not found",
-                $"The basket with user id '{identityService.GetUserId}' was not found.", HttpStatusCode.NotFound);
+            return ServiceResult<BasketDto>.SuccessAsOk(new BasketDto(identityService.GetUserId, []));
 
         var basket = JsonSerializer.Deserialize<BasketDto>(hasBasket);
 

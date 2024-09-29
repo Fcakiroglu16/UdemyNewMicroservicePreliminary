@@ -1,7 +1,8 @@
 ﻿using Asp.Versioning.Builder;
+using UdemyMicroservices.Basket.Features.Basket.AddBasket;
+using UdemyMicroservices.Basket.Features.Basket.ApplyDiscountRate;
 using UdemyMicroservices.Basket.Features.Basket.DeleteBasket;
 using UdemyMicroservices.Basket.Features.Basket.GetBasket;
-using UdemyMicroservices.Basket.Features.Basket.SaveOrUpdateBasket;
 
 namespace UdemyMicroservices.Basket.Features.Basket;
 
@@ -11,8 +12,9 @@ public static class BasketEndpointsExt
     {
         app.MapGroup("api/v{version:apiVersion}/baskets")
             .MapGetAllBasketByUserIdEndpoint()
-            .MapSaveOrUpdateBasketEndpoint()
+            .MapAddBasketEndpoint()
             .MapDeleteBasketEndpoint()
+            .MapApplyDiscountRateCommandEndpoint()
             .WithTags("baskets").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

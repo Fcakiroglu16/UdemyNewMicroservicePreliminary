@@ -8,7 +8,7 @@ public static class GetDiscountByCodeEndpoint
 {
     public static RouteGroupBuilder MapDiscountByCodeEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("/{discountCode:length(10)}",
+        group.MapGet("/{discountCode}",
                 async (IMediator mediator, string discountCode) =>
                 {
                     var query = new GetDiscountByCodeQuery(discountCode);

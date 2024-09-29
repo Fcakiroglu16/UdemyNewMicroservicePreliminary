@@ -6,9 +6,6 @@ public class CreateDiscountCommandValidator : AbstractValidator<CreateDiscountCo
 {
     public CreateDiscountCommandValidator()
     {
-        RuleFor(x => x.UserId)
-            .NotEmpty().WithMessage("{PropertyName} cannot be empty");
-
         RuleFor(x => x.Code)
             .NotEmpty().WithMessage("{PropertyName} cannot be empty")
             .Length(5, 20).WithMessage("{PropertyName} must be between 5 and 20 characters");

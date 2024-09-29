@@ -7,10 +7,10 @@ public static class DeleteBasketEndpoint
 {
     public static RouteGroupBuilder MapDeleteBasketEndpoint(this RouteGroupBuilder group)
     {
-        group.MapDelete("/{userId}",
-                async (IMediator mediator, string userId) =>
+        group.MapDelete("/{courseId}",
+                async (IMediator mediator, Guid courseId) =>
                 {
-                    var command = new DeleteBasketCommand(userId);
+                    var command = new DeleteBasketCommand(courseId);
                     var result = await mediator.Send(command);
                     return result.ToActionResult();
                 })

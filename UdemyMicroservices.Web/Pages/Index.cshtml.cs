@@ -7,7 +7,7 @@ namespace UdemyMicroservices.Web.Pages;
 
 public class IndexModel(CatalogService catalogService) : BasePageModel
 {
-    public List<CourseViewModel>? Courses { get; set; }
+    public List<CourseViewModel>? Courses { get; set; } = new();
 
     public async Task<IActionResult> OnGet()
     {

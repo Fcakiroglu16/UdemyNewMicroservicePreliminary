@@ -29,9 +29,7 @@ public class DeleteBasketCommandHandler(IDistributedCache distributedCache, IIde
         var basketItemToDelete = currentBasket!.BasketItems.FirstOrDefault(x => x.CourseId == request.CourseId);
 
         if (basketItemToDelete is null)
-        {
             return ServiceResult.Error("basket Item not found", "", HttpStatusCode.NotFound);
-        }
 
 
         currentBasket.BasketItems.Remove(basketItemToDelete!);

@@ -1,4 +1,3 @@
-﻿namespace UdemyMicroservices.Web.Pages.Basket.Dto
-{
-    public record GetDiscountByCouponResponse(float Rate);
-}
+﻿namespace UdemyMicroservices.Web.Pages.Basket.Dto;
+
+public record GetDiscountByCouponResponse(float Rate);

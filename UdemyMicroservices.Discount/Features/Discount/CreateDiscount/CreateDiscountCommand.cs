@@ -1,5 +1,4 @@
-﻿using System.Security.Principal;
-using MassTransit;
+﻿using MassTransit;
 using MediatR;
 using UdemyMicroservices.Discount.Repositories;
 using UdemyMicroservices.Shared;

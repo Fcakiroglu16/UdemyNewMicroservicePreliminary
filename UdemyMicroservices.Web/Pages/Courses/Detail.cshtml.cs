@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using UdemyMicroservices.Web.Pages.Basket.Dto;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;

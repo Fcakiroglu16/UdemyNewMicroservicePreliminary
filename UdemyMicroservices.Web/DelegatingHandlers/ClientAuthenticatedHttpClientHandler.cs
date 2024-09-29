@@ -1,6 +1,6 @@
-﻿using IdentityModel.Client;
+﻿using System.Net.Http.Headers;
+using IdentityModel.Client;
 using Microsoft.Extensions.Caching.Distributed;
-using System.Net.Http.Headers;
 using UdemyMicroservices.Web.Options;
 
 namespace UdemyMicroservices.Web.DelegatingHandlers;
@@ -16,13 +16,11 @@ public class ClientAuthenticatedHttpClientHandler(
         CancellationToken cancellationToken)
     {
         if (contextAccessor!.HttpContext!.User.Identity!.IsAuthenticated)
-        {
             return await base.SendAsync(request, cancellationToken);
-        }
 
 
         var responseAsDiscovery =
-            await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address, cancellationToken: cancellationToken);
+            await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address, cancellationToken);
 
 
         if (responseAsDiscovery.IsError)
@@ -35,12 +33,12 @@ public class ClientAuthenticatedHttpClientHandler(
         {
             Address = responseAsDiscovery.TokenEndpoint,
             ClientId = identityOption.Tenant.ClientId,
-            ClientSecret = identityOption.Tenant.ClientSecret,
+            ClientSecret = identityOption.Tenant.ClientSecret
             //Scope = "webshoppingagg.fullpermission"
         };
 
         var tokenResponse =
-            await client.RequestClientCredentialsTokenAsync(tokenRequest, cancellationToken: cancellationToken);
+            await client.RequestClientCredentialsTokenAsync(tokenRequest, cancellationToken);
 
         if (tokenResponse.IsError)
         {
@@ -50,7 +48,7 @@ public class ClientAuthenticatedHttpClientHandler(
 
 
         await distributedCache.SetStringAsync("AccessToken", tokenResponse.AccessToken!,
-            new DistributedCacheEntryOptions() { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) },
+            new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) },
             cancellationToken);
 
 

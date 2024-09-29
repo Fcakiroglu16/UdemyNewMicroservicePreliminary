@@ -1,36 +1,34 @@
-﻿namespace UdemyMicroservices.Web.Pages.Basket
+﻿namespace UdemyMicroservices.Web.Pages.Basket;
+
+public record BasketViewModel
 {
-    public record BasketViewModel
+    public List<BasketViewModelItem> Items { get; set; } = [];
+
+    private decimal TotalPrice { get; set; }
+
+    private decimal? TotalPriceByDiscountRate { get; set; }
+    public string? Coupon { get; set; }
+    public float? DiscountRate { get; set; }
+
+    public bool IsApplyDiscountCoupon => DiscountRate is > 0 && !string.IsNullOrEmpty(Coupon);
+
+
+    public decimal GetTotalPrice()
     {
-        public List<BasketViewModelItem> Items { get; set; } = [];
-
-        private decimal TotalPrice { get; set; }
-
-        private decimal? TotalPriceByDiscountRate { get; set; }
-        public string? Coupon { get; set; }
-        public float? DiscountRate { get; set; }
-
-
-        public decimal GetTotalPrice()
-        {
-            return IsApplyDiscountCoupon ? TotalPriceByDiscountRate!.Value : TotalPrice;
-        }
-
-
-        public void SetPrice(decimal totalPrice, decimal? totalPriceByDiscountRate)
-        {
-            TotalPrice = totalPrice;
-            TotalPriceByDiscountRate = totalPriceByDiscountRate;
-        }
-
-        public bool IsApplyDiscountCoupon => DiscountRate is > 0 && !string.IsNullOrEmpty(Coupon);
+        return IsApplyDiscountCoupon ? TotalPriceByDiscountRate!.Value : TotalPrice;
     }
 
 
-    public record BasketViewModelItem(
-        Guid Id,
-        string? PictureUrl,
-        string Name,
-        decimal Price,
-        decimal? PriceWithDiscountRate);
+    public void SetPrice(decimal totalPrice, decimal? totalPriceByDiscountRate)
+    {
+        TotalPrice = totalPrice;
+        TotalPriceByDiscountRate = totalPriceByDiscountRate;
+    }
 }
+
+public record BasketViewModelItem(
+    Guid Id,
+    string? PictureUrl,
+    string Name,
+    decimal Price,
+    decimal? PriceWithDiscountRate);

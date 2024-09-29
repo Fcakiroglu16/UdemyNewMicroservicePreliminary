@@ -2,11 +2,10 @@
 using UdemyMicroservices.Web.Pages.Basket.Dto;
 using UdemyMicroservices.Web.ViewModels;
 
-namespace UdemyMicroservices.Web.Services.Refit
+namespace UdemyMicroservices.Web.Services.Refit;
+
+public interface IDiscountService
 {
-    public interface IDiscountService
-    {
-        [Get("/v1/discount/{coupon}")]
-        Task<ApiResponse<ServiceResult<GetDiscountByCouponResponse>>> GetDiscountByCoupon(string coupon);
-    }
+    [Get("/v1/discount/{coupon}")]
+    Task<ApiResponse<ServiceResult<GetDiscountByCouponResponse>>> GetDiscountByCoupon(string coupon);
 }

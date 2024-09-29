@@ -46,10 +46,7 @@ public class AddBasketCommandHandler(IDistributedCache distributedCache, IIdenti
         }
 
 
-        if (currentBasket.IsApplyDiscountRate)
-        {
-            currentBasket.ApplyAvailableDiscount();
-        }
+        if (currentBasket.IsApplyDiscountRate) currentBasket.ApplyAvailableDiscount();
 
 
         var basketAsJson = JsonSerializer.Serialize(currentBasket);

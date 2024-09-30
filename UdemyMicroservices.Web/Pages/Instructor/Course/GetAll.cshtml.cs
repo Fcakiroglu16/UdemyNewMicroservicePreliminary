@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UdemyMicroservices.Web.Constants;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course;
 
+[Authorize(Roles = RoleConstants.Instructor)]
 public class GetAllCoursesModel(CatalogService catalogService) : BasePageModel
 {
     public List<CourseViewModel>? CourseList { get; set; }

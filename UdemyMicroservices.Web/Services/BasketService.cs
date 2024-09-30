@@ -70,4 +70,17 @@ public class BasketService(
 
         return ServiceResult.Success();
     }
+
+
+    public async Task<ServiceResult> RemoveDiscountAsync()
+    {
+        var response = await basketService.RemoveDiscountRateAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            logger.LogProblemDetails(response.Error);
+            return ServiceResult.Fail("An error occurred while removing the discount");
+        }
+
+        return ServiceResult.Success();
+    }
 }

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 
 namespace UdemyMicroservices.Web.Pages.Auth;
 
+[AllowAnonymous]
 public class SignInModel(SignInService signInService) : PageModel
 {
     [BindProperty] public SignInViewModel SignInViewModel { get; set; } = SignInViewModel.ExampleModel;

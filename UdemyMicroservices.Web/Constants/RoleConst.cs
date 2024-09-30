@@ -2,5 +2,5 @@
 
 public static class RoleConstants
 {
-    public const string Instructor = "Instructor";
+    public const string Instructor = "instructor";
 }

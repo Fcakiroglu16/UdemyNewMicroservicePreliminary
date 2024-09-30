@@ -3,6 +3,7 @@
 @{
     var index = 1;
 }
+
 <table class="table table-striped">
     <thead class="table-dark">
     <tr>
@@ -18,7 +19,7 @@
     @if (Model.Basket.Items.Count == 0)
     {
         <tr>
-            <td colspan="4" class="text-center">No items in the basket.</td>
+            <td colspan="5" class="text-center">No items in the basket.</td>
         </tr>
     }
 
@@ -71,8 +72,9 @@
 
 @if (Model.Basket.IsApplyDiscountCoupon)
 {
-    <div class="alert alert-success" role="alert">
-        Discount coupon[@Model.Basket.Coupon] applied successfully.
+    <div class="alert alert-success d-flex justify-content-between" role="alert">
+        <span>Discount coupon applied successfully.</span>
+        <a asp-page-handler="RemoveDiscount" class="btn btn-warning btn-sm">Remove Coupon (@Model.Basket.Coupon)</a>
     </div>
 }
 

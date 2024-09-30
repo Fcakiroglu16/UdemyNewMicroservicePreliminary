@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using UdemyMicroservices.Web.Constants;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor.Course;
 
+[Authorize(Roles = RoleConstants.Instructor)]
 public class UpdateCourseModel(CatalogService catalogService) : BasePageModel
 {
     [BindProperty] public UpdateCourseViewModel ViewModel { get; set; } = UpdateCourseViewModel.Empty;

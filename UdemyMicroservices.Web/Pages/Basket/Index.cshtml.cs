@@ -48,40 +48,27 @@ public class IndexModel(CatalogService catalogService, BasketService basketServi
 
         var result = await basketService.CreateOrUpdateBasketAsync(createOrUpdateBasket);
 
-        if (result.IsFail) return ErrorPage(result);
-
-
-        return RedirectToPage("index");
+        return result.IsFail ? ErrorPage(result, "Index") : SuccessPage("course added to basket", "Index");
     }
 
     public async Task<IActionResult> OnGetDeleteAsync(Guid courseId)
     {
         var result = await basketService.DeleteBasketAsync(courseId);
 
-        if (result.IsFail) return ErrorPage(result);
-
-        return RedirectToPage("Index");
+        return result.IsFail ? ErrorPage(result, "Index") : SuccessPage("course deleted from basket", "Index");
     }
 
     public async Task<IActionResult> OnPostApplyDiscountAsync(string couponCode)
     {
         var response = await basketService.ApplyDiscountAsync(couponCode);
 
-        if (response.IsFail)
-        {
-            var basketsAsResult = await basketService.GetBasketsAsync();
+        return response.IsFail ? ErrorPage(response, "Index") : SuccessPage("discount coupon applied", "Index");
+    }
 
-            if (basketsAsResult.IsFail) return ErrorPage(basketsAsResult);
+    public async Task<IActionResult> OnGetRemoveDiscountAsync()
+    {
+        var response = await basketService.RemoveDiscountAsync();
 
-
-            foreach (var basketItem in basketsAsResult.Data!.BasketItems)
-                Basket.Items.Add(new BasketViewModelItem(basketItem.CourseId, basketItem.CoursePictureUrl,
-                    basketItem.CourseName,
-                    basketItem.CoursePrice, basketItem.CoursePriceByApplyDiscountRate));
-
-            return ErrorPage(response);
-        }
-
-        return RedirectToPage("Index");
+        return response.IsFail ? ErrorPage(response, "Index") : SuccessPage("discount coupon removed", "Index");
     }
 }

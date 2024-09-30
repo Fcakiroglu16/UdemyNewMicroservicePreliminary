@@ -1,11 +1,15 @@
-﻿@using UdemyMicroservices.Web.ViewModels
+﻿
 @{
-    // var errorTitle = ViewBag.errorTitle as string;
-    var errorModel = ViewData["Error"] as PageErrorModel;
+ 
+
+    var errorTitle = TempData["Error_Title"];
+    var errorDescription = TempData["Error_Detail"];
+
+ 
 }
 
 
-@if (errorModel is not null)
+@if (errorTitle is not null)
 {
     <div class="toast-container position-fixed bottom-0 end-0 p-3 ">
 
@@ -13,10 +17,10 @@
         <div id="errorToast" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
                 <div class="toast-body">
-                    <div>@errorModel.Title</div>
-                    @if (errorModel.HasDescription)
+                    <div>@errorTitle</div>
+                    @if (errorDescription is not null)
                     {
-                        <div>@errorModel.Description</div>
+                        <div>@errorDescription</div>
                     }
                 </div>
                 <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>

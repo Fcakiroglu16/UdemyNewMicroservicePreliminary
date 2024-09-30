@@ -32,7 +32,7 @@ public record BasketDto(string UserId, List<BasketItemDto> BasketItems)
     }
 
 
-    public void ClearDiscount()
+    public void RemoveDiscount()
     {
         DiscountRate = null;
         Coupon = null;

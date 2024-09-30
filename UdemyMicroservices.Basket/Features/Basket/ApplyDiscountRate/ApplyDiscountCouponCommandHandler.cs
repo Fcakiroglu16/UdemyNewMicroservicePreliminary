@@ -7,10 +7,10 @@ using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Basket.Features.Basket.ApplyDiscountRate;
 
-public class ApplyDiscountRateCommandHandler(IIdentityService identityService, IDistributedCache distributedCache)
-    : IRequestHandler<ApplyDiscountRateCommand, ServiceResult>
+public class ApplyDiscountCouponCommandHandler(IIdentityService identityService, IDistributedCache distributedCache)
+    : IRequestHandler<ApplyDiscountCouponCommand, ServiceResult>
 {
-    public async Task<ServiceResult> Handle(ApplyDiscountRateCommand request, CancellationToken cancellationToken)
+    public async Task<ServiceResult> Handle(ApplyDiscountCouponCommand request, CancellationToken cancellationToken)
     {
         var cacheKey = string.Format(BasketConst.BasketCacheKey, identityService.GetUserId);
         var hasBasket = await distributedCache.GetStringAsync(cacheKey, cancellationToken);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
@@ -5,6 +6,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages;
 
+[AllowAnonymous]
 public class IndexModel(CatalogService catalogService) : BasePageModel
 {
     public List<CourseViewModel>? Courses { get; set; } = new();

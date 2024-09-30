@@ -50,7 +50,6 @@ builder.Services
 
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<FileServiceOption>>().Value);
 
-
 builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityOption>>().Value);
 
 
@@ -64,6 +63,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         opts.ExpireTimeSpan = TimeSpan.FromDays(60);
         opts.SlidingExpiration = true;
         opts.Cookie.Name = "webCookie";
+        opts.AccessDeniedPath = "/AccessDenied";
     });
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 builder.Services.AddScoped<ClientAuthenticatedHttpClientHandler>();

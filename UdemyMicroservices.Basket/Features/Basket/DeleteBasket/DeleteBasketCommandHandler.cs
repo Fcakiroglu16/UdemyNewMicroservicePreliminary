@@ -32,14 +32,14 @@ public class DeleteBasketCommandHandler(IDistributedCache distributedCache, IIde
             return ServiceResult.Error("basket Item not found", "", HttpStatusCode.NotFound);
 
 
-        currentBasket.BasketItems.Remove(basketItemToDelete!);
-
-
-        if (currentBasket.BasketItems.Count == 1)
+        if (currentBasket!.BasketItems.Count == 1)
         {
             await distributedCache.RemoveAsync(cacheKey, cancellationToken);
             return ServiceResult.SuccessAsNoContent();
         }
+
+
+        currentBasket.BasketItems.Remove(basketItemToDelete!);
 
 
         var basketAsJson = JsonSerializer.Serialize(currentBasket);

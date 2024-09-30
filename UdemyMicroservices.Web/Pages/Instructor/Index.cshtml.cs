@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using UdemyMicroservices.Web.Constants;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Instructor;
 
+[Authorize(Roles = RoleConstants.Instructor)]
 public class IndexModel(CatalogService catalogService) : PageModel
 {
     public CourseStatisticsViewModel? CourseStatisticsViewModel { get; set; }

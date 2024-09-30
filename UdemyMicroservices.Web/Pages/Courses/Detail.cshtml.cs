@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;
 using UdemyMicroservices.Web.Services;
@@ -5,6 +6,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Courses;
 
+[AllowAnonymous]
 public class DetailModel(CatalogService catalogService) : BasePageModel
 {
     public CourseViewModel? Course { get; set; }

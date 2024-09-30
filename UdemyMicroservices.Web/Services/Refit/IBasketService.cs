@@ -10,8 +10,13 @@ public interface IBasketService
     Task<ApiResponse<ServiceResult>> AddBasketAsync(AddBasketRequest request);
 
 
-    [Post("/v1/basket/ApplyDiscountRate/{coupon}/{discountRate}")]
+    [Post("/v1/basket/ApplyDiscountCoupon/{coupon}/{discountRate}")]
     Task<ApiResponse<ServiceResult>> ApplyDiscountRateAsync(string coupon, float discountRate);
+
+
+    [Delete("/v1/basket/RemoveDiscountCoupon")]
+    Task<ApiResponse<ServiceResult>> RemoveDiscountRateAsync();
+
 
     [Get("/v1/basket")]
     Task<ApiResponse<ServiceResult<BasketResponse>>> GetBasketsAsync();

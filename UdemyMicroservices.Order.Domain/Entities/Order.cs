@@ -5,16 +5,7 @@ namespace UdemyMicroservices.Order.Domain.Entities;
 
 public class Order : BaseEntity<Guid>
 {
-    private Order()
-    {
-    }
-
-    public Order(string buyerId, float? discountRate, Address address)
-    {
-        SetOrder(buyerId, discountRate, address);
-    }
-
-    public string OrderCode { get; private set; }
+    public string OrderCode { get; private set; } = default!;
 
     public DateTime OrderDate { get; private set; }
     public string BuyerId { get; private set; } = default!;
@@ -24,6 +15,10 @@ public class Order : BaseEntity<Guid>
     public float? DiscountRate { get; private set; }
     public ICollection<OrderItem> OrderItems { get; } = [];
     public Address Address { get; set; } = default!;
+
+    public OrderStatus Status { get; set; }
+
+    public Guid? PaymentId { get; set; }
 
     private static string GenerateOrderCode()
     {
@@ -35,7 +30,7 @@ public class Order : BaseEntity<Guid>
         return orderCode.ToString(); // Sonuç olarak string döndürülür.
     }
 
-    public void SetOrder(string buyerId, float? discountRate, Address address)
+    public static Order CreateUnPaidOrder(string buyerId, float? discountRate, Address address)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(buyerId);
         ArgumentNullException.ThrowIfNull(address);
@@ -43,13 +38,16 @@ public class Order : BaseEntity<Guid>
         if (discountRate is < 0 or > 100)
             throw new ArgumentException("Discount rate must be between 0 and 100.");
 
-        BuyerId = buyerId;
-        Id = NewId.NextGuid();
-        OrderDate = DateTime.Now;
-        DiscountRate = discountRate;
-        Address = address;
-        OrderCode = GenerateOrderCode();
-        TotalPrice = 0; // Initial total price is zero
+        return new Order
+        {
+            BuyerId = buyerId,
+            Id = NewId.NextGuid(),
+            OrderDate = DateTime.Now,
+            DiscountRate = discountRate,
+            Address = address,
+            OrderCode = GenerateOrderCode(),
+            Status = OrderStatus.WaitingForPayment
+        };
     }
 
     // Business method to add an OrderItem
@@ -87,7 +85,7 @@ public class Order : BaseEntity<Guid>
 
 
     // Business method to check if the order has a specific product
-    public bool HasProduct(string productId)
+    public bool HasProduct(Guid productId)
     {
         return OrderItems.Any(item => item.ProductId == productId);
     }
@@ -98,4 +96,17 @@ public class Order : BaseEntity<Guid>
     {
         return OrderItems.Count;
     }
+
+    public void SetPaidStatus(Guid paymentId)
+    {
+        PaymentId = paymentId;
+        Status = OrderStatus.Paid;
+    }
+}
+
+public enum OrderStatus
+{
+    WaitingForPayment,
+    Paid,
+    Cancelled
 }

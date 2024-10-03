@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Refit;
+using UdemyMicroservices.Shared.Extensions;
 using UdemyMicroservices.Web.Extensions;
 using UdemyMicroservices.Web.Pages.Instructor.Course.Dto;
 using UdemyMicroservices.Web.Pages.Instructor.Course.ViewModel;

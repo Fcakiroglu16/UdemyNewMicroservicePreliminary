@@ -9,4 +9,9 @@ public record BasketResponse(
     public decimal TotalPrice => BasketItems.Sum(x => x.CoursePrice);
 
     public decimal? TotalPriceByApplyDiscountRate => BasketItems.Sum(x => x.CoursePriceByApplyDiscountRate);
+
+    public decimal CurrentTotalPrice()
+    {
+        return DiscountRate is not null ? TotalPriceByApplyDiscountRate!.Value : TotalPrice;
+    }
 }

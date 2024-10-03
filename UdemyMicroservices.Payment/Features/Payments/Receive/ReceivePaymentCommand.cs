@@ -7,5 +7,5 @@ public record ReceivePaymentCommand(
     string CardNumber,
     string CardHolderName,
     string ExpiryDate,
-    string CVV,
+    string Cvv,
     decimal Amount) : IRequestByServiceResult<ReceivePaymentResponse>;

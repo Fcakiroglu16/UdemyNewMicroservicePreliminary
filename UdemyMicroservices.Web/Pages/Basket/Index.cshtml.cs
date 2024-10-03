@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UdemyMicroservices.Web.Pages.Basket.Dto;
+using UdemyMicroservices.Web.Pages.Basket.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 

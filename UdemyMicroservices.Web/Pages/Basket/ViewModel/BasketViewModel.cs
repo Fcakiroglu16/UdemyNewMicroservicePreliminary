@@ -1,4 +1,4 @@
-﻿namespace UdemyMicroservices.Web.Pages.Basket;
+﻿namespace UdemyMicroservices.Web.Pages.Basket.ViewModel;
 
 public record BasketViewModel
 {

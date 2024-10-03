@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using UdemyMicroservices.Shared.Options;
 using UdemyMicroservices.Shared.Services;
 
@@ -27,6 +28,15 @@ public static class ServiceCollectionExt
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+
+        services
+            .AddOptions<MicroserviceOption>()
+            .BindConfiguration(nameof(MicroserviceOption))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+
+        services.AddSingleton(sp => sp.GetRequiredService<IOptions<MicroserviceOption>>().Value);
 
         return services;
     }

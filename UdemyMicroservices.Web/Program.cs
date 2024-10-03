@@ -91,8 +91,15 @@ builder.Services.AddRefitClient<IDiscountService>()
         c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 
+builder.Services.AddRefitClient<IOrderService>()
+    .ConfigureHttpClient(
+        c => c.BaseAddress = new Uri(builder.Configuration.GetSection("GatewayServiceOption")["Address"]!))
+    .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+
+
 builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<BasketService>();
+builder.Services.AddScoped<OrderService>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {

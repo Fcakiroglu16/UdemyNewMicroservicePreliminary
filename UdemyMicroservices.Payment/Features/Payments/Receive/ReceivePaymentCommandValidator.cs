@@ -24,7 +24,7 @@ public class ReceivePaymentCommandValidator : AbstractValidator<ReceivePaymentCo
             .Matches(@"^(0[1-9]|1[0-2])\/?([0-9]{2})$").WithMessage("Expiry date must be in MM/YY format.");
 
         // CVV - Must be exactly 3 or 4 digits
-        RuleFor(x => x.CVV)
+        RuleFor(x => x.Cvv)
             .Matches(@"^\d{3,4}$").WithMessage("CVV must be 3 or 4 digits.");
 
         // Amount - Must be greater than zero

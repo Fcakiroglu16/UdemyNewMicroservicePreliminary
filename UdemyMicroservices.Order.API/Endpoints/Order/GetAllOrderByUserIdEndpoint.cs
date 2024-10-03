@@ -9,13 +9,13 @@ public static class GetAllOrderByUserIdEndpoint
 {
     public static RouteGroupBuilder MapGetAllOrderByUserIdEndpoint(this RouteGroupBuilder group)
     {
-        group.MapGet("/userId",
+        group.MapGet("/GetAllByUserId",
                 async ([FromServices] IMediator mediator) =>
                 {
                     var result = await mediator.Send(new GetAllOrderByUserIdQuery());
                     return result.ToActionResult();
                 })
-            .WithName("GetAllOrderByUserId")
+            .WithName("GetAllByUserId")
             .Produces(StatusCodes.Status200OK)
             .MapToApiVersion(1.0);
 

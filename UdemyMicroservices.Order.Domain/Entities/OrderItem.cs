@@ -6,9 +6,9 @@ public class OrderItem : BaseEntity<int>
     {
     }
 
-    public OrderItem(string productId, string productName, decimal productPrice, float? discountRate)
+    public OrderItem(Guid productId, string productName, decimal productPrice)
     {
-        SetItem(productId, productName, productPrice, discountRate);
+        SetItem(productId, productName, productPrice);
     }
     //// Constructor to initialize an OrderItem
     //public OrderItem(string productId, string productName, decimal productPrice)
@@ -19,18 +19,15 @@ public class OrderItem : BaseEntity<int>
     // Business method to set or update product details
 
 
-    public string ProductId { get; private set; } = default!;
+    public Guid ProductId { get; private set; } = default!;
     public string ProductName { get; private set; } = default!;
     public decimal UnitPrice { get; private set; }
 
     public Guid OrderId { get; set; }
     public Order Order { get; set; } = default!;
 
-    public void SetItem(string productId, string productName, decimal productPrice, float? discountRate)
+    public void SetItem(Guid productId, string productName, decimal productPrice)
     {
-        if (string.IsNullOrWhiteSpace(productId))
-            throw new ArgumentException("ProductId cannot be empty.");
-
         if (string.IsNullOrWhiteSpace(productName))
             throw new ArgumentException("ProductName cannot be empty.");
 
@@ -39,12 +36,7 @@ public class OrderItem : BaseEntity<int>
 
         ProductId = productId;
         ProductName = productName;
-
-
-        if (discountRate.HasValue)
-            UnitPrice = productPrice - productPrice * (decimal)discountRate / 100;
-        else
-            UnitPrice = productPrice;
+        UnitPrice = productPrice;
     }
 
 

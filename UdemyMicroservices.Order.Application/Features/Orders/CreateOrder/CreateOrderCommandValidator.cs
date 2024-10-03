@@ -7,9 +7,6 @@ public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>
 {
     public CreateOrderCommandValidator()
     {
-        RuleFor(x => x.BuyerId)
-            .NotEmpty().WithMessage("{PropertyName} cannot be empty");
-
         RuleFor(x => x.DiscountRate)
             .GreaterThanOrEqualTo(0).When(x => x.DiscountRate.HasValue)
             .WithMessage("{PropertyName} must be a positive number or zero");

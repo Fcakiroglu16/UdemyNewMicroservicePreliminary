@@ -16,10 +16,13 @@ namespace UdemyMicroservices.Order.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OrderCode = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    BuyerId = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    BuyerId = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TotalPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    DiscountRate = table.Column<float>(type: "real", nullable: true)
+                    DiscountRate = table.Column<float>(type: "real", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    PaymentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,7 +58,7 @@ namespace UdemyMicroservices.Order.Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 100, nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     UnitPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)

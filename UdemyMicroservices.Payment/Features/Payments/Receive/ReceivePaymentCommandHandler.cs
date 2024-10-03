@@ -14,12 +14,12 @@ public class ReceivePaymentCommandHandler(AppDbContext context, IIdentityService
     {
         var newPayment = new Repositories.Payment(identityService.GetUserId, request.OrderCode, request.Amount);
 
+
         var processResult = await ExternalPaymentProcessAsync(request.CardNumber, request.CardHolderName,
             request.ExpiryDate,
-            request.CVV,
+            request.Cvv,
             request.Amount);
 
-        await context.Payments.AddAsync(newPayment, cancellationToken);
 
         if (!processResult)
         {
@@ -32,6 +32,8 @@ public class ReceivePaymentCommandHandler(AppDbContext context, IIdentityService
         }
 
         newPayment.SetSuccessStatus();
+
+        await context.Payments.AddAsync(newPayment, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
         return ServiceResult<ReceivePaymentResponse>.SuccessAsOk(new ReceivePaymentResponse(newPayment.Id));
     }

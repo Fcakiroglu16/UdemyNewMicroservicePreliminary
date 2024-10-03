@@ -1,15 +1,15 @@
 ﻿using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Refit;
-using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
-namespace UdemyMicroservices.Web.Extensions;
+namespace UdemyMicroservices.Shared.Extensions;
 
 public static class ProblemDetailsExtensions
 {
     // Extension method for logging ProblemDetails
-    public static void LogProblemDetails(this ILogger logger, ApiException apiException)
+    public static void LogProblemDetails(this ILogger logger, ApiException? apiException)
     {
-        if (string.IsNullOrEmpty(apiException.Content))
+        if (string.IsNullOrEmpty(apiException!.Content))
         {
             logger.LogError(apiException.Message);
             return;

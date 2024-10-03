@@ -1,4 +1,4 @@
-﻿using UdemyMicroservices.Web.Extensions;
+﻿using UdemyMicroservices.Shared.Extensions;
 using UdemyMicroservices.Web.Pages.Basket.Dto;
 using UdemyMicroservices.Web.Services.Refit;
 using UdemyMicroservices.Web.ViewModels;

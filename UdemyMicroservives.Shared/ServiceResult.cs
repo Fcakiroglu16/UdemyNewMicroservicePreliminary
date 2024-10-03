@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
+using Refit;
+using ProblemDetails = Microsoft.AspNetCore.Mvc.ProblemDetails;
 
 namespace UdemyMicroservices.Shared;
 
@@ -36,6 +38,28 @@ public class ServiceResult
     }
 
 
+    public static ServiceResult ErrorFromProblemDetails(ApiException? exception)
+    {
+        if (string.IsNullOrEmpty(exception!.Content))
+            return new ServiceResult
+            {
+                Fail = new ProblemDetails
+                {
+                    Title = exception.Message
+                }
+            };
+
+
+        return new ServiceResult
+        {
+            Fail = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            })
+        };
+    }
+
+
     // Static factory method for error with ProblemDetails
     public static ServiceResult Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {
@@ -60,6 +84,21 @@ public class ServiceResult
             }
         };
     }
+
+
+    public static ServiceResult Error(string title, HttpStatusCode statusCode)
+    {
+        return new ServiceResult
+        {
+            Status = statusCode,
+            Fail = new ProblemDetails
+            {
+                Title = title,
+                Status = (int)statusCode
+            }
+        };
+    }
+
 
     // Static factory method for validation errors
     public static ServiceResult ValidationError(IDictionary<string, object?> errors)
@@ -103,6 +142,33 @@ public class ServiceResult<T> : ServiceResult
         };
     }
 
+
+    public new static ServiceResult<T> ErrorFromProblemDetails(ApiException exception)
+    {
+        if (string.IsNullOrEmpty(exception.Content))
+            return new ServiceResult<T>
+            {
+                Fail = new ProblemDetails
+                {
+                    Title = exception.Message
+                },
+                Status = exception.StatusCode
+            };
+
+
+        var problemDetails = JsonSerializer.Deserialize<ProblemDetails>(exception.Content, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        return new ServiceResult<T>
+        {
+            Fail = problemDetails,
+            Status = exception.StatusCode
+        };
+    }
+
+
     // Static factory method for error with ProblemDetails (inherits from base class)
     public new static ServiceResult<T> Error(ProblemDetails problemDetails, HttpStatusCode statusCode)
     {
@@ -139,6 +205,19 @@ public class ServiceResult<T> : ServiceResult
                 Title = "Validation errors occurred",
                 Detail = "See the errors property for details",
                 Extensions = errors
+            }
+        };
+    }
+
+    public new static ServiceResult<T> Error(string title, HttpStatusCode statusCode)
+    {
+        return new ServiceResult<T>
+        {
+            Status = statusCode,
+            Fail = new ProblemDetails
+            {
+                Title = title,
+                Status = (int)statusCode
             }
         };
     }

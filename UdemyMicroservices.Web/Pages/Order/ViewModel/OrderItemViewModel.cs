@@ -1,4 +1,4 @@
-﻿namespace UdemyMicroservices.Order.Application.Features.Orders.Dto;
+﻿namespace UdemyMicroservices.Web.Pages.Order.Dto;
 
 public record OrderItemDto(
     Guid ProductId,

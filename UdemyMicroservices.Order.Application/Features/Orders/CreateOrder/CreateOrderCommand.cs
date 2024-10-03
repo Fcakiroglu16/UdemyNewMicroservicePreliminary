@@ -4,8 +4,8 @@ using UdemyMicroservices.Shared;
 namespace UdemyMicroservices.Order.Application.Features.Orders.CreateOrder;
 
 public record CreateOrderCommand(
-    string BuyerId,
     float? DiscountRate,
     AddressDto Address,
+    PaymentDto Payment,
     List<OrderItemDto> OrderItems)
-    : IRequestByServiceResult<Guid>;
+    : IRequestByServiceResult;

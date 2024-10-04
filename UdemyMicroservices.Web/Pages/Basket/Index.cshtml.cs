@@ -26,9 +26,9 @@ public class IndexModel(CatalogService catalogService, BasketService basketServi
 
 
         foreach (var basketItem in basketsAsResult.Data!.BasketItems)
-            Basket.Items.Add(new BasketViewModelItem(basketItem.CourseId, basketItem.CoursePictureUrl,
-                basketItem.CourseName,
-                basketItem.CoursePrice, basketItem.CoursePriceByApplyDiscountRate));
+            Basket.Items.Add(new BasketViewModelItem(basketItem.Id, basketItem.PictureUrl,
+                basketItem.Name,
+                basketItem.Price, basketItem.PriceByApplyDiscountRate));
 
         return Page();
     }
@@ -39,12 +39,12 @@ public class IndexModel(CatalogService catalogService, BasketService basketServi
         var course = await catalogService.GetCourse(courseId);
 
 
-        var basketItem = new BasketItemDto(course.Data!.Id, course.Data.Name, course.Data.PictureUrl,
-            course.Data.Price, null);
+        //var basketItem = new BasketItemDto(course.Data!.Id, course.Data.Name, course.Data.PictureUrl,
+        //    course.Data.Price, null,);
 
 
-        var createOrUpdateBasket = new AddBasketRequest(basketItem.CourseId, basketItem.CourseName,
-            basketItem.CoursePictureUrl, basketItem.CoursePrice);
+        var createOrUpdateBasket = new AddBasketRequest(course.Data!.Id, course.Data.Name,
+            course.Data.PictureUrl, course.Data.Price);
 
 
         var result = await basketService.CreateOrUpdateBasketAsync(createOrUpdateBasket);

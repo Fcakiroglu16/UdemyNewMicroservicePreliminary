@@ -1,4 +1,4 @@
-services:
+﻿services:
 
   mongo.db.catalog:
     image: mongo:8.0-rc
@@ -100,11 +100,22 @@ services:
       - "5432:5432"
     volumes:
       - keycloak-postgres-data:/var/lib/postgresql/data
-
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"  # AMQP protokolü için
+      - "15672:15672" # Yönetim paneli için
+    environment:
+      RABBITMQ_DEFAULT_USER: ${username}
+      RABBITMQ_DEFAULT_PASS: ${password}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq  # RabbitMQ verilerinin kalıcılığı için
 
 volumes:
   mongo-discount-data:
   mongo-catalog-data:
   redis-basket-data: 
   order-sqlserver-data:
-  keycloak-postgres-data:  
+  keycloak-postgres-data: 
+  rabbitmq_data:  

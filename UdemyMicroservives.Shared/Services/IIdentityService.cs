@@ -2,7 +2,7 @@
 
 public interface IIdentityService
 {
-    public string GetUserId { get; }
+    public Guid GetUserId { get; }
 
     public string GetFullName { get; }
 }

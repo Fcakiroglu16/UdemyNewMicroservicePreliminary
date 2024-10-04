@@ -34,8 +34,9 @@ public static class SeedData
                 new() { Id = NewId.NextGuid(), Name = "Personal Development" }
             };
 
+            var randomUserId = Guid.NewGuid();
 
-            categories.First().Courses =
+            List<Course> courses =
             [
                 new Course
                 {
@@ -43,10 +44,11 @@ public static class SeedData
                     Name = "C#",
                     Description = "C# Course",
                     Price = 100,
-                    UserId = "1",
-                    Picture = "1.jpg",
+                    UserId = randomUserId,
+
                     CreatedTime = DateTime.Now,
-                    Feature = new Feature { Duration = 10, Rating = 4 }
+                    Feature = new Feature { Duration = 10, Rating = 4, EducatorFullName = "Ahmet Yıldız" },
+                    CategoryId = categories.First().Id
                 },
 
                 new Course
@@ -55,10 +57,11 @@ public static class SeedData
                     Name = "Java",
                     Description = "Java Course",
                     Price = 200,
-                    UserId = "2",
-                    Picture = "2.jpg",
+                    UserId = randomUserId,
+
                     CreatedTime = DateTime.Now,
-                    Feature = new Feature { Duration = 20, Rating = 4 }
+                    Feature = new Feature { Duration = 20, Rating = 4, EducatorFullName = "Ahmet Yıldız" },
+                    CategoryId = categories.First().Id
                 },
 
                 new Course
@@ -67,62 +70,18 @@ public static class SeedData
                     Name = "Python",
                     Description = "Python Course",
                     Price = 300,
-                    UserId = "3",
-                    Picture = "3.jpg",
+                    UserId = randomUserId,
+
                     CreatedTime = DateTime.Now,
-                    Feature = new Feature { Duration = 30, Rating = 4 }
+                    Feature = new Feature { Duration = 30, Rating = 4, EducatorFullName = "Ahmet Yıldız" },
+                    CategoryId = categories.First().Id
                 }
             ];
 
 
             await context.Categories.AddRangeAsync(categories);
+            await context.Courses.AddRangeAsync(courses);
             await context.SaveChangesAsync();
         }
-
-        //if (!context.Courses.Any())
-        //{
-        //    var courses = new List<Course>
-        //    {
-        //        new Course
-        //        {
-        //            Id = NewId.NextGuid(),
-        //            Name = "C#",
-        //            Description = "C# Course",
-        //            Price = 100,
-        //            UserId = "1",
-        //            Picture = "1.jpg",
-        //            CreatedTime = DateTime.Now,
-        //            Feature = new Feature { Duration = 10, Rating = 4 },
-        //            CategoryId = context.Categories.First().Id
-        //        },
-        //        new Course
-        //        {
-        //            Id = NewId.NextGuid(),
-        //            Name = "Java",
-        //            Description = "Java Course",
-        //            Price = 200,
-        //            UserId = "2",
-        //            Picture = "2.jpg",
-        //            CreatedTime = DateTime.Now,
-        //            Feature = new Feature { Duration = 20, Rating = 4 },
-        //            CategoryId = context.Categories.First().Id
-        //        },
-        //        new Course
-        //        {
-        //            Id = NewId.NextGuid(),
-        //            Name = "Python",
-        //            Description = "Python Course",
-        //            Price = 300,
-        //            UserId = "3",
-        //            Picture = "3.jpg",
-        //            CreatedTime = DateTime.Now,
-        //            Feature = new Feature { Duration = 30, Rating = 4 },
-        //            CategoryId = context.Categories.First().Id
-        //        }
-        //    };
-
-        //    await context.Courses.AddRangeAsync(courses);
-        //    await context.SaveChangesAsync();
-        //}
     }
 }

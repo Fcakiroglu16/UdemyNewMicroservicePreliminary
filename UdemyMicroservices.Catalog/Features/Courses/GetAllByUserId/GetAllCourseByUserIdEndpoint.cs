@@ -6,7 +6,7 @@ using UdemyMicroservices.Shared;
 
 namespace UdemyMicroservices.Catalog.Features.Courses.GetAllByUserId;
 
-public record GetAllCourseByUserIdQuery(string UserId) : IRequest<ServiceResult<List<CourseDto>>>;
+public record GetAllCourseByUserIdQuery(Guid UserId) : IRequest<ServiceResult<List<CourseDto>>>;
 
 public class GetCourseByUserIdQueryHandler(AppDbContext context, IMapper mapper)
     : IRequestHandler<GetAllCourseByUserIdQuery, ServiceResult<List<CourseDto>>>
@@ -39,7 +39,7 @@ public static class GetAllCourseByUserIdEndpoint
     public static RouteGroupBuilder MapAllCourseByUserIdEndpoint(this RouteGroupBuilder group)
     {
         group.MapGet("/user/{userId}",
-                async (IMediator mediator, string userId) =>
+                async (IMediator mediator, Guid userId) =>
                     (await mediator.Send(new GetAllCourseByUserIdQuery(userId))).ToActionResult())
             .WithName("GetAllCourseByUserId")
             .Produces<List<CourseDto>>()

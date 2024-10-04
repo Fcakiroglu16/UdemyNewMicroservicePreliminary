@@ -11,10 +11,10 @@ using UdemyMicroservices.Web.ViewModels;
 namespace UdemyMicroservices.Web.Services;
 
 public class CatalogService(
-    IHttpContextAccessor httpContextAccessor,
     ICatalogService catalogService,
     IFileService fileService,
-    ILogger<CatalogService> logger)
+    ILogger<CatalogService> logger,
+    UserService userService)
 {
     public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesAsync()
     {
@@ -42,10 +42,7 @@ public class CatalogService(
 
     public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesByUserId()
     {
-        var userId = Guid.Parse(httpContextAccessor.HttpContext!.User.FindFirst(x => x.Type == "sub")!.Value);
-
-
-        var coursesAsResult = await catalogService.GetAllCoursesByUserId(userId);
+        var coursesAsResult = await catalogService.GetAllCoursesByUserId(userService.GetUserId);
 
         if (!coursesAsResult.IsSuccessStatusCode)
         {
@@ -104,7 +101,7 @@ public class CatalogService(
 
     public async Task<ServiceResult<CourseStatisticsViewModel>> GetCourseStatistic()
     {
-        var getAllCoursesAsResult = await catalogService.GetAllCourses();
+        var getAllCoursesAsResult = await catalogService.GetAllCoursesByUserId(userService.GetUserId);
 
 
         if (!getAllCoursesAsResult.IsSuccessStatusCode)

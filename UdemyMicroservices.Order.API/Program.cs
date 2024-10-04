@@ -1,6 +1,7 @@
 using Refit;
 using UdemyMicroservices.Catalog;
 using UdemyMicroservices.Order.API.Endpoints.Order;
+using UdemyMicroservices.Order.API.Extensions;
 using UdemyMicroservices.Order.Application.Contracts.refit;
 using UdemyMicroservices.Order.Application.DelegateHandlers;
 using UdemyMicroservices.Order.Persistence;
@@ -14,6 +15,7 @@ builder.Services.AddSwaggerServicesExt();
 builder.Services.AddCommonServicesExt(typeof(OrderApplicationAssembly));
 builder.Services.AddVersioningExt();
 builder.Services.AddPersistenceExt(builder.Configuration);
+builder.Services.AddMasstransitExt(builder.Configuration);
 
 builder.Services.AddScoped<AuthenticatedHttpClientHandler>();
 

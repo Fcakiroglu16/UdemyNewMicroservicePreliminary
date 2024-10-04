@@ -2,5 +2,5 @@
 
 public interface IOrderRepository : IGenericRepository<Domain.Entities.Order, Guid>
 {
-    Task<List<Domain.Entities.Order>> GetOrdersByUserIdAsync(string userId);
+    Task<List<Domain.Entities.Order>> GetOrdersByUserIdAsync(Guid userId);
 }

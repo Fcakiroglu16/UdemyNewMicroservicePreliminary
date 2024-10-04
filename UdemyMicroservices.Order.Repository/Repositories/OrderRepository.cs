@@ -7,7 +7,7 @@ namespace UdemyMicroservices.Order.Persistence.Repositories;
 internal class OrderRepository(AppDbContext context)
     : GenericRepository<Domain.Entities.Order, Guid>(context), IOrderRepository
 {
-    public Task<List<Domain.Entities.Order>> GetOrdersByUserIdAsync(string userId)
+    public Task<List<Domain.Entities.Order>> GetOrdersByUserIdAsync(Guid userId)
     {
         return Context.Orders.Include(x => x.OrderItems).Where(x => x.BuyerId == userId).ToListAsync();
     }

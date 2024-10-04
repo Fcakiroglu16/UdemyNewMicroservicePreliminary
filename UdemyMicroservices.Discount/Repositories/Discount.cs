@@ -3,7 +3,7 @@
 public class Discount
 {
     public Guid Id { get; set; }
-    public string UserId { get; set; } = default!;
+    public Guid UserId { get; set; } = default!;
     public float Rate { get; set; }
     public string Code { get; set; } = default!;
     public DateTime Created { get; set; }

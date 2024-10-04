@@ -26,7 +26,7 @@ public class DeleteBasketCommandHandler(IDistributedCache distributedCache, IIde
         var currentBasket = JsonSerializer.Deserialize<BasketDto>(hasBasket!);
 
 
-        var basketItemToDelete = currentBasket!.BasketItems.FirstOrDefault(x => x.CourseId == request.CourseId);
+        var basketItemToDelete = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.CourseId);
 
         if (basketItemToDelete is null)
             return ServiceResult.Error("basket Item not found", "", HttpStatusCode.NotFound);

@@ -12,7 +12,7 @@ public class Course : BaseEntity
 
     public decimal Price { get; set; }
 
-    public string UserId { get; set; } = default!;
+    public Guid UserId { get; set; } = default!;
 
     public string? Picture { get; set; }
 

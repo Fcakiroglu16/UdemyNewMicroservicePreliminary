@@ -1,3 +1,4 @@
+using UdemyMicroservices.Basket.Extensions;
 using UdemyMicroservices.Basket.Features.Basket;
 using UdemyMicroservices.Catalog;
 using UdemyMicroservices.Shared;
@@ -13,8 +14,10 @@ builder.Services.AddVersioningExt();
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
-    options.InstanceName = "SampleInstance";
+    //options.InstanceName = "SampleInstance";
 });
+
+builder.Services.AddMasstransitExt(builder.Configuration);
 
 var app = builder.Build();
 app.UseExceptionHandler();

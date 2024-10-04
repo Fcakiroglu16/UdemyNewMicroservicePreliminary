@@ -10,17 +10,17 @@ namespace UdemyMicroservices.Web.Pages.Order.Validators
         {
             RuleFor(x => x.Address)
                 .NotNull().WithMessage("Address is required.")
-                .SetValidator(new AddressDtoValidator());
+                .SetValidator(new AddressViewModelValidator());
 
             RuleFor(x => x.Payment)
                 .NotNull().WithMessage("Payment information is required.")
-                .SetValidator(new PaymentDtoValidator());
+                .SetValidator(new PaymentViewModelValidator());
         }
     }
 
-    public class AddressDtoValidator : AbstractValidator<AddressViewModel>
+    public class AddressViewModelValidator : AbstractValidator<AddressViewModel>
     {
-        public AddressDtoValidator()
+        public AddressViewModelValidator()
         {
             RuleFor(x => x.Line).NotEmpty().WithMessage("Address line is required.");
             RuleFor(x => x.Province).NotEmpty().WithMessage("Province is required.");
@@ -29,15 +29,14 @@ namespace UdemyMicroservices.Web.Pages.Order.Validators
         }
     }
 
-    public class PaymentDtoValidator : AbstractValidator<PaymentViewModel>
+    public class PaymentViewModelValidator : AbstractValidator<PaymentViewModel>
     {
-        public PaymentDtoValidator()
+        public PaymentViewModelValidator()
         {
             RuleFor(x => x.CardNumber).CreditCard().WithMessage("Invalid card number.");
             RuleFor(x => x.CardHolderName).NotEmpty().WithMessage("Card holder name is required.");
             RuleFor(x => x.ExpiryDate).NotEmpty().WithMessage("Expiry date is required.");
             RuleFor(x => x.Cvv).Matches(@"^\d{3,4}$").WithMessage("Invalid CVV.");
-            RuleFor(x => x.Amount).GreaterThan(0).WithMessage("Amount must be greater than 0.");
         }
     }
 }

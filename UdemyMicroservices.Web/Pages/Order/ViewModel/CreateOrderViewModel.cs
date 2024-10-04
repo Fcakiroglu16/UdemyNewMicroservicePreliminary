@@ -25,18 +25,10 @@ namespace UdemyMicroservices.Web.Pages.Order.ViewModel
         };
 
 
-        public void AddOrderItem(BasketItemDto basketItem, float? discountRate)
+        public void AddOrderItem(BasketItemDto basketItem)
         {
-            if (discountRate is not null)
-            {
-                OrderItems.Add(new(basketItem.CourseId, basketItem.CourseName,
-                    basketItem.CoursePriceByApplyDiscountRate!.Value));
-            }
-            else
-            {
-                OrderItems.Add(new(basketItem.CourseId, basketItem.CourseName,
-                    basketItem.CoursePrice));
-            }
+            OrderItems.Add(new(basketItem.Id, basketItem.Name,
+                basketItem.CurrentPrice));
         }
     }
 }

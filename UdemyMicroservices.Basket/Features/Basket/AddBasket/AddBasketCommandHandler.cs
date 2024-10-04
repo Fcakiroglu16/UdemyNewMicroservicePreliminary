@@ -31,7 +31,7 @@ public class AddBasketCommandHandler(IDistributedCache distributedCache, IIdenti
             currentBasket = JsonSerializer.Deserialize<BasketDto>(hasBasket);
 
 
-            var existingBasketItem = currentBasket!.BasketItems.FirstOrDefault(x => x.CourseId == request.CourseId);
+            var existingBasketItem = currentBasket!.BasketItems.FirstOrDefault(x => x.Id == request.CourseId);
 
 
             if (existingBasketItem is not null)
@@ -52,7 +52,7 @@ public class AddBasketCommandHandler(IDistributedCache distributedCache, IIdenti
         var basketAsJson = JsonSerializer.Serialize(currentBasket);
 
 
-        await distributedCache.SetStringAsync(string.Format(BasketConst.BasketCacheKey, identityService.GetUserId),
+        await distributedCache.SetStringAsync(cacheKey,
             basketAsJson, cancellationToken);
 
         return ServiceResult.SuccessAsNoContent();

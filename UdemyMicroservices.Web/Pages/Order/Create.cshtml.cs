@@ -11,18 +11,7 @@ namespace UdemyMicroservices.Web.Pages.Order
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var basketAsResult = await basketService.GetBasketsAsync();
-
-
-            if (basketAsResult.IsFail) return ErrorPage(basketAsResult);
-
-
-            foreach (var basketItem in basketAsResult.Data!.BasketItems)
-            {
-                CreateOrderViewModel.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
-            }
-
-            CreateOrderViewModel.TotalPrice = basketAsResult.Data.CurrentTotalPrice();
+            await LoadInitialFormData();
 
             return Page();
         }
@@ -30,23 +19,26 @@ namespace UdemyMicroservices.Web.Pages.Order
 
         public async Task<IActionResult> OnPostAsync()
         {
+            await LoadInitialFormData();
             if (!ModelState.IsValid) return Page();
 
-            var basketAsResult = await basketService.GetBasketsAsync();
-
-
-            CreateOrderViewModel.TotalPrice = basketAsResult.Data!.CurrentTotalPrice();
-            CreateOrderViewModel.DiscountRate = basketAsResult.Data.DiscountRate;
-            foreach (var basketItem in basketAsResult.Data!.BasketItems)
-            {
-                CreateOrderViewModel.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
-            }
 
             var result = await orderService.CreateOrder(CreateOrderViewModel);
 
             return result.IsFail
                 ? ErrorPage(result)
                 : SuccessPage("order created successfully", "/Order/Result");
+        }
+
+        private async Task LoadInitialFormData()
+        {
+            var basketAsResult = await basketService.GetBasketsAsync();
+            CreateOrderViewModel.TotalPrice = basketAsResult.Data!.CurrentTotalPrice;
+            CreateOrderViewModel.DiscountRate = basketAsResult.Data.DiscountRate;
+            foreach (var basketItem in basketAsResult.Data!.BasketItems)
+            {
+                CreateOrderViewModel.AddOrderItem(basketItem);
+            }
         }
     }
 }

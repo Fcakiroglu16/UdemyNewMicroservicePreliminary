@@ -1,7 +1,9 @@
 ﻿using System.Net;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Refit;
+using UdemyMicroservices.Bus;
 using UdemyMicroservices.Order.Application.Contracts.Persistence;
 using UdemyMicroservices.Order.Application.Contracts.refit;
 using UdemyMicroservices.Order.Application.Features.Orders.Dto;
@@ -17,7 +19,8 @@ public class CreateOrderCommandHandler(
     IUnitOfWork unitOfWork,
     IIdentityService identityService,
     IPaymentService paymentService,
-    ILogger<CreateOrderCommandHandler> logger)
+    ILogger<CreateOrderCommandHandler> logger,
+    IPublishEndpoint publishEndpoint)
     : IRequestHandler<CreateOrderCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -45,6 +48,8 @@ public class CreateOrderCommandHandler(
 
         // TODO : send message to bus
         // TODO : outbox pattern
+
+
         return await UpdateOrderStatusAsync(order, paymentResult);
     }
 
@@ -106,6 +111,12 @@ public class CreateOrderCommandHandler(
                 "An error occurred while updating the order status. PaymentId={PaymentId},OrderCode={OrderCode}",
                 paymentResult.Content!.Data, order.OrderCode);
         }
+
+
+        await publishEndpoint.Publish(new OrderCreatedEvent(identityService.GetUserId, order.OrderCode,
+            order.TotalPrice,
+            order.OrderDate));
+
 
         return ServiceResult.SuccessAsNoContent();
     }

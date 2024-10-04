@@ -8,7 +8,7 @@ public class Order : BaseEntity<Guid>
     public string OrderCode { get; private set; } = default!;
 
     public DateTime OrderDate { get; private set; }
-    public string BuyerId { get; private set; } = default!;
+    public Guid BuyerId { get; private set; } = default!;
 
     public decimal TotalPrice { get; private set; }
 
@@ -30,9 +30,8 @@ public class Order : BaseEntity<Guid>
         return orderCode.ToString(); // Sonuç olarak string döndürülür.
     }
 
-    public static Order CreateUnPaidOrder(string buyerId, float? discountRate, Address address)
+    public static Order CreateUnPaidOrder(Guid buyerId, float? discountRate, Address address)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(buyerId);
         ArgumentNullException.ThrowIfNull(address);
 
         if (discountRate is < 0 or > 100)

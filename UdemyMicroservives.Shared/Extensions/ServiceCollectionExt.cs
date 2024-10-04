@@ -28,6 +28,12 @@ public static class ServiceCollectionExt
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
+        services
+            .AddOptions<BusOption>()
+            .BindConfiguration(nameof(BusOption))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
 
         services
             .AddOptions<MicroserviceOption>()

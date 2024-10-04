@@ -8,13 +8,13 @@ public class Payment
     {
     }
 
-    public Payment(string userId, string orderCode, decimal amount)
+    public Payment(Guid userId, string orderCode, decimal amount)
     {
         CreateNew(userId, orderCode, amount);
     }
 
     public Guid Id { get; private set; }
-    public string UserId { get; private set; } = default!;
+    public Guid UserId { get; private set; } = default!;
     public string OrderCode { get; private set; } = default!;
     public decimal Amount { get; private set; }
     public DateTime PaymentDate { get; private set; } = DateTime.UtcNow;
@@ -23,9 +23,8 @@ public class Payment
     public string? Error { get; private set; }
 
     // Factory method for creating a new payment
-    public void CreateNew(string userId, string orderCode, decimal amount)
+    public void CreateNew(Guid userId, string orderCode, decimal amount)
     {
-        ArgumentException.ThrowIfNullOrEmpty(userId);
         ArgumentException.ThrowIfNullOrEmpty(orderCode);
 
         if (amount <= 0) throw new InvalidOperationException("Payment amount must be greater than zero.");

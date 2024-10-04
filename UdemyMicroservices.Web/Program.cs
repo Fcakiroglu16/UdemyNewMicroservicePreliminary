@@ -60,6 +60,8 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityOptio
 builder.Services.AddHttpClient<SignUpService>();
 builder.Services.AddHttpClient<SignInService>();
 
+builder.Services.AddScoped<UserService>();
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     CookieAuthenticationDefaults.AuthenticationScheme, opts =>
     {

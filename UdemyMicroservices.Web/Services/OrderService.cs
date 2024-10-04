@@ -9,7 +9,7 @@ namespace UdemyMicroservices.Web.Services
 {
     public class OrderService(IOrderService orderService, ILogger<OrderService> logger)
     {
-        public async Task<ServiceResult> CreateOrder(OrderViewModel viewModel)
+        public async Task<ServiceResult> CreateOrder(CreateOrderViewModel viewModel)
         {
             //createAddressDto
             var address = new AddressDto(viewModel.Address.Province, viewModel.Address.District,

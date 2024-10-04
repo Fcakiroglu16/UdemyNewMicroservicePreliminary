@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using UdemyMicroservices.Web.Pages.Order.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Order
 {
-    public class IndexModel(BasketService basketService, OrderService orderService) : BasePageModel
+    public class CreateModel(BasketService basketService, OrderService orderService) : BasePageModel
     {
-        [BindProperty] public OrderViewModel Order { get; set; } = OrderViewModel.Empty;
+        [BindProperty] public CreateOrderViewModel CreateOrderViewModel { get; set; } = CreateOrderViewModel.Empty;
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -20,10 +19,10 @@ namespace UdemyMicroservices.Web.Pages.Order
 
             foreach (var basketItem in basketAsResult.Data!.BasketItems)
             {
-                Order.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
+                CreateOrderViewModel.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
             }
 
-            Order.TotalPrice = basketAsResult.Data.CurrentTotalPrice();
+            CreateOrderViewModel.TotalPrice = basketAsResult.Data.CurrentTotalPrice();
 
             return Page();
         }
@@ -36,18 +35,18 @@ namespace UdemyMicroservices.Web.Pages.Order
             var basketAsResult = await basketService.GetBasketsAsync();
 
 
-            Order.TotalPrice = basketAsResult.Data!.CurrentTotalPrice();
-            Order.DiscountRate = basketAsResult.Data.DiscountRate;
+            CreateOrderViewModel.TotalPrice = basketAsResult.Data!.CurrentTotalPrice();
+            CreateOrderViewModel.DiscountRate = basketAsResult.Data.DiscountRate;
             foreach (var basketItem in basketAsResult.Data!.BasketItems)
             {
-                Order.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
+                CreateOrderViewModel.AddOrderItem(basketItem, basketAsResult.Data.DiscountRate);
             }
 
-            var result = await orderService.CreateOrder(Order);
+            var result = await orderService.CreateOrder(CreateOrderViewModel);
 
             return result.IsFail
-                ? ErrorPage(result, "/Order/Index")
-                : SuccessPage("order created successfully", "Index");
+                ? ErrorPage(result)
+                : SuccessPage("order created successfully", "/Order/Result");
         }
     }
 }

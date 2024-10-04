@@ -12,7 +12,7 @@ public record BasketDto(Guid UserId, List<BasketItemDto> BasketItems)
 
     public decimal? TotalPriceByApplyDiscountRate => BasketItems.Sum(x => x.PriceByApplyDiscountRate);
 
-    public decimal CurrentTotalPrice=> DiscountRate is not null ? TotalPriceByApplyDiscountRate!.Value : TotalPrice;
+    public decimal CurrentTotalPrice => DiscountRate is not null ? TotalPriceByApplyDiscountRate!.Value : TotalPrice;
 
 
     public void ApplyNewDiscount(string coupon, float rate)

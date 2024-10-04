@@ -1,12 +1,10 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace UdemyMicroservices.Web.Pages
+namespace UdemyMicroservices.Web.Pages;
+
+public class AccessDeniedModel : PageModel
 {
-    public class AccessDeniedModel : PageModel
+    public void OnGet()
     {
-        public void OnGet()
-        {
-        }
     }
 }

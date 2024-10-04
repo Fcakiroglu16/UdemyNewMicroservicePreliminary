@@ -19,7 +19,7 @@ public class OrderItem : BaseEntity<int>
     // Business method to set or update product details
 
 
-    public Guid ProductId { get; private set; } = default!;
+    public Guid ProductId { get; private set; }
     public string ProductName { get; private set; } = default!;
     public decimal UnitPrice { get; private set; }
 

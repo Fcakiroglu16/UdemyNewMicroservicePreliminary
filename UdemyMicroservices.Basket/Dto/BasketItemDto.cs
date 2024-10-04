@@ -7,7 +7,5 @@ public record BasketItemDto(
     decimal Price,
     decimal? PriceByApplyDiscountRate)
 {
-
     public decimal CurrentPrice => PriceByApplyDiscountRate ?? Price;
-
 }

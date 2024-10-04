@@ -14,7 +14,7 @@ public class Payment
     }
 
     public Guid Id { get; private set; }
-    public Guid UserId { get; private set; } = default!;
+    public Guid UserId { get; private set; }
     public string OrderCode { get; private set; } = default!;
     public decimal Amount { get; private set; }
     public DateTime PaymentDate { get; private set; } = DateTime.UtcNow;

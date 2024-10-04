@@ -1,5 +1,5 @@
 ﻿@page
-@model UdemyMicroservices.Web.Pages.Order.CreateModel
+@model CreateModel
 @{
 }
 
@@ -35,7 +35,6 @@
                         </div>
 
 
-
                         <h3>Payment Information</h3>
                         <div class="mb-3">
                             <label asp-for="CreateOrderViewModel.Payment.CardHolderName" class="form-label"></label>
@@ -60,17 +59,10 @@
                         </div>
 
 
-
-
-
                     </div>
 
 
-
                 </div>
-
-
-
 
 
             </div>
@@ -80,29 +72,33 @@
                     <div class="card-body">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th>Course Name</th>
-                                    <th>Price</th>
+                            <tr>
+                                <th>Course Name</th>
+                                <th>Price</th>
 
-                                </tr>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach (var item in Model.CreateOrderViewModel.OrderItems)
-                                {
-                                    <tr>
-                                        <td>@item.ProductName</td>
-                                        <td>@item.UnitPrice</td>
-
-                                    </tr>
-                                }
-                            </tbody>
-                            <tfoot>
-                                <tr class="table-info">
-                                    <td><strong>Total Price:</strong></td>
-                                    <td><strong>@Model.CreateOrderViewModel.TotalPrice.ToString("C")</strong></td>
-
+                            @foreach (var item in Model.CreateOrderViewModel.OrderItems)
+                            {
+                                <tr>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.UnitPrice</td>
 
                                 </tr>
+                            }
+                            </tbody>
+                            <tfoot>
+                            <tr class="table-info">
+                                <td>
+                                    <strong>Total Price:</strong>
+                                </td>
+                                <td>
+                                    <strong>@Model.CreateOrderViewModel.TotalPrice.ToString("C")</strong>
+                                </td>
+
+
+                            </tr>
                             </tfoot>
                         </table>
 

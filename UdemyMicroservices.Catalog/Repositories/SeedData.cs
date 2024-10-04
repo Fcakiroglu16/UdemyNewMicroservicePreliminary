@@ -38,7 +38,7 @@ public static class SeedData
 
             List<Course> courses =
             [
-                new Course
+                new()
                 {
                     Id = NewId.NextGuid(),
                     Name = "C#",
@@ -51,7 +51,7 @@ public static class SeedData
                     CategoryId = categories.First().Id
                 },
 
-                new Course
+                new()
                 {
                     Id = NewId.NextGuid(),
                     Name = "Java",
@@ -64,7 +64,7 @@ public static class SeedData
                     CategoryId = categories.First().Id
                 },
 
-                new Course
+                new()
                 {
                     Id = NewId.NextGuid(),
                     Name = "Python",

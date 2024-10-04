@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
 
 namespace UdemyMicroservices.Order.Application.DelegateHandlers;
 
@@ -19,10 +18,8 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
         string? accessToken = null;
 
 
-        if (contextAccessor.HttpContext.Request.Headers.TryGetValue("Authorization", out StringValues values))
-        {
+        if (contextAccessor.HttpContext.Request.Headers.TryGetValue("Authorization", out var values))
             accessToken = values.ToString().Split(" ")[1];
-        }
 
 
         if (!string.IsNullOrEmpty(accessToken))

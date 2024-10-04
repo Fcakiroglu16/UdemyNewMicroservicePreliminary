@@ -2,11 +2,10 @@
 using UdemyMicroservices.Order.Application.Features.Orders.CreateOrder;
 using UdemyMicroservices.Shared;
 
-namespace UdemyMicroservices.Order.Application.Contracts.refit
+namespace UdemyMicroservices.Order.Application.Contracts.refit;
+
+public interface IPaymentService
 {
-    public interface IPaymentService
-    {
-        [Post("/api/v1/payments/receive")]
-        Task<ApiResponse<ServiceResult<ReceivePaymentResponse>>> ReceivePaymentAsync(ReceivePaymentRequest request);
-    }
+    [Post("/api/v1/payments/receive")]
+    Task<ApiResponse<ServiceResult<ReceivePaymentResponse>>> ReceivePaymentAsync(ReceivePaymentRequest request);
 }

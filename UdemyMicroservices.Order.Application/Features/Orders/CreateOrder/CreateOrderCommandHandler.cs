@@ -31,19 +31,14 @@ public class CreateOrderCommandHandler(
         var order = CreateOrder(request);
 
         if (order.GetTotalItems() == 0)
-        {
             return ServiceResult<Guid>.Error("Order item not found.", "Order must have at least one item.",
                 HttpStatusCode.BadRequest);
-        }
 
         await SaveOrderAsync(order);
 
         var paymentResult = await ProcessPaymentAsync(order, request.Payment);
 
-        if (!paymentResult.IsSuccessStatusCode)
-        {
-            return HandlePaymentFailure(paymentResult);
-        }
+        if (!paymentResult.IsSuccessStatusCode) return HandlePaymentFailure(paymentResult);
 
 
         // TODO : send message to bus
@@ -61,9 +56,7 @@ public class CreateOrderCommandHandler(
         var order = Domain.Entities.Order.CreateUnPaidOrder(identityService.GetUserId, request.DiscountRate, address);
 
         foreach (var item in request.OrderItems)
-        {
             order.AddOrderItem(new OrderItem(item.ProductId, item.ProductName, item.UnitPrice));
-        }
 
         return order;
     }

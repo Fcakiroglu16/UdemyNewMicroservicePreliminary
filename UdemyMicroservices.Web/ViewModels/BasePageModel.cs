@@ -12,10 +12,7 @@ public class BasePageModel : PageModel
         TempData["Error_Detail"] = serviceResult.ProblemDetails!.Detail;
 
 
-        if (redirectToPage is not null)
-        {
-            return RedirectToPage(redirectToPage);
-        }
+        if (redirectToPage is not null) return RedirectToPage(redirectToPage);
 
 
         var validationError = serviceResult.ProblemDetails.Extensions.FirstOrDefault(x => x.Key == "errors");
@@ -37,10 +34,7 @@ public class BasePageModel : PageModel
         TempData["Success"] = true;
         TempData["Success_Message"] = message;
 
-        if (redirectToPage is not null)
-        {
-            return RedirectToPage(redirectToPage);
-        }
+        if (redirectToPage is not null) return RedirectToPage(redirectToPage);
 
         return Page();
     }

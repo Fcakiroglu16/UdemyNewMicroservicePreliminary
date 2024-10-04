@@ -2,12 +2,11 @@
 using UdemyMicroservices.Shared;
 using UdemyMicroservices.Web.Pages.Order.Dto;
 
-namespace UdemyMicroservices.Web.Services.Refit
+namespace UdemyMicroservices.Web.Services.Refit;
+
+public interface IOrderService
 {
-    public interface IOrderService
-    {
-        //CreateOrder endpoint
-        [Post("/v1/order")]
-        Task<ApiResponse<ServiceResult>> CreateOrder(CreateOrderRequest request);
-    }
+    //CreateOrder endpoint
+    [Post("/v1/order")]
+    Task<ApiResponse<ServiceResult>> CreateOrder(CreateOrderRequest request);
 }

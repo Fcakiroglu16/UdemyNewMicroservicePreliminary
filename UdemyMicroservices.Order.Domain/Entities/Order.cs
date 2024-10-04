@@ -8,7 +8,7 @@ public class Order : BaseEntity<Guid>
     public string OrderCode { get; private set; } = default!;
 
     public DateTime OrderDate { get; private set; }
-    public Guid BuyerId { get; private set; } = default!;
+    public Guid BuyerId { get; private set; }
 
     public decimal TotalPrice { get; private set; }
 

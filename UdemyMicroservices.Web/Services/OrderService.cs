@@ -41,4 +41,35 @@ public class OrderService(IOrderService orderService, ILogger<OrderService> logg
 
         return ServiceResult.Success();
     }
+
+    public async Task<ServiceResult<List<OrderHistoryViewModel>>> GetHistory()
+    {
+        var response = await orderService.GetOrderHistory();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            logger.LogProblemDetails(response.Error);
+            return ServiceResult<List<OrderHistoryViewModel>>.Fail("An error occurred while getting the order history");
+        }
+
+        var orderHistoryList = new List<OrderHistoryViewModel>();
+
+
+        foreach (var orderResponse in response.Content.Data)
+        {
+            var newOrderHistory =
+                new OrderHistoryViewModel(orderResponse.OrderDate.ToLongDateString(),
+                    orderResponse.TotalPrice.ToString("C"));
+
+            foreach (var orderItem in orderResponse.OrderItems)
+            {
+                newOrderHistory.AddItem(orderItem.ProductId, orderItem.ProductName, orderItem.UnitPrice);
+            }
+
+            orderHistoryList.Add(newOrderHistory);
+        }
+
+
+        return ServiceResult<List<OrderHistoryViewModel>>.Success(orderHistoryList);
+    }
 }

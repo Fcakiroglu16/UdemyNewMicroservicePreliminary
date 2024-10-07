@@ -1,6 +1,6 @@
-﻿namespace UdemyMicroservices.Web.Pages.Order.Dto;
+﻿namespace UdemyMicroservices.Web.Pages.Order.ViewModel;
 
-public record OrderItemDto(
+public record OrderItemViewModel(
     Guid ProductId,
     string ProductName,
     decimal UnitPrice

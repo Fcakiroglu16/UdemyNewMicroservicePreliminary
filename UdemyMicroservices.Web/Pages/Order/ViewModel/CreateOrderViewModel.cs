@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using UdemyMicroservices.Web.Pages.Basket.Dto;
-using UdemyMicroservices.Web.Pages.Order.Dto;
 
 namespace UdemyMicroservices.Web.Pages.Order.ViewModel;
 

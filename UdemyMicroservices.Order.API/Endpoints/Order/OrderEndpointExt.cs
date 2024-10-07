@@ -8,7 +8,7 @@ public static class OrderEndpointsExt
     {
         app.MapGroup("api/v{version:apiVersion}/orders")
             .MapCreateOrderEndpoint()
-            .MapGetAllOrderByUserIdEndpoint()
+            .MapGetOrderHistoryEndpoint()
             .WithTags("orders").WithApiVersionSet(apiVersionSet).RequireAuthorization();
     }
 }

@@ -24,6 +24,8 @@ public record BasketViewModel
         TotalPrice = totalPrice;
         TotalPriceByDiscountRate = totalPriceByDiscountRate;
     }
+
+    public bool HasItem => Items.Count > 0;
 }
 
 public record BasketViewModelItem(

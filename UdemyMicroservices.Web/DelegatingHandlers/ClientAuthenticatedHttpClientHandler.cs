@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.Net;
+using System.Net.Http.Headers;
 using IdentityModel.Client;
 using Microsoft.Extensions.Caching.Distributed;
 using UdemyMicroservices.Web.Options;
@@ -12,12 +13,24 @@ public class ClientAuthenticatedHttpClientHandler(
     ILogger<ClientAuthenticatedHttpClientHandler> logger,
     IDistributedCache distributedCache) : DelegatingHandler
 {
+    public const string AccessTokenCacheKey = "AccessTokenKey";
+
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
         if (contextAccessor!.HttpContext!.User.Identity!.IsAuthenticated)
             return await base.SendAsync(request, cancellationToken);
 
+
+        var accessToken = await distributedCache.GetStringAsync(AccessTokenCacheKey, cancellationToken);
+
+        if (!string.IsNullOrEmpty(accessToken))
+        {
+            request.SetBearerToken(accessToken);
+            var response = await base.SendAsync(request, cancellationToken);
+
+            if (response.StatusCode != HttpStatusCode.Unauthorized) return response;
+        }
 
         var responseAsDiscovery =
             await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address, cancellationToken);
@@ -29,12 +42,12 @@ public class ClientAuthenticatedHttpClientHandler(
             throw new Exception("A system error occurred. Please try again later.");
         }
 
+
         var tokenRequest = new ClientCredentialsTokenRequest
         {
             Address = responseAsDiscovery.TokenEndpoint,
             ClientId = identityOption.Tenant.ClientId,
             ClientSecret = identityOption.Tenant.ClientSecret
-            //Scope = "webshoppingagg.fullpermission"
         };
 
         var tokenResponse =
@@ -47,12 +60,9 @@ public class ClientAuthenticatedHttpClientHandler(
         }
 
 
-        await distributedCache.SetStringAsync("AccessToken", tokenResponse.AccessToken!,
+        await distributedCache.SetStringAsync(AccessTokenCacheKey, tokenResponse.AccessToken!,
             new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) },
             cancellationToken);
-
-
-        if (contextAccessor is null) return await base.SendAsync(request, cancellationToken);
 
 
         if (!string.IsNullOrEmpty(tokenResponse.AccessToken))

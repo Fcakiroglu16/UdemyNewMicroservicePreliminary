@@ -1,7 +1,8 @@
-﻿namespace UdemyMicroservices.Web.Services;
-
-public class UserService(IHttpContextAccessor httpContextAccessor)
+﻿namespace UdemyMicroservices.Web.Services
 {
-    public Guid GetUserId =>
-        Guid.Parse(httpContextAccessor.HttpContext!.User.FindFirst(x => x.Type == "sub")!.Value);
+    public class UserService(IHttpContextAccessor contextAccessor)
+    {
+        public Guid GetUserId =>
+            Guid.Parse(contextAccessor.HttpContext!.User.FindFirst(x => x.Type == "sub")!.Value);
+    }
 }

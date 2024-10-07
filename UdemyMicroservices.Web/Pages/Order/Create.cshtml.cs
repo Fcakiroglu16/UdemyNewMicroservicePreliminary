@@ -33,6 +33,13 @@ public class CreateModel(BasketService basketService, OrderService orderService)
     private async Task LoadInitialFormData()
     {
         var basketAsResult = await basketService.GetBasketsAsync();
+
+        if (basketAsResult.IsFail)
+        {
+            ErrorPage(basketAsResult);
+            return;
+        }
+
         CreateOrderViewModel.TotalPrice = basketAsResult.Data!.CurrentTotalPrice;
         CreateOrderViewModel.DiscountRate = basketAsResult.Data.DiscountRate;
         foreach (var basketItem in basketAsResult.Data!.BasketItems) CreateOrderViewModel.AddOrderItem(basketItem);

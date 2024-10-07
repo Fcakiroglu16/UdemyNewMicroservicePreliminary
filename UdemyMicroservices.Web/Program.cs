@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Refit;
 using UdemyMicroservices.Web.DelegatingHandlers;
+using UdemyMicroservices.Web.ExceptionHandler;
 using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
@@ -60,7 +61,7 @@ builder.Services.AddSingleton(sp => sp.GetRequiredService<IOptions<IdentityOptio
 builder.Services.AddHttpClient<SignUpService>();
 builder.Services.AddHttpClient<SignInService>();
 
-builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     CookieAuthenticationDefaults.AuthenticationScheme, opts =>
@@ -103,9 +104,13 @@ builder.Services.AddRefitClient<IOrderService>()
     .AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
 
 
+builder.Services.AddHttpClient<TokenService>();
+builder.Services.AddScoped<UserService>();
+
 builder.Services.AddScoped<CatalogService>();
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<OrderService>();
+
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -113,10 +118,21 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "SampleInstance";
 });
 
+
+builder.Services.AddExceptionHandler<UnAuthorizeExceptionHandler>();
+
 var app = builder.Build();
 app.UseRequestLocalization();
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment()) app.UseExceptionHandler("/Error");
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+}
+else
+{
+    app.UseExceptionHandler("/Error");
+}
+
 
 app.UseStaticFiles();
 

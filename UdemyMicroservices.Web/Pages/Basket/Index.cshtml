@@ -16,7 +16,7 @@
     </thead>
     <tbody>
 
-    @if (Model.Basket.Items.Count == 0)
+    @if (!Model.Basket.HasItem)
     {
         <tr>
             <td colspan="5" class="text-center">No items in the basket.</td>
@@ -68,6 +68,12 @@
 
     </tbody>
 </table>
+
+
+@if (!Model.Basket.HasItem)
+{
+    return;
+}
 
 @if (Model.Basket.IsApplyDiscountCoupon)
 {

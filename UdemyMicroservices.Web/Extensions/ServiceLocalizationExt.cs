@@ -5,7 +5,7 @@ namespace UdemyMicroservices.Web.Extensions
 {
     public static class ServiceLocalizationExt
     {
-        public static IServiceCollection AddCustomLocalizationExt(this IServiceCollection services)
+        public static IServiceCollection AddLocalizationExt(this IServiceCollection services)
         {
             var supportedCultures = new CultureInfo[] { new("tr-Tr") };
 

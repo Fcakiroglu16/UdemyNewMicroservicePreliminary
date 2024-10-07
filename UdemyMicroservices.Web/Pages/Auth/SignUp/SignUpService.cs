@@ -1,10 +1,12 @@
 ﻿using IdentityModel.Client;
 using UdemyMicroservices.Web.Options;
+using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Pages.Auth.SignUp;
 
 public class SignUpService(HttpClient client, IdentityOption identityOption, ILogger<SignUpService> logger)
+    : IHttpClientService
 {
     public async Task<ServiceResult> SignUpAsync(SignUpViewModel model)
     {

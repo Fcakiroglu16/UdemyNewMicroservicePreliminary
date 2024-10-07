@@ -20,7 +20,7 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
 
         if (accessToken is null)
         {
-            contextAccessor.HttpContext.Response.Redirect("/Auth/SignIn");
+            throw new UnauthorizedAccessException();
         }
 
         if (!string.IsNullOrEmpty(accessToken))

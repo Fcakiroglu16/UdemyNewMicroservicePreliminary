@@ -15,7 +15,7 @@ public class SignInService(
     IHttpContextAccessor contextAccessor,
     HttpClient client,
     IdentityOption identityOption,
-    ILogger<SignInService> logger)
+    ILogger<SignInService> logger) : IHttpClientService
 {
     public async Task<ServiceResult> SignInAsync(SignInViewModel model)
     {

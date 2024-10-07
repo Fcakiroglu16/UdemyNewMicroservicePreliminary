@@ -10,10 +10,10 @@ using UdemyMicroservices.Web.ViewModels;
 namespace UdemyMicroservices.Web.Services;
 
 public class CatalogService(
-    ICatalogService catalogService,
-    IFileService fileService,
+    IRefitCatalogService catalogService,
+    IRefitFileService fileService,
     ILogger<CatalogService> logger,
-    UserService userService)
+    UserService userService) : IScopedService
 {
     public async Task<ServiceResult<List<CourseViewModel>>> GetAllCoursesAsync()
     {

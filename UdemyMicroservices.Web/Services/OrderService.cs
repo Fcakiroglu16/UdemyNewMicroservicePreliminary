@@ -7,7 +7,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Services;
 
-public class OrderService(IOrderService orderService, ILogger<OrderService> logger)
+public class OrderService(IRefitOrderService orderService, ILogger<OrderService> logger) : IScopedService
 {
     public async Task<ServiceResult> CreateOrder(CreateOrderViewModel viewModel)
     {

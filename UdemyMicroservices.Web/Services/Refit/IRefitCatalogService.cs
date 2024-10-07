@@ -5,7 +5,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Services.Refit;
 
-public interface ICatalogService
+public interface IRefitCatalogService
 {
     [Post("/v1/catalog/courses")]
     Task<ApiResponse<ServiceResult>> CreateCourseAsync(CreateCourseRequest request);

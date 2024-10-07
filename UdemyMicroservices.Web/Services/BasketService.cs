@@ -6,9 +6,9 @@ using UdemyMicroservices.Web.ViewModels;
 namespace UdemyMicroservices.Web.Services;
 
 public class BasketService(
-    IBasketService basketService,
-    IDiscountService discountService,
-    ILogger<BasketService> logger)
+    IRefitBasketService basketService,
+    IRefitDiscountService discountService,
+    ILogger<BasketService> logger) : IScopedService
 {
     public async Task<ServiceResult> CreateOrUpdateBasketAsync(AddBasketRequest request)
     {

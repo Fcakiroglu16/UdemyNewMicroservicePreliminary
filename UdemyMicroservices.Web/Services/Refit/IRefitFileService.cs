@@ -4,7 +4,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Services.Refit;
 
-public interface IFileService
+public interface IRefitFileService
 {
     [Multipart]
     [Post("/v1/file")]

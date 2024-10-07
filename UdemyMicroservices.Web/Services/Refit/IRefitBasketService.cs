@@ -4,7 +4,7 @@ using UdemyMicroservices.Web.ViewModels;
 
 namespace UdemyMicroservices.Web.Services.Refit;
 
-public interface IBasketService
+public interface IRefitBasketService
 {
     [Post("/v1/basket")]
     Task<ApiResponse<ServiceResult>> AddBasketAsync(AddBasketRequest request);

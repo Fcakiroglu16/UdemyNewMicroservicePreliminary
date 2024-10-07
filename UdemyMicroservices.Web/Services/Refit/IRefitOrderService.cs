@@ -4,7 +4,7 @@ using UdemyMicroservices.Web.Pages.Order.Dto;
 
 namespace UdemyMicroservices.Web.Services.Refit;
 
-public interface IOrderService
+public interface IRefitOrderService
 {
     //CreateOrder endpoint
     [Post("/v1/order")]

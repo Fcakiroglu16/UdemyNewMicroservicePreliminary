@@ -19,7 +19,7 @@ public class TokenService(
     HttpClient client,
     IdentityOption identityOption,
     ILogger<TokenService> logger,
-    IDistributedCache distributedCache)
+    IDistributedCache distributedCache) : IHttpClientService
 {
     private const string DiscoveryResponseCacheKey = "DiscoveryResponseKey";
 

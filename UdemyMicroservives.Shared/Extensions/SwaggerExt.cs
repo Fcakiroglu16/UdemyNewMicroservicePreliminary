@@ -17,8 +17,9 @@ public static class SwaggerExt
 
     public static void AddSwaggerMiddlewareExt(this WebApplication app)
     {
+        var isDevelopment = app.Environment.IsDevelopment();
         // Configure the HTTP request pipeline.
-        if (app.Environment.IsDevelopment())
+        if (true)
         {
             app.UseSwagger();
             app.UseSwaggerUI(

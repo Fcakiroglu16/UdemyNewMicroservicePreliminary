@@ -19,13 +19,8 @@ public class SignInService(
 {
     public async Task<ServiceResult> SignInAsync(SignInViewModel model)
     {
-        var responseAsDiscovery = await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address);
+        var responseAsDiscovery = await tokenService.GetDiscovery();
 
-        if (responseAsDiscovery.IsError)
-        {
-            logger.LogError(responseAsDiscovery.Error, "Failed to retrieve discovery document.");
-            return ServiceResult.Fail("A system error occurred. Please try again later.");
-        }
 
         var tokenResponse = await GetTokenAsync(responseAsDiscovery, model);
 

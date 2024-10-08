@@ -79,29 +79,21 @@ public class TokenService(
     }
 
 
-    public async Task<DiscoveryDocumentResponse> GetDiscovery(CancellationToken cancellationToken)
+    public async Task<DiscoveryDocumentResponse> GetDiscovery(CancellationToken cancellationToken = default)
     {
-        var cachedResponse = await distributedCache.GetStringAsync(DiscoveryResponseCacheKey, cancellationToken);
-
-        if (!string.IsNullOrEmpty(cachedResponse))
+        var discoveryRequest = new DiscoveryDocumentRequest
         {
-            return JsonSerializer.Deserialize<DiscoveryDocumentResponse>(cachedResponse)!;
-        }
+            Address = identityOption.Tenant.Address,
+            Policy = { RequireHttps = false }
+        };
 
 
         var responseAsDiscovery =
-            await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address, cancellationToken);
+            await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken);
 
 
         if (!responseAsDiscovery.IsError)
         {
-            var serializedResponse = JsonSerializer.Serialize(responseAsDiscovery);
-
-            await distributedCache.SetStringAsync(DiscoveryResponseCacheKey, serializedResponse,
-                new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromHours(1) },
-                cancellationToken);
-
-
             return responseAsDiscovery;
         }
 

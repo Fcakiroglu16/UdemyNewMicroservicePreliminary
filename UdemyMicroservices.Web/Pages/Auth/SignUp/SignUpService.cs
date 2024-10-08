@@ -52,7 +52,14 @@ public class SignUpService(HttpClient client, IdentityOption identityOption, ILo
 
     private async Task<ServiceResult<TokenResponse>> TokenResponseAsMaster()
     {
-        var discoAsMaster = await client.GetDiscoveryDocumentAsync(identityOption.MasterTenant.Address);
+        var discoveryRequest = new DiscoveryDocumentRequest
+        {
+            Address = identityOption.MasterTenant.Address,
+            Policy = { RequireHttps = false } // Disable HTTPS requirement
+        };
+
+
+        var discoAsMaster = await client.GetDiscoveryDocumentAsync(discoveryRequest);
         if (discoAsMaster.IsError)
         {
             logger.LogError(discoAsMaster.Exception, "Failed to retrieve discovery document.");

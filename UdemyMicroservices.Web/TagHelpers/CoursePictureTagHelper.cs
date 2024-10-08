@@ -3,7 +3,7 @@ using UdemyMicroservices.Web.Options;
 
 namespace UdemyMicroservices.Web.TagHelpers;
 
-public class CoursePictureTagHelper(FileServiceOption fileServiceOption) : TagHelper
+public class CoursePictureTagHelper(IConfiguration configuration) : TagHelper
 {
     public string? Src { get; set; }
 
@@ -13,7 +13,8 @@ public class CoursePictureTagHelper(FileServiceOption fileServiceOption) : TagHe
 
         var imagePath = "/pictures/default-course-picture.jpeg";
 
-        if (!string.IsNullOrEmpty(Src)) imagePath = $"{fileServiceOption.Address}/{Src}";
+        if (!string.IsNullOrEmpty(Src))
+            imagePath = $"{configuration.GetSection("FileServiceOption")["PublishAddress"]}/{Src}";
 
 
         output.Attributes.SetAttribute("src", imagePath);

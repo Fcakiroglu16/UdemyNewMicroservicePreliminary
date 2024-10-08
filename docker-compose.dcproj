@@ -11,10 +11,8 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include=".env" />
-    <None Include="docker-compose-ui.yml" />
+    <None Include="docker-compose.override.yml" />
     <None Include="docker-compose.yml" />
-    <None Include="docker-compose.onlydb.yml" />
-    <None Include="docker-compose.production.yml" />
     <None Include=".dockerignore" />
   </ItemGroup>
 </Project>

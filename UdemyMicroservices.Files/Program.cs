@@ -19,12 +19,12 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 app.AddSwaggerMiddlewareExt();
-
+app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
 var apiVersionSet = app.AddVersionSetExt();
 app.AddFileEndpointsExt(apiVersionSet);
 
-app.UseStaticFiles();
+
 app.Run();

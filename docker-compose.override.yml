@@ -1,0 +1,94 @@
+﻿services:
+ basket.api:
+    image: basket.api.image:${VERSION}
+    container_name: basket.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Basket/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5000:8080"
+ catalog.api:
+    image: catalog.api.image:${VERSION}
+    container_name: catalog.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Catalog/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5001:8080"
+ discount.api:
+    image: discount.api.image:${VERSION}
+    container_name: discount.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Discount/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5002:8080"
+ file.api:
+    image: file.api.image:${VERSION}
+    user: root
+    container_name: file.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Files/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5003:8080"
+    volumes:
+     - file-api-volume:/app/wwwroot/uploads 
+ order.api:
+    image: order.api.image:${VERSION}
+    container_name: order.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Order.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5004:8080"
+ payment.api:
+    image: payment.api.image:${VERSION}
+    container_name: payment.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Payment/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5005:8080"
+ yarp.api:
+    image: yarp.api.image:${VERSION}
+    container_name: yarp.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Yarp/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5020:8080"
+ web:
+    image: web.api.image:${VERSION}
+    container_name: web.api.container
+    build:
+      context: .
+      dockerfile: UdemyMicroservices.Web/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5030:8080"
+volumes:
+  file-api-volume:  

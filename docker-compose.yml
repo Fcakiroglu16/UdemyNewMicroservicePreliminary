@@ -22,15 +22,15 @@
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
       ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.catalog:27017/
       ME_CONFIG_BASICAUTH: false
-  redis.db.basket:
+  redis.db:
     image: redis:7.0-alpine
-    container_name: redis.db.basket
+    container_name: redis.db
     restart: always
     command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     ports:
       - "6379:6379"
     volumes:
-      - redis-basket-data:/data
+      - redis-data:/data
   redis.db.basket.ui:
     image: rediscommander/redis-commander:latest
     container_name: redis-commander.ui
@@ -38,9 +38,9 @@
     ports:
       - "8082:8081"
     environment:
-      REDIS_HOSTS: redis.db.basket
-      REDIS_HOST: redis.db.basket
-      REDIS_PORT: redis.db.basket:6379
+      REDIS_HOSTS: redis.db
+      REDIS_HOST: redis.db
+      REDIS_PORT: redis.db:6379
       REDIS_PASSWORD: ${REDIS_PASSWORD}
       HTTP_USER: ${REDIS_UI_USERNAME}
       HTTP_PASSWORD: ${REDIS_UI_PASSWORD}
@@ -78,12 +78,12 @@
     volumes:
       - order-sqlserver-data:/var/opt/mssql
   keycloak:
-    restart: always
+    # restart: always
     container_name: keycloak
     image: quay.io/keycloak/keycloak:25.0
     command: start
     environment:
-      KC_HOSTNAME: localhost
+      KC_HOSTNAME: keycloak
       KC_HOSTNAME_PORT: 8080
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_HTTP_ENABLED: true
@@ -137,8 +137,9 @@
 volumes:
   mongo-discount-data:
   mongo-catalog-data:
-  redis-basket-data: 
+  redis-data: 
   order-sqlserver-data:
   keycloak-postgres-data: 
   rabbitmq_data:
   postgres-identity-db-ui-data:
+  

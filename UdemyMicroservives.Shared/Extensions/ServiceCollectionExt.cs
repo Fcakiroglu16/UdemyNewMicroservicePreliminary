@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using UdemyMicroservices.Shared.Options;
 using UdemyMicroservices.Shared.Services;
 
@@ -59,6 +60,11 @@ public static class ServiceCollectionExt
                 options.Authority = identityOption!.Address;
                 options.Audience = identityOption!.Audience;
                 options.RequireHttpsMetadata = false;
+
+                //options.TokenValidationParameters = new TokenValidationParameters
+                //{
+                //    ValidateIssuer = false
+                //};
             });
 
 

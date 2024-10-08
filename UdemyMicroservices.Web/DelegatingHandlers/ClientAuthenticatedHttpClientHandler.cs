@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 using IdentityModel.Client;
 using Microsoft.Extensions.Caching.Distributed;
 using UdemyMicroservices.Web.Options;
+using UdemyMicroservices.Web.Services;
 
 namespace UdemyMicroservices.Web.DelegatingHandlers;
 
@@ -11,7 +12,8 @@ public class ClientAuthenticatedHttpClientHandler(
     HttpClient client,
     IdentityOption identityOption,
     ILogger<ClientAuthenticatedHttpClientHandler> logger,
-    IDistributedCache distributedCache) : DelegatingHandler
+    IDistributedCache distributedCache,
+    TokenService tokenService) : DelegatingHandler
 {
     public const string AccessTokenCacheKey = "AccessTokenKey";
 
@@ -32,15 +34,7 @@ public class ClientAuthenticatedHttpClientHandler(
             if (response.StatusCode != HttpStatusCode.Unauthorized) return response;
         }
 
-        var responseAsDiscovery =
-            await client.GetDiscoveryDocumentAsync(identityOption.Tenant.Address, cancellationToken);
-
-
-        if (responseAsDiscovery.IsError)
-        {
-            logger.LogError(responseAsDiscovery.Error, "Failed to retrieve discovery document.");
-            throw new Exception("A system error occurred. Please try again later.");
-        }
+        var responseAsDiscovery = await tokenService.GetDiscovery(cancellationToken);
 
 
         var tokenRequest = new ClientCredentialsTokenRequest

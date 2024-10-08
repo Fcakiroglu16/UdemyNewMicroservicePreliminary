@@ -12,7 +12,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["UdemyMicroservices.Catalog/UdemyMicroservices.Catalog.csproj", "UdemyMicroservices.Catalog/"]
-COPY ["UdemyMicroservices.Bus/UdemyMicroservices.Bus.csproj", "UdemyMicroservices.Bus/"]
 COPY ["UdemyMicroservives.Shared/UdemyMicroservices.Shared.csproj", "UdemyMicroservives.Shared/"]
 RUN dotnet restore "./UdemyMicroservices.Catalog/UdemyMicroservices.Catalog.csproj"
 COPY . .

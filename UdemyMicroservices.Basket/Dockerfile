@@ -5,27 +5,28 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
+EXPOSE 8081
 
 
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["UdemyMicroservices.Catalog/UdemyMicroservices.Catalog.csproj", "UdemyMicroservices.Catalog/"]
+COPY ["UdemyMicroservices.Basket/UdemyMicroservices.Basket.csproj", "UdemyMicroservices.Basket/"]
 COPY ["UdemyMicroservices.Bus/UdemyMicroservices.Bus.csproj", "UdemyMicroservices.Bus/"]
 COPY ["UdemyMicroservives.Shared/UdemyMicroservices.Shared.csproj", "UdemyMicroservives.Shared/"]
-RUN dotnet restore "./UdemyMicroservices.Catalog/UdemyMicroservices.Catalog.csproj"
+RUN dotnet restore "./UdemyMicroservices.Basket/UdemyMicroservices.Basket.csproj"
 COPY . .
-WORKDIR "/src/UdemyMicroservices.Catalog"
-RUN dotnet build "./UdemyMicroservices.Catalog.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/UdemyMicroservices.Basket"
+RUN dotnet build "./UdemyMicroservices.Basket.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./UdemyMicroservices.Catalog.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./UdemyMicroservices.Basket.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "UdemyMicroservices.Catalog.dll"]
+ENTRYPOINT ["dotnet", "UdemyMicroservices.Basket.dll"]

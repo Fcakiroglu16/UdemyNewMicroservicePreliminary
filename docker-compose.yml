@@ -2,34 +2,38 @@
 
   mongo.db.catalog:
     image: mongo:8.0-rc
+    container_name: mongo.db.catalog
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${username}
-      MONGO_INITDB_ROOT_PASSWORD: ${password}
+      MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
     ports:
       - "27017:27017"
     volumes:
       - mongo-catalog-data:/data/db
   mongo.db.catalog.ui:
     image: mongo-express:1.0.2-20-alpine3.19
+    container_name: mongo.db.catalog.ui
     restart: always
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${username}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${password}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
       ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.catalog:27017/
       ME_CONFIG_BASICAUTH: false
   redis.db.basket:
     image: redis:7.0-alpine
+    container_name: redis.db.basket
     restart: always
-    command: ["redis-server", "--requirepass", "Password12"]
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD}"]
     ports:
       - "6379:6379"
     volumes:
       - redis-basket-data:/data
-  redis-commander:
+  redis.db.basket.ui:
     image: rediscommander/redis-commander:latest
+    container_name: redis-commander.ui
     restart: always
     ports:
       - "8082:8081"
@@ -37,40 +41,45 @@
       REDIS_HOSTS: redis.db.basket
       REDIS_HOST: redis.db.basket
       REDIS_PORT: redis.db.basket:6379
-      REDIS_PASSWORD: Password12
-      HTTP_USER: root
-      HTTP_PASSWORD: root
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      HTTP_USER: ${REDIS_UI_USERNAME}
+      HTTP_PASSWORD: ${REDIS_UI_PASSWORD}
   mongo.db.discount:
     image: mongo:8.0-rc
+    container_name: mongo.db.discount
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${username}
-      MONGO_INITDB_ROOT_PASSWORD: ${password}
+      MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
     ports:
       - "27020:27017"
     volumes:
       - mongo-discount-data:/data/db
   mongo.db.discount.ui:
     image: mongo-express:1.0.2-20-alpine3.19
+    container_name: mongo.db.discount.ui
     restart: always
     ports:
       - 8083:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${username}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${password}
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
       ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.discount:27017/
       ME_CONFIG_BASICAUTH: false  
   sqlserver.db.order:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver.db.order
     restart: always
     environment:
-      SA_PASSWORD: ${password}
+      SA_PASSWORD: ${PASSWORD}
       ACCEPT_EULA: "Y"
     ports:
       - "1433:1433"
     volumes:
       - order-sqlserver-data:/var/opt/mssql
   keycloak:
+    restart: always
+    container_name: keycloak
     image: quay.io/keycloak/keycloak:25.0
     command: start
     environment:
@@ -83,15 +92,17 @@
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+      KC_DB_URL: jdbc:postgresql://postgres.identity.db/${POSTGRES_DB}
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
-  postgres:
+      - postgres.identity.db
+  postgres.identity.db:
     image: postgres:16.2
+    container_name: postgres.identity.db
+    restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -100,22 +111,34 @@
       - "5432:5432"
     volumes:
       - keycloak-postgres-data:/var/lib/postgresql/data
+  postgres.identity.db.ui:
+    image: dpage/pgadmin4
+    container_name: postgres.identity.db.ui
+    restart: always
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
+      PGADMIN_DEFAULT_PASSWORD: strong-password
+    volumes:
+      - postgres-identity-db-ui-data:/var/lib/pgadmin
   rabbitmq:
-    image: rabbitmq:3-management
+    restart: always
+    image: rabbitmq:3.13.7-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"  # AMQP protokolü için
-      - "15672:15672" # Yönetim paneli için
+      - 5672:5672  
+      - 15672:15672 
     environment:
-      RABBITMQ_DEFAULT_USER: ${username}
-      RABBITMQ_DEFAULT_PASS: ${password}
+      RABBITMQ_DEFAULT_USER: root
+      RABBITMQ_DEFAULT_PASS: Password12
     volumes:
-      - rabbitmq_data:/var/lib/rabbitmq  # RabbitMQ verilerinin kalıcılığı için
-
+      - rabbitmq_data:/var/lib/rabbitmq  
 volumes:
   mongo-discount-data:
   mongo-catalog-data:
   redis-basket-data: 
   order-sqlserver-data:
   keycloak-postgres-data: 
-  rabbitmq_data:  
+  rabbitmq_data:
+  postgres-identity-db-ui-data:

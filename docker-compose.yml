@@ -8,7 +8,7 @@
       MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
     ports:
-      - "27017:27017"
+      - "27030:27017"
     volumes:
       - mongo-catalog-data:/data/db
   mongo.db.catalog.ui:

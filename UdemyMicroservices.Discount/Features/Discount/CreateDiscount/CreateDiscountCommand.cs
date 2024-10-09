@@ -6,10 +6,10 @@ using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Discount.Features.Discount.CreateDiscount;
 
-public record CreateDiscountCommand(string Code, int Rate, DateTime Expired)
+public record CreateDiscountCommand(string Code, int Rate, Guid UserId, DateTime Expired)
     : IRequestByServiceResult;
 
-public class CreateDiscountCommandHandler(AppDbContext context, IIdentityService identityService)
+public class CreateDiscountCommandHandler(AppDbContext context)
     : IRequestHandler<CreateDiscountCommand, ServiceResult>
 {
     public async Task<ServiceResult> Handle(CreateDiscountCommand request, CancellationToken cancellationToken)
@@ -17,7 +17,7 @@ public class CreateDiscountCommandHandler(AppDbContext context, IIdentityService
         var discount = new Repositories.Discount
         {
             Id = NewId.NextGuid(),
-            UserId = identityService.GetUserId,
+            UserId = request.UserId,
             Code = request.Code,
             Rate = request.Rate / 100f,
             Created = DateTime.Now,

@@ -51,7 +51,7 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
         }
 
 
-        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse.Data!.AccessToken);
+        request.SetBearerToken(tokenResponse.Data!.AccessToken!);
 
         response = await base.SendAsync(request, cancellationToken);
 

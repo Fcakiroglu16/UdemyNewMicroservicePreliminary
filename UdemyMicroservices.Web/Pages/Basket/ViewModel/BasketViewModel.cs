@@ -12,6 +12,8 @@ public record BasketViewModel
 
     public bool IsApplyDiscountCoupon => DiscountRate is > 0 && !string.IsNullOrEmpty(Coupon);
 
+    public bool HasItem => Items.Count > 0;
+
 
     public decimal GetTotalPrice()
     {
@@ -24,8 +26,6 @@ public record BasketViewModel
         TotalPrice = totalPrice;
         TotalPriceByDiscountRate = totalPriceByDiscountRate;
     }
-
-    public bool HasItem => Items.Count > 0;
 }
 
 public record BasketViewModelItem(

@@ -2,7 +2,6 @@
 using MediatR;
 using UdemyMicroservices.Discount.Repositories;
 using UdemyMicroservices.Shared;
-using UdemyMicroservices.Shared.Services;
 
 namespace UdemyMicroservices.Discount.Features.Discount.CreateDiscount;
 

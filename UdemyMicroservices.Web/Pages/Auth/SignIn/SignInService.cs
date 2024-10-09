@@ -1,9 +1,7 @@
-﻿using IdentityModel.Client;
+﻿using System.Security.Claims;
+using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text.Json;
 using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;

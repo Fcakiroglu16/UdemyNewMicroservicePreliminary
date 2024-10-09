@@ -4,27 +4,23 @@ using UdemyMicroservices.Web.Pages.Order.ViewModel;
 using UdemyMicroservices.Web.Services;
 using UdemyMicroservices.Web.ViewModels;
 
-namespace UdemyMicroservices.Web.Pages.Order
+namespace UdemyMicroservices.Web.Pages.Order;
+
+[Authorize]
+public class HistoryModel(OrderService orderService) : BasePageModel
 {
-    [Authorize]
-    public class HistoryModel(OrderService orderService) : BasePageModel
+    public List<OrderHistoryViewModel> OrderHistoryList { get; set; } = default!;
+
+    public async Task<IActionResult> OnGet()
     {
-        public List<OrderHistoryViewModel> OrderHistoryList { get; set; } = default!;
-
-        public async Task<IActionResult> OnGet()
-        {
-            var response = await orderService.GetHistory();
+        var response = await orderService.GetHistory();
 
 
-            if (response.IsFail)
-            {
-                return ErrorPage(response);
-            }
+        if (response.IsFail) return ErrorPage(response);
 
-            OrderHistoryList = response.Data!;
+        OrderHistoryList = response.Data!;
 
 
-            return Page();
-        }
+        return Page();
     }
 }

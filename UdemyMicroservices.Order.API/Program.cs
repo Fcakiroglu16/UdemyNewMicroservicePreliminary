@@ -7,6 +7,7 @@ using UdemyMicroservices.Order.Application.DelegateHandlers;
 using UdemyMicroservices.Order.Persistence;
 using UdemyMicroservices.Shared;
 using UdemyMicroservices.Shared.Options;
+using UdemyMicroservices.Shared.Resiliency;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthenticationExt(builder.Configuration);
@@ -26,7 +27,9 @@ builder.Services.AddRefitClient<IPaymentService>()
             var microserviceOption =
                 builder.Configuration.GetSection(nameof(MicroserviceOption)).Get<MicroserviceOption>();
             c.BaseAddress = new Uri(microserviceOption!.Payment!.Address);
-        }).AddHttpMessageHandler<AuthenticatedHttpClientHandler>();
+        }).AddHttpMessageHandler<AuthenticatedHttpClientHandler>()
+    .AddPolicyHandler(ResiliencyPolicy.AddResiliencyCombinePolicy());
+
 
 var app = builder.Build();
 app.UseExceptionHandler();

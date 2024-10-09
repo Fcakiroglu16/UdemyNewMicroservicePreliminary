@@ -62,9 +62,7 @@ public class OrderService(IRefitOrderService orderService, ILogger<OrderService>
                     orderResponse.TotalPrice.ToString("C"));
 
             foreach (var orderItem in orderResponse.OrderItems)
-            {
                 newOrderHistory.AddItem(orderItem.ProductId, orderItem.ProductName, orderItem.UnitPrice);
-            }
 
             orderHistoryList.Add(newOrderHistory);
         }

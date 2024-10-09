@@ -1,23 +1,22 @@
-﻿using Microsoft.AspNetCore.Localization;
-using System.Globalization;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
-namespace UdemyMicroservices.Web.Extensions
+namespace UdemyMicroservices.Web.Extensions;
+
+public static class ServiceLocalizationExt
 {
-    public static class ServiceLocalizationExt
+    public static IServiceCollection AddLocalizationExt(this IServiceCollection services)
     {
-        public static IServiceCollection AddLocalizationExt(this IServiceCollection services)
+        var supportedCultures = new CultureInfo[] { new("tr-Tr") };
+
+
+        services.Configure<RequestLocalizationOptions>(options =>
         {
-            var supportedCultures = new CultureInfo[] { new("tr-Tr") };
+            options.SupportedCultures = supportedCultures; // datetime-currency
+            options.SupportedUICultures = supportedCultures; // string localization
+            options.DefaultRequestCulture = new RequestCulture(supportedCultures.First());
+        });
 
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.SupportedCultures = supportedCultures; // datetime-currency
-                options.SupportedUICultures = supportedCultures; // string localization
-                options.DefaultRequestCulture = new RequestCulture(supportedCultures.First());
-            });
-
-            return services;
-        }
+        return services;
     }
 }

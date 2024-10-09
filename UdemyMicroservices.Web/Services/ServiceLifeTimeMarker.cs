@@ -1,10 +1,9 @@
-﻿namespace UdemyMicroservices.Web.Services
-{
-    public interface ITransientService;
+﻿namespace UdemyMicroservices.Web.Services;
 
-    public interface IScopedService;
+public interface ITransientService;
 
-    public interface ISingletonService;
+public interface IScopedService;
 
-    public interface IHttpClientService;
-}
+public interface ISingletonService;
+
+public interface IHttpClientService;

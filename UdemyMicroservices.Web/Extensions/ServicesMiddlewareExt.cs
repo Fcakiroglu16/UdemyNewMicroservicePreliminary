@@ -1,27 +1,22 @@
-﻿namespace UdemyMicroservices.Web.Extensions
+﻿namespace UdemyMicroservices.Web.Extensions;
+
+public static class ServicesMiddlewareExt
 {
-    public static class ServicesMiddlewareExt
+    public static void AddMiddlewares(this WebApplication app)
     {
-        public static void AddMiddlewares(this WebApplication app)
-        {
-            app.UseRequestLocalization();
+        app.UseRequestLocalization();
 
 
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Error");
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
+        if (!app.Environment.IsDevelopment())
+            app.UseExceptionHandler("/Error");
+        else
+            app.UseExceptionHandler("/Error");
 
 
-            app.UseStaticFiles();
+        app.UseStaticFiles();
 
-            app.UseRouting();
+        app.UseRouting();
 
-            app.UseAuthorization();
-        }
+        app.UseAuthorization();
     }
 }

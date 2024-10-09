@@ -1,16 +1,15 @@
-﻿using IdentityModel.Client;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
+using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using UdemyMicroservices.Web.Options;
 using UdemyMicroservices.Web.Pages.Auth.SignIn;
 using UdemyMicroservices.Web.ViewModels;
-
 
 namespace UdemyMicroservices.Web.Services;
 
@@ -92,10 +91,7 @@ public class TokenService(
             await client.GetDiscoveryDocumentAsync(discoveryRequest, cancellationToken);
 
 
-        if (!responseAsDiscovery.IsError)
-        {
-            return responseAsDiscovery;
-        }
+        if (!responseAsDiscovery.IsError) return responseAsDiscovery;
 
 
         logger.LogError(responseAsDiscovery.Error, "Failed to retrieve discovery document.");

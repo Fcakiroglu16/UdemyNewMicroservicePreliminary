@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http.Headers;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -18,10 +17,7 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
 
         var accessToken = await contextAccessor.HttpContext!.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
-        if (accessToken is null)
-        {
-            throw new UnauthorizedAccessException();
-        }
+        if (accessToken is null) throw new UnauthorizedAccessException();
 
         if (!string.IsNullOrEmpty(accessToken))
             request.SetBearerToken(accessToken);
@@ -37,18 +33,12 @@ public class AuthenticatedHttpClientHandler(IHttpContextAccessor? contextAccesso
             await contextAccessor.HttpContext!.GetTokenAsync(OpenIdConnectParameterNames.RefreshToken);
 
 
-        if (string.IsNullOrEmpty(refreshToken))
-        {
-            throw new UnauthorizedAccessException();
-        }
+        if (string.IsNullOrEmpty(refreshToken)) throw new UnauthorizedAccessException();
 
 
         var tokenResponse = await userService.GetAccessTokenByRefreshToken();
 
-        if (tokenResponse.IsFail)
-        {
-            throw new UnauthorizedAccessException();
-        }
+        if (tokenResponse.IsFail) throw new UnauthorizedAccessException();
 
 
         request.SetBearerToken(tokenResponse.Data!.AccessToken!);

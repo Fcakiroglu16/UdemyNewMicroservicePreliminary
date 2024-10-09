@@ -2,15 +2,14 @@
 using UdemyMicroservices.Web.Pages.Auth.SignUp;
 using UdemyMicroservices.Web.Services;
 
-namespace UdemyMicroservices.Web.Extensions
+namespace UdemyMicroservices.Web.Extensions;
+
+public static class ServiceHttpClientExt
 {
-    public static class ServiceHttpClientExt
+    public static void AddHttpClientsExt(this IServiceCollection services)
     {
-        public static void AddHttpClientsExt(this IServiceCollection services)
-        {
-            services.AddHttpClient<SignUpService>();
-            services.AddHttpClient<SignInService>();
-            services.AddHttpClient<TokenService>();
-        }
+        services.AddHttpClient<SignUpService>();
+        services.AddHttpClient<SignInService>();
+        services.AddHttpClient<TokenService>();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using UdemyMicroservices.Web.Options;
 
 namespace UdemyMicroservices.Web.TagHelpers;
 

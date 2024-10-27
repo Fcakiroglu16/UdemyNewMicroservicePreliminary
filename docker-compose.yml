@@ -5,22 +5,17 @@
     container_name: mongo.db.catalog
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: Password12
     ports:
       - "27030:27017"
-    volumes:
-      - mongo-catalog-data:/data/db
   mongo.db.catalog.ui:
     image: mongo-express:1.0.2-20-alpine3.19
     container_name: mongo.db.catalog.ui
-    restart: always
     ports:
       - 8081:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.catalog:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://user:Password12@mongo.db.catalog:27017/
       ME_CONFIG_BASICAUTH: false
   redis.db:
     image: redis:7.0-alpine
@@ -49,12 +44,10 @@
     container_name: mongo.db.discount
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${PASSWORD}
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: Password12
     ports:
       - "27020:27017"
-    volumes:
-      - mongo-discount-data:/data/db
   mongo.db.discount.ui:
     image: mongo-express:1.0.2-20-alpine3.19
     container_name: mongo.db.discount.ui
@@ -62,9 +55,7 @@
     ports:
       - 8083:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: ${USERNAME}
-      ME_CONFIG_MONGODB_ADMINPASSWORD: ${PASSWORD}
-      ME_CONFIG_MONGODB_URL: mongodb://root:Password12@mongo.db.discount:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://user:Password12@mongo.db.discount:27017/
       ME_CONFIG_BASICAUTH: false  
   sqlserver.db.order:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -78,12 +69,12 @@
     volumes:
       - order-sqlserver-data:/var/opt/mssql
   keycloak:
-    # restart: always
+    restart: always
     container_name: keycloak
     image: quay.io/keycloak/keycloak:25.0
     command: start
     environment:
-      KC_HOSTNAME: keycloak
+      KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8080
       KC_HOSTNAME_STRICT_BACKCHANNEL: false
       KC_HTTP_ENABLED: true
